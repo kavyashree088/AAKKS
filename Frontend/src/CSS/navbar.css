@@ -47,8 +47,16 @@
   font-size: 1.2rem;
 }
 
+.side-link:hover {
+  background-color: rgb(187, 226, 250);
+}
+
 .side-link {
   padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 25px;
   cursor: pointer;
 }
 
