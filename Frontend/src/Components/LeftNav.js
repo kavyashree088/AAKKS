@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import "../CSS/navbar.css"
 
 export default class LeftNav extends Component {
     render() {
         let linksMarkup = this.props.links.map((link, index) => {
             let linkMarkup = link.active ? (
-                <a className="side-link active">
-                    <span className={link.className} style={{ marginRight: "10px" }} href={link.link}></span>
+                <a className="side-link active" href={link.link}>
+                    <span className={link.className} style={{ marginRight: "10px" }} ></span>
                     <span><b>{link.label}</b></span>
                 </a>
             ) : (
-                    <a className="side-link">
-                        <span className={link.className} style={{ marginRight: "10px" }} href={link.link}></span>
+                    <a className="side-link" href={link.link}>
+                        <span className={link.className} style={{ marginRight: "10px" }} ></span>
                         <span><b>{link.label}</b></span>
                     </a>
                 );
@@ -28,7 +27,9 @@ export default class LeftNav extends Component {
         return (
             <div className="navbar-side" id="navbarSide" >
                 <li className="navbar-side-item">
-                    <a className="side-link">
+                    <a style={{
+                        paddingLeft: "2rem"
+                    }} href="/">
                         <span className="fab fa-twitter" style={{
                             marginRight: "10px",
                             fontSize: "2rem",
