@@ -54,10 +54,12 @@
 .side-link {
   padding-left: 2rem;
   padding-right: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   border-radius: 25px;
   cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
 
 .active {
@@ -78,4 +80,10 @@
 }
 .ip2 {
   border-radius: 25px;
+}
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
 }

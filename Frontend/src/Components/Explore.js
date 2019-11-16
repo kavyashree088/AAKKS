@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 
-class Home extends Component {
+class Explore extends Component {
     render() {
         let links = [
-            { label: 'Home', link: '/', className: "fas fa-home", active: true },
-            { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
+            { label: 'Home', link: '/', className: "fas fa-home" },
+            { label: 'Explore', link: '/explore', className: "fas fa-hashtag", active: true },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '#home', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
@@ -23,10 +23,19 @@ class Home extends Component {
 
                     </Col>
                     <Col className="col-sm-6">
-                        Here Main Content
+                        <InputGroup className="ip2">
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                                placeholder="Search Twitter"
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                            />
+                        </InputGroup>
                     </Col>
                     <Col className="col-sm-3">
-                        <div class="navbar-side-right" id="navbarSide">
+                        <div className="navbar-side-right" id="navbarSide">
                             here
                         </div>
 
@@ -37,4 +46,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Explore;
