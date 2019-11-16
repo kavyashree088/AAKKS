@@ -22,12 +22,12 @@ class Explore extends Component {
                         <LeftNav links={links} ></LeftNav>
 
                     </Col>
-                    <Col className="col-sm-6">
+                    <Col className="col-sm-6 pt-3">
                         <InputGroup className="ip2">
                             <InputGroup.Prepend>
                                 <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
                             </InputGroup.Prepend>
-                            <FormControl
+                            <FormControl onKeyPress
                                 placeholder="Search Twitter"
                                 aria-label="Username"
                                 aria-describedby="basic-addon1"
