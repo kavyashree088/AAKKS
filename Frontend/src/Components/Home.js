@@ -1,73 +1,25 @@
 import React, { Component } from "react";
 import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import "../CSS/navbar.css"
+import LeftNav from "./LeftNav";
 
 class Home extends Component {
     render() {
+        let links = [
+            { label: 'Home', link: '#home', className: "fas fa-home", active: true },
+            { label: 'Explore', link: '#home', className: "fas fa-hashtag" },
+            { label: 'Notifications', link: '#home', className: "fas fa-bell" },
+            { label: 'Messages', link: '#home', className: "fas fa-envelope" },
+            { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
+            { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
+            { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
+            { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
+        ];
         return (
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <div class="navbar-side" id="navbarSide">
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fab fa-twitter" style={{
-                                        marginRight: "10px",
-                                        fontSize: "2rem",
-                                        color: "rgba(29,161,242,1.00)"
-                                    }}></span>
-                                </a>
-                            </li>
-
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-home" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Home</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item active">
-                                <a class="side-link">
-                                    <span class="fas fa-hashtag" style={{ marginRight: "10px" }}></span>
-                                    <span><b> Explore</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-bell" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Notifications</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-envelope" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Messages</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-envelope" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Bookmarks</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-bookmark" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Lists</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-user-circle" style={{ marginRight: "10px" }}></span>
-                                    <span><b>Profile</b></span>
-                                </a>
-                            </li>
-                            <li class="navbar-side-item">
-                                <a class="side-link">
-                                    <span class="fas fa-ellipsis-h" style={{ marginRight: "10px" }}></span>
-                                    <span><b>More</b></span>
-                                </a>
-                            </li>
-                        </div>
+                        <LeftNav links={links} ></LeftNav>
 
                     </Col>
                     <Col className="col-sm-6">
