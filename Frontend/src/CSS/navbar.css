@@ -29,7 +29,7 @@
 }
 .navbar-side {
   height: 100%;
-  width: 25%;
+  width: 23%;
   position: fixed;
   top: 0;
   left: 0;
@@ -86,4 +86,32 @@ a:visited,
 a:link,
 a:active {
   text-decoration: none;
+}
+.message {
+  cursor: pointer;
+  color: rgba(29, 161, 242, 1);
+  padding: 0.5rem;
+}
+.message:hover {
+  background-color: rgb(187, 226, 250);
+}
+
+.padLeft {
+  padding-left: 0.5rem;
+}
+
+.lightFont {
+  color: rgb(204, 197, 197);
+}
+
+.messageActive {
+  background-color: rgb(245, 248, 250);
+  border-right: 2px solid rgba(29, 161, 242, 1);
+  padding: 0.5rem;
+}
+
+.messageText {
+  position: absolute;
+  bottom: 0px;
+  padding: 2rem;
 }
