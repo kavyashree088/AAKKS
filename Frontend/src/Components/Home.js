@@ -9,7 +9,7 @@ class Home extends Component {
             { label: 'Home', link: '/', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
-            { label: 'Messages', link: '#home', className: "fas fa-envelope" },
+            { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },

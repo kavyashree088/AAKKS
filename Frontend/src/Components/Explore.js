@@ -4,6 +4,24 @@ import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 
 class Explore extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            searchText: ""
+        }
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSearch = (event) => {
+        if (event.key === "Enter") {
+            console.log(this.state.searchText)
+        }
+    }
     render() {
         let links = [
             { label: 'Home', link: '/', className: "fas fa-home" },
@@ -28,9 +46,12 @@ class Explore extends Component {
                                 <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl
+                                name="searchText"
                                 placeholder="Search Twitter"
                                 aria-label="Username"
                                 aria-describedby="basic-addon1"
+                                onChange={this.handleChange}
+                                onKeyDown={this.handleSearch}
                             />
                         </InputGroup>
                     </Col>
