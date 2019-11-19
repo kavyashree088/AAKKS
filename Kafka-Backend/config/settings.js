@@ -10,5 +10,8 @@ module.exports = {
     
 
     'kafka_host' : 'localhost',
-    'kafka_port' : '2181'
+    'kafka_port' : '2181',
+
+    'redis_host' : 'localhost',
+    'redis_port' : 6379
 };

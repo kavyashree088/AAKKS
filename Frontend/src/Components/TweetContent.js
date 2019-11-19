@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 const settings = require("../config/settings.js");
@@ -40,12 +40,42 @@ export class TweetContent extends Component {
         
         this.writeATweet(tweetObj);
     }
+
+    getUserTweets = () => {
+        let data = {userId : 123};
+        //let data = {userId : 123};
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getUserTweets";
+        axios.defaults.withCredentials = true;
+        axios({
+            method: 'post',
+            url: postURL,        
+            data: data,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } },
+            //headers: {"Authorization" : `Bearer ${token}`} 
+        })
+            .then((response) => {
+                if (response.status >= 500) {
+                    throw new Error("Bad response from server");
+                }
+                return response.data;
+            })
+            .then((responseData) => {
+                swal(responseData.message);
+                
+            }).catch(function (err) {
+                console.log(err)
+            });
+    }
+
     render(){
         return (
-            <form onSubmit = {this.submitHandler}>
-                <textarea name="tweetText" className = "form-control"></textarea>
-                <button className = "btn btn-success" type="submit">Submit</button>
-            </form>
+            <div>
+                <form onSubmit = {this.submitHandler}>
+                    <textarea name="tweetText" className = "form-control"></textarea>
+                    <button className = "btn btn-success" type="submit">Submit</button>
+                </form>
+                <Button onClick = {this.getUserTweets}>Get Tweets</Button>
+            </div>
         );
     }
 }
