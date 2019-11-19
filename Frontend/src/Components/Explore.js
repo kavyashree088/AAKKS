@@ -22,6 +22,7 @@ class Explore extends Component {
             console.log(this.state.searchText)
         }
     }
+
     render() {
         let links = [
             { label: 'Home', link: '/', className: "fas fa-home" },
@@ -52,6 +53,7 @@ class Explore extends Component {
                                 aria-describedby="basic-addon1"
                                 onChange={this.handleChange}
                                 onKeyDown={this.handleSearch}
+
                             />
                         </InputGroup>
                     </Col>
