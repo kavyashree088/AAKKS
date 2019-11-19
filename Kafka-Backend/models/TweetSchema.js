@@ -15,7 +15,7 @@ TweetSchema = new Schema({
   retweets:[],
   replies:[],
   likes:[],
-  CreatedAt : {
+  createdAt : {
       type: String,
       default :""
   },
@@ -25,6 +25,4 @@ TweetSchema = new Schema({
   }
 });
 
-
-    
-module.exports = mongoose.model('Tweet', TweetSchema);
+module.exports = mongoose.model('tweets', TweetSchema);

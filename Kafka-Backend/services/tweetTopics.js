@@ -12,7 +12,9 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
         case 'likeATweet':
             likeATweet(msg, callback);
             break;
-       
+        case 'getFollowersTweets':
+            getFollowersTweets(msg, callback);
+            break;
     }
 };
 
@@ -36,7 +38,7 @@ let getUserTweets = (message, callback) => {
     let userId = message.userId;
     tweet.find({userId}, (err, result)=>{
         if(err){
-            console.log("unable to insert into database", err);
+            console.log("unable to find in database", err);
             callback(err, "Database Error");
        } else if(result) {
            console.log("result is..");
@@ -67,5 +69,22 @@ let likeATweet = function(message, callback){
            console.log(result);
            callback(null, { status: 200,  message:"like cannot be added!!" });
        }
+    });
+};
+
+let getFollowersTweets = (message, callback) => {
+    let followersList = message.followersList;
+    console.log(followersList);
+    tweet.find({userId : { $in : followersList } }, (err, result) => {
+        if(err) {
+            console.log("unable to insert into database", err);
+            callback(err, "Database Error");
+        } else if(result){
+            console.log("tweets returned!!");
+            console.log(result);
+            callback(null, { status: 200,  message: result });
+        } else {
+           callback(null, { status: 200,  message:"tweets list cannot be returned!!" });
+        }
     });
 };

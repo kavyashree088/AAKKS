@@ -78,7 +78,7 @@ router.post('/getUserTweets', function(req, res){
                 responseObj.status = true;
                 responseObj.message = result.message;
                 console.log("tweets set to cache in redis!!");
-                redisClient.expire(redisKey, 200);
+                redisClient.expire(redisKey, 100);
               } else{
                 responseObj.status = false;
                 responseObj.message = result.message;
@@ -101,7 +101,7 @@ router.post('/getUserTweets', function(req, res){
   }
 });
 
-router.post('/likeATweet', function(err, res){
+router.post('/likeATweet', function(req, res){
   let {userId, tweetId} = req.body;
   kafka.make_request('tweetTopics',{'path':'likeATweet', userId, tweetId}, function(err,result){
     var responseObj = {
@@ -130,7 +130,7 @@ router.post('/likeATweet', function(err, res){
 
 });
 
-router.post('/replyATweet', function(err, res){
+router.post('/replyATweet', function(req, res){
   let {userId, tweetId, tweetReply} = req.body;
   kafka.make_request('tweetTopics',{'path':'replyATweet', userId, tweetId, tweetReply}, function(err,result){
     var responseObj = {
@@ -148,9 +148,39 @@ router.post('/replyATweet', function(err, res){
       console.log('Added reply successfully!');
       responseObj.status = true;
       responseObj.message = result.message;
-      res.status(200).json(responseObj);
+      //res.status(200).json(responseObj);
     } else if (result.status === 401){
       console.log('reply cannot be  added to the tweet!!');
+      responseObj.status = false;
+      responseObj.message = result.message;
+    }
+    res.status(status).json(responseObj);
+  });
+});
+
+router.post('/getFollowersTweets', function(req, res){
+  let {userId} = req.body;
+  //get followers list  from local storage
+  let followersList = ["333", "222" , "111", "123"];
+  kafka.make_request('tweetTopics', {'path':'getFollowersTweets', followersList}, function(err,result){
+    var responseObj = {
+      status : false,
+      message :""
+    };
+    let status = 200;
+    if (err) {
+      console.log(err);
+      status = 500;
+      responseObj.message = 'Database is not responding!!!';
+    }
+    else if (result.status === 200)
+    {
+      console.log('Tweets returned successfully!');
+      responseObj.status = true;
+      responseObj.message = result.message;
+      //res.status(200).json(responseObj);
+    } else if (result.status === 401){
+      console.log('Tweets cannot be returned!!');
       responseObj.status = false;
       responseObj.message = result.message;
     }

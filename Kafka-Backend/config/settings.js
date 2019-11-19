@@ -5,7 +5,7 @@ module.exports = {
     'database_password' : 'sjsu',
     'database_host': 'localhost',
     'database_port': '27017',
-    'database_name': 'grubhub',
+    'database_name': 'twitter',
     'connection_string': 'mongodb+srv://root:root@clusterkc-cr6mm.mongodb.net/Twitter?retryWrites=true&w=majority',
     
 
