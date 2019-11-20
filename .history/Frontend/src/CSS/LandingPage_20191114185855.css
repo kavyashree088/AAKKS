@@ -1,0 +1,5 @@
+.imageStyle: {
+    width: Dimensions.get('window').width - 23,
+    resizeMode: "contain",
+    height: 211,
+ }

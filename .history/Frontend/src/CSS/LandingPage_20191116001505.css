@@ -1,0 +1,20 @@
+
+
+.imgbox {
+    display: grid;
+    height: 100%; 
+   
+}
+.left-fit {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit:cover ;    
+}
+.input {
+    
+    float: right;
+    clear: both;
+  }
+  * {
+    float: left;
+}

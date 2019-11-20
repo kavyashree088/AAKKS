@@ -1,0 +1,10 @@
+*{
+    float: left;  
+}
+.input {
+    float: left;
+    clear: both;
+  }
+.password{
+    color : #BFC9CA ;
+}

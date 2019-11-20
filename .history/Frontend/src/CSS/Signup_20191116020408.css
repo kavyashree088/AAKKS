@@ -1,0 +1,18 @@
+*{
+    float: left;  
+    
+}
+.input {
+    padding: 20px;
+    float: center;
+    clear: both;
+  }
+.password{
+    color : #BFC9CA ;
+    font-size: 14px;
+}
+.signup{
+    padding: 40px;
+    float: center;
+    clear: both;
+}

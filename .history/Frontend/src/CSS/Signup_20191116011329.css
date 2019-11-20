@@ -1,0 +1,12 @@
+*{
+    float: left;  
+    padding: 2;
+}
+.input {
+    float: left;
+    clear: both;
+  }
+.password{
+    color : #BFC9CA ;
+    font-size: 14px;
+}

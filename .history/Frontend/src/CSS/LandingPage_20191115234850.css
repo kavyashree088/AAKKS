@@ -1,0 +1,16 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.imgbox {
+    display: grid;
+    height: 100%;
+}
+.left-fit {
+
+    max-width: 50vh;
+    max-height: 100vh;
+    margin: left;
+     
+}

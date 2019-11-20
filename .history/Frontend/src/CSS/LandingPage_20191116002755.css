@@ -1,0 +1,18 @@
+
+* {
+    float: left; 
+    position: relative;
+}
+.imgbox {
+    display: grid;
+    height: 100%; 
+    float: left;
+   
+}
+.left-fit {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit:cover ;  
+    float: left;  
+}
+
