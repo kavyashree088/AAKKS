@@ -48,7 +48,8 @@
 }
 
 .side-link:hover {
-  background-color: rgb(187, 226, 250);
+  background-color: rgb(229, 244, 253);
+  color: rgba(29, 161, 242, 1);
 }
 
 .side-link {

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Components/Home"
 import Explore from './Components/Explore';
 import Messages from './Components/Messages';
+import List from './Components/List';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route path="/Explore" component={Explore}></Route>
+          <Route path="/List" component={List}></Route>
           <Route path="/Messages" component={Messages}></Route>
         </Switch>
       </Router>

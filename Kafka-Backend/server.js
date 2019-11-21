@@ -3,21 +3,22 @@ var userService = require("./services/userService");
 var ownerService = require("./services/ownerService")
 var orderService = require("./services/orderService")
 var messageService = require("./services/messageService")
+var tweetTopics = require('./services/tweetTopics.js');
 
-const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb://root:root@clusterkc-shard-00-00-cr6mm.mongodb.net:27017,clusterkc-shard-00-01-cr6mm.mongodb.net:27017,clusterkc-shard-00-02-cr6mm.mongodb.net:27017/grubhub?ssl=true&replicaSet=ClusterKC-shard-0&authSource=admin&retryWrites=true&w=majority",
-  { useNewUrlParser: true, poolSize: 10 },
-  function (err) {
-    if (err) {
-      console.log(err);
-      console.log("ERROR! MONGO MONGOOSE");
-      throw err;
-    } else {
-      console.log("Successfully connected to MongoDB");
+
+
+// Set up Database connection
+var config = require('./config/settings');
+var mongoose = require('mongoose');
+//var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
+var connStr = config.connection_string;
+console.log(connStr);
+mongoose.connect(connStr, { useNewUrlParser: true, poolSize: 10 }, function (err) {
+    if (err) throw err;
+    else {
+        console.log('Successfully connected to MongoDB');
     }
-  }
-);
+});
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -53,6 +54,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+        case "tweetTopics":
+                tweetTopics.tweetTopicService(data.data, function (err, res) {
+                    response(data, res, producer);
+                    return;
+                });
+                break;
     }
   });
 }
@@ -80,3 +87,10 @@ handleTopicRequest("userActions", userService);
 handleTopicRequest("ownerActions", ownerService);
 handleTopicRequest("orderActions", orderService);
 handleTopicRequest("messageActions", messageService);
+handleTopicRequest("tweetTopics", tweetTopics);
+
+
+
+
+
+
