@@ -87,6 +87,7 @@ a:link,
 a:active {
   text-decoration: none;
 }
+
 .message {
   cursor: pointer;
   color: rgba(29, 161, 242, 1);

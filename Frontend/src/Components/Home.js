@@ -3,6 +3,8 @@ import { Row, Col } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 
+import TweetContent from "./TweetContent";
+
 class Home extends Component {
     render() {
         let links = [
@@ -10,6 +12,7 @@ class Home extends Component {
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
+
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
@@ -24,6 +27,8 @@ class Home extends Component {
                     </Col>
                     <Col className="col-sm-6">
                         Here Main Content
+
+                        <TweetContent />
                     </Col>
                     <Col className="col-sm-3">
                         <div class="navbar-side-right" id="navbarSide">
