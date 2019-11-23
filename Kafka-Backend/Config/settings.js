@@ -13,6 +13,6 @@ module.exports = {
     'kafka_host': 'localhost',
     'kafka_port': '2181',
 
-    'redis_host': 'localhost',
+    'redis_host': 'twittercache.zmt4yc.ng.0001.use2.cache.amazonaws.com',
     'redis_port': 6379
 };
