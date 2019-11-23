@@ -11,6 +11,6 @@ module.exports = {
     'backend_port': '3001',
     'useUnifiedTopology': true,
 
-    'connection_string': 'mongodb+srv://root:root1234@cluster0-o7wbx.mongodb.net/grubhub?retryWrites=true&w=majority',
+    'connection_string': 'mongodb+srv://root:root@clusterkc-cr6mm.mongodb.net/Twitter?retryWrites=true&w=majority',
     'client' : 'localhost'
 };
