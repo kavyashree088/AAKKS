@@ -15,6 +15,12 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
         case 'getFollowersTweets':
             getFollowersTweets(msg, callback);
             break;
+        case 'bookmarkATweet':
+            bookmarkATweet(msg, callback);
+            break;
+        case 'deleteATweet':
+            deleteATweet(msg, callback);
+            break;
     }
 };
 
@@ -22,6 +28,9 @@ let writeATweet = function(message, callback){
     //let userId = message.userId;
     let tweetDetails = message.tweetDetails;
     console.log("In tweet topics : writeATweet ", message);
+    let tweetText = tweetDetails.tweetText;
+    let hashTags = tweetText.toLowercase().match(/#\w*/g/i);
+    tweetDetails.hashTags = hashTags;
     tweet.create(tweetDetails, function(err, result){
         if(err){
             console.log("unable to insert into database", err);
@@ -88,3 +97,36 @@ let getFollowersTweets = (message, callback) => {
         }
     });
 };
+
+let bookmarkATweet = (message, callback) => {
+    let { userId, tweetId } = message;
+    console.log("in bookmarkATweet..");
+    tweet.update({tweetId}, {$push: {'bookmarks' : userId}}, (err, result) => {
+        if(err) {
+            console.log('unable to insert into database', err);
+            callback(err, 'Database Error');
+        } else if(result){
+            console.log('bookmarking a tweet...');
+            callback(null, {status:200, message})
+        } else {
+            callback(null, { status: 200,  message:"tweet  cannot be bookmarked!!" });
+        }
+    });
+}
+
+let deleteATweet = (message, callback) => {
+    let { userId, tweetId } = message;
+    console.log("in bookmarkATweet..");
+    tweet.remove({tweetId}, (err, result) => {
+        if(err) {
+            console.log('unable to delete into database', err);
+            callback(err, 'Database Error');
+        } else if(result){
+            console.log('deleting a tweet...');
+            callback(null, {status:200, message})
+        } else {
+            callback(null, { status: 200,  message:"tweet  cannot be deleted!!" });
+        }
+    });
+}
+

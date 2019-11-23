@@ -11,11 +11,11 @@ var kafka = require('../kafka/client');
 //var requireAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/writeATweet',  function (req, res) {
-    /*console.log("Inside write a tweet");
+    console.log("Inside write a tweet");
     console.log("Requestbody is ::");
-    console.log(req.body);*/
+    console.log(req.body);
     let {userId, tweetText}  = req.body;
-    let tweetDetails =  {userId, tweetText} ;
+    let tweetDetails =  {userId, tweetText, isRetweet : 'false', 'actualTweetId' : ''} ;
 
     kafka.make_request('tweetTopics',{'path':'writeATweet', 'tweetDetails' : tweetDetails}, function(err,result){
       var responseObj = {
@@ -181,6 +181,92 @@ router.post('/getFollowersTweets', function(req, res){
       //res.status(200).json(responseObj);
     } else if (result.status === 401){
       console.log('Tweets cannot be returned!!');
+      responseObj.status = false;
+      responseObj.message = result.message;
+    }
+    res.status(status).json(responseObj);
+  });
+});
+
+router.post('/bookmarkATweet', function(req, res){
+  let {userId, tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'bookmarkATweet', tweetId, userId}, function(err,result){
+    var responseObj = {
+      status : false,
+      message :""
+    };
+    let status = 200;
+    if (err) {
+      console.log(err);
+      status = 500;
+      responseObj.message = 'Database is not responding!!!';
+    }
+    else if (result.status === 200)
+    {
+      console.log('Tweets bookmarked successfully!');
+      responseObj.status = true;
+      responseObj.message = result.message;
+      //res.status(200).json(responseObj);
+    } else if (result.status === 401){
+      console.log('Tweets cannot be bookmarked!!');
+      responseObj.status = false;
+      responseObj.message = result.message;
+    }
+    res.status(status).json(responseObj);
+  });
+});
+
+router.post('/retweetATweet', function(req, res){
+  let {userId, actualTweetId, tweetText} = req.body;
+  let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId} ;
+  kafka.make_request('tweetTopics', {'path':'writeATweet', tweetDetails}, function(err,result){
+    var responseObj = {
+      status : false,
+      message :''
+    };
+    let status = 200;
+    if (err) {
+      console.log(err);
+      status = 500;
+      responseObj.message = 'Database is not responding!!!';
+    }
+    else if (result.status === 200)
+    {
+      console.log('Tweets bookmarked successfully!');
+      responseObj.status = true;
+      responseObj.message = result.message;
+      //res.status(200).json(responseObj);
+    } else if (result.status === 401){
+      console.log('Tweets cannot be bookmarked!!');
+      responseObj.status = false;
+      responseObj.message = result.message;
+    }
+    res.status(status).json(responseObj);
+  });
+});
+
+router.post('/deleteATweet', function(req, res){
+  let {userId, tweetId} = req.body;
+  //let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId} ;
+  kafka.make_request('tweetTopics', {'path':'deleteATweet', tweetId, userId}, function(err,result){
+    var responseObj = {
+      status : false,
+      message :''
+    };
+    let status = 200;
+    if (err) {
+      console.log(err);
+      status = 500;
+      responseObj.message = 'Database is not responding!!!';
+    }
+    else if (result.status === 200)
+    {
+      console.log('Tweet deleted successfully!');
+      responseObj.status = true;
+      responseObj.message = result.message;
+      //res.status(200).json(responseObj);
+    } else if (result.status === 401){
+      console.log('Tweets cannot be deleted!!');
       responseObj.status = false;
       responseObj.message = result.message;
     }
