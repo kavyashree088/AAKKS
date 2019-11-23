@@ -7,6 +7,7 @@ var tweetTopics = require('./services/tweetTopics.js');
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
+const messageTopics = require("./services/messageTopics.js")
 //var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
 var connStr = config.connection_string;
 console.log(connStr);
