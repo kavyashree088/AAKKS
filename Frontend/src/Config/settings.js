@@ -1,3 +1,5 @@
-const rooturl = "localhost";
-
-export default rooturl;
+"use strict";
+module.exports={
+    "hostname" : "localhost",
+    "port" : 3002
+};
