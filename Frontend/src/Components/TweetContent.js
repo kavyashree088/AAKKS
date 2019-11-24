@@ -3,7 +3,19 @@ import { Row, Col, Button } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import FollowersTweets from "./FollowersTweets.js";
-const settings = require("../config/settings.js");
+import '../CSS/tweetArea.css';
+
+import {
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle,
+    CardLink
+  } from "reactstrap";
+
+  const settings = require("../Config/settings");
 
 export class TweetContent extends Component {
     state = {
@@ -108,6 +120,16 @@ export class TweetContent extends Component {
             });
     }
 
+
+    like=(event)=>{
+
+        
+    }
+
+
+
+
+
     render(){
         let allTweetsComponent;
         if(this.state.allTweets && this.state.allTweets.length > 0){
@@ -115,13 +137,58 @@ export class TweetContent extends Component {
         }
         return (
             <div>
-                <form onSubmit = {this.submitHandler}>
-                    <textarea name="tweetText" className = "form-control"></textarea>
-                    <button className = "btn btn-success" type="submit">Submit</button>
-                </form>
-                <Button onClick = {this.getUserTweets}>Get Tweets</Button>
-                {allTweetsComponent}
-            </div>
+                <div>
+                    <form onSubmit = {this.submitHandler}>
+                        <h5 style={{fontWeight:"bolder"}}>Home</h5>
+                        <textarea name="tweetText" className = "form-control"></textarea>
+                        <button className = "btn btn-success" type="submit">Submit</button>
+                    </form>
+                    <Button onClick = {this.getUserTweets}>Get Tweets</Button>
+                    {allTweetsComponent}
+
+                </div><br/>
+                <div className="space">
+                    <div>
+                        <textarea id="tweetArea" className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus></textarea>
+                        <div style={{display:'inline-block'}}>
+                        <i id="image" class="far fa-image fa-2x"></i>
+                        <button className="btn btn-primary btn-circle" type="submit" style={{position:'absolute',  right:'60px',fontWeight:"bold"   }}>Tweet</button><br/><br/><br/>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+                <div class="tweet-container">
+                    <div class="tweet-body">
+                    <Card >
+                    <CardBody>
+                        <CardTitle style={{fontWeight:"bolder"}}>Times Now<span style={{color:"grey",fontWeight:"normal"}}> @timesnow</span></CardTitle>
+                        {/* <CardSubtitle>Card subtitle</CardSubtitle>
+                    </CardBody>
+                    {<img width="100%" src="/assets/318x180.svg" alt="Card image cap" />}
+                    <CardBody> */}
+                        <CardText>oneplus says hit by data breach, usernames, addresses leaked.</CardText>
+                        <CardLink href="#">Card Link</CardLink>
+                        <CardLink href="#">Another Link</CardLink>
+                        <br/><br/>
+                        <div><i class="fas fa-heart fa-lg" style={{color:"red"}} onClick={this.like}></i><span>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></div>
+                        <a onClick={this.like}><i class="like far fa-heart fa-lg" style={{color:"grey"}}>20</i></a><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                        <i class="far fa-comment fa-lg" style={{color:"grey"}}> 55</i><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                        <i class="fas fa-retweet fa-lg" style={{color:"grey"}}> <span style={{fontWeight:"normal    "}}> 10</span></i><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                    </CardBody>
+
+                    </Card>
+                    
+                    </div>
+    </div>
+
+
+
+
+
+
+         </div>
         );
     }
 }

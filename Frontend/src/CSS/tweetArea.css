@@ -1,0 +1,42 @@
+textarea:focus,
+textarea:active{
+
+    outline: 0px !important;
+    box-shadow: none !important;
+
+}
+
+#image{
+
+    color: rgba(29, 161, 242, 1);
+    size:9px
+}
+
+.btn-circle{
+     
+    background-color:rgba(29, 161, 242, 1);
+    border: none;
+    color:#ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50px; 
+    
+}
+
+.far.fa-heart:hover{
+
+    color:red !important;
+}
+
+.fa-comment:hover{
+
+    color:rgba(29, 161, 242, 1) !important;
+}
+.fa-retweet:hover{
+
+    color: green !important;
+}
