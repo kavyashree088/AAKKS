@@ -1,9 +1,9 @@
-'use strict';
+/*'use strict';
 var passport = require('passport');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
-var Users = require('./../database/UserSchema');
-
+var Buyers = require('../src/models/BuyersSchema');
+var Owners = require('../src/models/OwnersSchema');
 var config = require('./settings');
 
 // Setup work and export for the JWT passport strategy
@@ -13,12 +13,14 @@ var opts = {
 };
 passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
     console.log("JWT Payload:", jwt_payload);
-    Users.findOne({ email: jwt_payload.email }, function (err, user) {
+    let user_type = jwt_payload.user_type;
+    let Users = (user_type == "buyer") ? Buyers :Owners;
+    Users.findOne({ _id: jwt_payload.id }, function (err, user) {
         if (err) {
             return done(err, false);
         }
         if (user) {
-            delete user.password;
+            delete user.buyer_password;
             console.log("Authentication valid");
             return done(null, user);
         } else {
@@ -27,4 +29,4 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
     });
 }));
 
-module.exports = passport;
+module.exports = passport;*/
