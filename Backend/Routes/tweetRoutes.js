@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const {redisClient} = require('../../redisClient')
+const {redisClient} = require('../redisClient')
 
 //imports
 //var config = require('../../config/settings');
-var kafka = require('../kafka/client');
+var kafka = require('../Kafka/client');
 //var jwt = require('jsonwebtoken');
 //const passport = require('../../config/passport');
 //var requireAuth = passport.authenticate('jwt', { session: false });

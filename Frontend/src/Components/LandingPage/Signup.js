@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import rooturl from './../../Config/settings.js'
+import config from './../../Config/settings.js'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -112,7 +112,7 @@ class Signup extends Component {
         })
 
         axios.defaults.withCredentials = true;
-        axios.post('http://' + rooturl + ':3001/signup', data)
+        axios.post('http://' + config.hostname + ':'+ config.port + '/signup', data)
             .then(response => {
                 console.log("frontend")
                 //console.log("Status Code : ", response.status);

@@ -1,5 +1,5 @@
 const redis = require('redis');
-const config = require('./config/settings.js');
+const config = require('./Config/settings.js');
 //let redisClient = null;
 
 /*let RedisClustr = require('redis-clustr');
@@ -19,7 +19,7 @@ let redis = new RedisClustr({
 /*redis.on('connect', function(){
   console.log('connected');
 });*/
-
+console.log("In redis file")
 redisClient = redis.createClient(config.redis_port, config.redis_host);
 redisClient.on('connect', function (err) {
   if(err){

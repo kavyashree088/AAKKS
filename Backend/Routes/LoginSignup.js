@@ -7,7 +7,7 @@ router = express.Router();
 
 //imports
 var config = require('../Config/settings');
-var kafka = require('../kafka/client');
+var kafka = require('../Kafka/client');
 
 // Set up middleware
 var jwt = require('jsonwebtoken');

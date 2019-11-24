@@ -16,7 +16,7 @@ const path = require('path');
 var morgan = require('morgan');
 
 //passport auth require
-var config = require('./config/settings');
+var config = require('./Config/settings');
 var passport = require('passport');
 
 console.log("Initializing passport");
@@ -24,7 +24,6 @@ app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
 require('./Config/passport').passport;
-var config = require('./config/settings');
 
 var mongoose = require('mongoose');
 //var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
@@ -49,12 +48,13 @@ testDBConection = async() => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-var loginSignup = require('./Routes/LoginSignup')
+const loginSignup = require('./Routes/LoginSignup')
+const tweetRoutes = require('./Routes/tweetRoutes');
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
 
 //use cors to allow cross origin resource sharing
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://'+config.client+':3000', credentials: true }));
 
 app.use(session({
     secret: 'cmpe273_kafka',
@@ -69,7 +69,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://'+config.client+':3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
@@ -86,3 +86,4 @@ app.use(bodyParser.urlencoded({
 
  app.use(bodyParser.json());
  app.use('/', loginSignup);
+ app.use('/', tweetRoutes);

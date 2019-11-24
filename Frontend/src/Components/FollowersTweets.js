@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Card } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
-const settings = require("../config/settings.js");
+const settings = require('./../Config/settings');
 
 export class FollowersTweets extends Component {
    state = {
