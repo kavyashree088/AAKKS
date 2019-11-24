@@ -1,5 +1,5 @@
 "use strict";
-module.exports={
-    "hostname" : "localhost",
-    "port" : 3002
+module.exports = {
+    "rooturl": "localhost",
+    "port": 3001
 };
