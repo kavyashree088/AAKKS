@@ -47,13 +47,13 @@ function handleTopicRequest(topic_name, fname) {
     console.log(JSON.stringify(message.value));
     var data = JSON.parse(message.value);
     switch (topic_name) {
-      case "tweetTopics":
+      /*case "tweetTopics":
         tweetTopics.tweetTopicService(data.data, function (err, res) {
           response(data, res, producer);
           return;
         });
         break;
-      case 'loginSignuptopic':
+*/      case 'loginSignuptopic':
         SignupSignin.loginSignupService(data.data, function (err, res) {
           console.log("app.js")
           response(data, res, producer);

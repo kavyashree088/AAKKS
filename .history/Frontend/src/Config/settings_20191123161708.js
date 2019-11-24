@@ -2,5 +2,5 @@
 module.exports={
     "hostname" : "localhost",
     "port" : 3001,
-    "rooturl": "localhost"
+    "rooturl": ""
 };

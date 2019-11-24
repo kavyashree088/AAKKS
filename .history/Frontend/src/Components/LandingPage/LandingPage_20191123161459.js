@@ -11,7 +11,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router'
 
 
-import config from './../../Config/settings'
+import rooturl from './../../Config/settings.js'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
@@ -57,7 +57,7 @@ class LandingPage extends Component {
         
         axios({
         method: 'post',
-            url: 'http://'+config.hostname+':3001/login',
+            url: 'http://'+rooturl+':3001/login',
             params: data,
            // config: { headers: { 'Content-Type': 'application/json' } },
             //headers: { "Authorization": `Bearer ${token}` }

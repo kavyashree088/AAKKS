@@ -47,7 +47,7 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
         var payloads = [
             { topic: topic_name, messages: JSON.stringify({
                 correlationId:correlationId,
-                replyTo:'response_topics',
+                replyTo:'responseTopics',
                 data:content}),
                 partition:0}
         ];
@@ -69,7 +69,7 @@ KafkaRPC.prototype.setupResponseQueue = function(producer,topic_name, next){
     self = this;
 
     //subscribe to messages
-    var consumer = self.connection.getConsumer('response_topics');
+    var consumer = self.connection.getConsumer('responseTopics');
     consumer.on('error', function (err) {
         console.log("Kafka Error: Response Consumer - " + err);
     });
@@ -94,4 +94,3 @@ KafkaRPC.prototype.setupResponseQueue = function(producer,topic_name, next){
     console.log('returning next from kafkarpc.js');
     return next();
 };
-
