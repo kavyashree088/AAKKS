@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Components/Home"
 import Explore from './Components/Explore';
 import Messages from './Components/Messages';
-import List from './Components/List';
+import List from './Components/ListInfo';
 
 class App extends Component {
   render() {

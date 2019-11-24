@@ -45,17 +45,18 @@ mongoose.connect(connStr, { useNewUrlParser: true, poolSize: 10, }, function(err
   }
 });
 
+const createListRouter = require('./Routes/createList');
+app.use('/createList',createListRouter);
 
-
-const userActions = require("./routes/userActions");
-const ownerAction = require("./routes/ownerActions");
-const orderAction = require("./routes/orderActions");
-const messageAction = require("./routes/messageActions");
-app.use("/user", userActions);
-app.use("/owner", ownerAction);
-app.use(orderAction);
-app.use("/message", messageAction);
-app.use("/uploads", express.static(__dirname + "/uploads"));
+// const userActions = require("./routes/userActions");
+// const ownerAction = require("./routes/ownerActions");
+// const orderAction = require("./routes/orderActions");
+// const messageAction = require("./routes/messageActions");
+// app.use("/user", userActions);
+// app.use("/owner", ownerAction);
+// app.use(orderAction);
+// app.use("/message", messageAction);
+// app.use("/uploads", express.static(__dirname + "/uploads"));
 //start your server on port 3001
 app.listen(3001);
 console.log("Server Listening on port 3001");
