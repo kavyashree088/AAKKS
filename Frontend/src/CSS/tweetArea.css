@@ -40,3 +40,7 @@ textarea:active{
 
     color: green !important;
 }
+.fa-bookmark:hover{
+
+    color: orange !important;
+}
