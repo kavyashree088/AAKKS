@@ -24,6 +24,7 @@ app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
 require('./Config/passport').passport;
+var config = require('./config/settings');
 
 var mongoose = require('mongoose');
 //var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;

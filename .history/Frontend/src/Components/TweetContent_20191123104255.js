@@ -7,7 +7,7 @@ const settings = require('./../Config/settings');
 
 export class TweetContent extends Component {
     state = {
-        allTweets: []
+        allTweets : []
     }
     constructor(props) {
         super(props);
@@ -45,15 +45,15 @@ export class TweetContent extends Component {
             });
     }*/
 
-    writeATweet = (tweetObj) => {
+    writeATweet = (tweetObj) =>{
         //TODO :get userId from local storage
-        let data = { userId: 123, tweetText: tweetObj.tweetText };
+        let data = {userId : 123, tweetText :tweetObj.tweetText};
         //let data = {userId : 123};
-        let postURL = "http://" + settings.hostname + ":" + settings.port + "/writeATweet";
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet";
         axios.defaults.withCredentials = true;
         axios({
             method: 'post',
-            url: postURL,
+            url: postURL,        
             data: data,
             config: { headers: { 'Content-Type': 'multipart/form-data' } },
             //headers: {"Authorization" : `Bearer ${token}`} 
@@ -66,30 +66,30 @@ export class TweetContent extends Component {
             })
             .then((responseData) => {
                 swal(responseData.message);
-
+                
             }).catch(function (err) {
                 console.log(err)
             });
     }
 
-    submitHandler = (evt) => {
+    submitHandler = (evt) =>{
         debugger;
         evt.preventDefault();
         let target = evt.target;
         var formData = new FormData(evt.target);
         let tweetObj = { "tweetText": formData.get('tweetText') }
-
+        
         this.writeATweet(tweetObj);
     }
 
     getUserTweets = () => {
-        let data = { userId: 123 };
+        let data = {userId : 123};
         //let data = {userId : 123};
-        let postURL = "http://" + settings.hostname + ":" + settings.port + "/getUserTweets";
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getUserTweets";
         axios.defaults.withCredentials = true;
         axios({
             method: 'post',
-            url: postURL,
+            url: postURL,        
             data: data,
             config: { headers: { 'Content-Type': 'multipart/form-data' } },
             //headers: {"Authorization" : `Bearer ${token}`} 
@@ -102,24 +102,24 @@ export class TweetContent extends Component {
             })
             .then((responseData) => {
                 swal(responseData.message);
-
+                
             }).catch(function (err) {
                 console.log(err)
             });
     }
 
-    render() {
+    render(){
         let allTweetsComponent;
-        if (this.state.allTweets && this.state.allTweets.length > 0) {
-            allTweetsComponent = <FollowersTweets allTweets={this.state.allTweets} />;
+        if(this.state.allTweets && this.state.allTweets.length > 0){
+            allTweetsComponent = <FollowersTweets allTweets = {this.state.allTweets} />;
         }
         return (
             <div>
-                <form onSubmit={this.submitHandler}>
-                    <textarea name="tweetText" className="form-control"></textarea>
-                    <button className="btn btn-success" type="submit">Submit</button>
+                <form onSubmit = {this.submitHandler}>
+                    <textarea name="tweetText" className = "form-control"></textarea>
+                    <button className = "btn btn-success" type="submit">Submit</button>
                 </form>
-                <Button onClick={this.getUserTweets}>Get Tweets</Button>
+                <Button onClick = {this.getUserTweets}>Get Tweets</Button>
                 {allTweetsComponent}
             </div>
         );

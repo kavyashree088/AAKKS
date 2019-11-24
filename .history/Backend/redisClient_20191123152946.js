@@ -1,5 +1,5 @@
 const redis = require('redis');
-const config = require('./Config/settings.js');
+const config = require('./config/settings.js');
 //let redisClient = null;
 
 /*let RedisClustr = require('redis-clustr');
