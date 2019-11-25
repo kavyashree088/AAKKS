@@ -45,11 +45,11 @@ router.post('/writeATweet',  upload.single('tweetImages'), function (req, res) {
     console.log("Inside write a tweet");
     console.log("Requestbody is ::");
     console.log(req.body);
-    let {userId, tweetText}  = req.body;
+    let {userId, userName, tweetText}  = req.body;
     console.log("ref files..");
     console.log(req.file);
     let currTimeStamp = Date.now();
-    let tweetDetails =  {userId, tweetText, isRetweet : 'false', 'actualTweetId' : '', createdAt : currTimeStamp} ;
+    let tweetDetails =  {userId, userName, tweetText, isRetweet : 'false', 'actualTweetId' : '', createdAt : currTimeStamp} ;
     kafka.make_request('tweetTopics',{'path':'writeATweet', 'tweetDetails' : tweetDetails}, function(err,result){
       var responseObj = {
         status : false,
@@ -152,7 +152,6 @@ router.post('/likeATweet', function(req, res){
       console.log('Added like successfully!');
       responseObj.status = true;
       responseObj.message = result.message;
-      res.status(200).json(responseObj);
     } else if (result.status === 401){
       console.log('Like cannot be  added to the tweet!!');
       responseObj.status = false;
@@ -194,8 +193,7 @@ router.post('/replyATweet', function(req, res){
 router.post('/getDashboardTweets', function(req, res){
   let {userId} = req.body;
   //get followers list  from local storage
-  let followersList = ["333", "222" , "111", "123"];
-  kafka.make_request('tweetTopics', {'path':'getFollowersTweets', followersList}, function(err,result){
+  kafka.make_request('tweetTopics', {'path':'getDashboardTweets'}, function(err,result){
     var responseObj = {
       status : false,
       message :""

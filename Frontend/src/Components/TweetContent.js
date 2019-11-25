@@ -5,15 +5,7 @@ import swal from 'sweetalert';
 import DashboardTweets from "./DashboardTweets.js";
 import '../CSS/tweetArea.css';
 
-import {
-    Card,
-    CardImg,
-    CardText,
-    CardBody,
-    CardTitle,
-    CardSubtitle,
-    CardLink
-  } from "reactstrap";
+
 
 const settings = require("../config/settings.js");
 var faker = require('faker');
@@ -70,9 +62,12 @@ export class TweetContent extends Component {
         let {tweetText, tweetImages} = this.state;
         let form_data = new FormData();
        // let form_data = new FormData(evt.target);
-        let userId = '123';
+        let userId = '1000';
+        let userName = 'user1';
         form_data.set('userId', userId);
+        form_data.set('userName', userName);
         //ADD LATER
+        //TODO: add profile pic as well. take it from local storage
         form_data.append('tweetImages', tweetImages);
         form_data.set('tweetText',tweetText);
         let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet";
@@ -206,7 +201,7 @@ export class TweetContent extends Component {
             <div className="space">
             <div>
               <form onSubmit = {this.writeATweet}>
-                <textarea id="tweetArea" className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus></textarea>
+                <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus value={this.state.tweetText}></textarea>
                 <div style={{display:'inline-block'}}>
                 <div class="image-upload">
                     <label for="input-file">

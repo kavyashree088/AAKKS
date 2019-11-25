@@ -12,8 +12,8 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
         case 'likeATweet':
             likeATweet(msg, callback);
             break;
-        case 'getFollowersTweets':
-            getFollowersTweets(msg, callback);
+        case 'getDashboardTweets':
+            getDashboardTweets(msg, callback);
             break;
         case 'bookmarkATweet':
             bookmarkATweet(msg, callback);
@@ -83,8 +83,8 @@ let likeATweet = function(message, callback){
     });
 };
 
-let getFollowersTweets = (message, callback) => {
-    let followersList = message.followersList;
+let getDashboardTweets = (message, callback) => {
+    let followersList = ['999', '1000'];
     console.log(followersList);
     tweet.find({userId : { $in : followersList } }, (err, result) => {
         if(err) {
