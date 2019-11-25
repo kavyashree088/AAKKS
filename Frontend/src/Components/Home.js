@@ -24,7 +24,7 @@ class Home extends Component {
 
                     </Col>
                     <Col className="col-sm-6">
-                        Here Main Content
+                    <h5 style={{fontWeight:"bolder"}}>Home</h5>
                         <TweetContent/>
                     </Col>
                     <Col className="col-sm-3">

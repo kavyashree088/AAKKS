@@ -3,6 +3,17 @@ import { Row, Col, Button } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import DashboardTweets from "./DashboardTweets.js";
+import '../CSS/tweetArea.css';
+
+import {
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle,
+    CardLink
+  } from "reactstrap";
 
 const settings = require("../config/settings.js");
 var faker = require('faker');
@@ -64,7 +75,6 @@ export class TweetContent extends Component {
         //ADD LATER
         form_data.append('tweetImages', tweetImages);
         form_data.set('tweetText',tweetText);
-       
         let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet";
         axios.defaults.withCredentials = true;
         axios({
@@ -82,6 +92,9 @@ export class TweetContent extends Component {
             })
             .then((responseData) => {
                 swal(responseData.message);
+                this.setState({
+                    tweetText :""
+                });
                 
             }).catch(function (err) {
                 console.log(err)
@@ -175,17 +188,40 @@ export class TweetContent extends Component {
     }
 
     render(){
-        return (
-            <div>
+        /*
+        <div>
                 <form onSubmit = {this.writeATweet}>
                     <textarea name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className = "form-control"></textarea>
-                    <input id="profile-image-upload" class="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
+                    <input id="profile-image-upload" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
                     <button className = "btn btn-success" type="submit">Submit</button>
                 </form>
                 <Button onClick = {this.getUserTweets}>Get Tweets</Button>
                 <Button onClick = {this.generateFakeData}>generateFakeData</Button>
                 <DashboardTweets />
             </div>
+        */
+        return (
+            <div>
+            
+            <div className="space">
+            <div>
+              <form onSubmit = {this.writeATweet}>
+                <textarea id="tweetArea" className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus></textarea>
+                <div style={{display:'inline-block'}}>
+                <div class="image-upload">
+                    <label for="input-file">
+                    <i id="image" className="far fa-image fa-2x"></i>
+                    </label>
+                    <input id="input-file" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
+                </div>
+               
+                <button className="btn btn-primary btn-circle" type="submit" style={{position:'absolute',  right:'60px',fontWeight:"bold"   }}>Tweet</button><br/><br/><br/>
+                </div>
+              </form>  
+              <DashboardTweets />
+            </div>
+            </div>
+        </div>
         );
     }
 }

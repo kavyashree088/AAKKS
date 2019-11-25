@@ -20,15 +20,15 @@ const uuidv4 = require('uuid/v4');
 const path = require('path');
 
 var s3 = new aws.S3({
-    secretAccessKey: "X19a/52Dm2VeHosnm+nBPelThchLyfG0kaax0FlC",
-    accessKeyId: "AKIA2MHADI4IZQ5E5M7B",
+    secretAccessKey: "",
+    accessKeyId: "",
     region: "us-east-2"
 });
 
 var upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: "twitter-g12-bucket",
+        bucket: "",
         acl: 'public-read',
         key: function (req, file, cb) {
             console.log("in multer...");
