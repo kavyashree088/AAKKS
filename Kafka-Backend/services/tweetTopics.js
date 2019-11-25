@@ -29,8 +29,10 @@ let writeATweet = function(message, callback){
     let tweetDetails = message.tweetDetails;
     console.log("In tweet topics : writeATweet ", message);
     let tweetText = tweetDetails.tweetText;
-    let hashTags = tweetText.toLowercase().match(/#\w*/g/i);
-    tweetDetails.hashTags = hashTags;
+    if(tweetText){
+        let hashTags = tweetText.toLowerCase().match(/#\w*/g);
+        tweetDetails.hashTags = hashTags;
+    }
     tweet.create(tweetDetails, function(err, result){
         if(err){
             console.log("unable to insert into database", err);

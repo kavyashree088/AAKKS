@@ -2,50 +2,21 @@ import React, { Component } from "react";
 import { Row, Col, Button } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
-import FollowersTweets from "./FollowersTweets.js";
-const settings = require("../config/settings.js");
+import DashboardTweets from "./DashboardTweets.js";
 
+const settings = require("../config/settings.js");
 var faker = require('faker');
 
 export class TweetContent extends Component {
     state = {
-        allTweets : []
+        tweetData : {},
+        tweetText : "",
+        tweetImages : []
     }
     constructor(props) {
         super(props);
     }
-    /*componentDidMount() {
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/getFollowersTweets";
-        //TODO :get userId from local storage
-        //TODO :or get followers list from local storage and send it
-        let data = {userId : 123};
-        axios.defaults.withCredentials = true;
-       axios({
-            method: 'post',
-            url: postURL,        
-            data: data,
-            config: { headers: { 'Content-Type': 'multipart/form-data' } },
-            //headers: {"Authorization" : `Bearer ${token}`} 
-        })
-            .then((response) => {
-                if (response.status >= 500) {
-                    throw new Error("Bad response from server");
-                }
-                return response.data;
-            })
-            .then((responseData) => {
-                if(responseData.status){
-                    this.setState({
-                        allTweets : responseData.message
-                    });
-                } else {
-                    swal(responseData.message);
-                }
-                //swal(responseData.message); 
-            }).catch(function (err) {
-                console.log(err)
-            });
-    }*/
+    
 
     /*generateFakeData = () => {
         let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet"; 
@@ -80,16 +51,26 @@ export class TweetContent extends Component {
         }
     };*/
 
-    writeATweet = (tweetObj) =>{
+    writeATweet = (evt) =>{
         //TODO :get userId from local storage
-        let data = {userId : 123, tweetText :tweetObj.tweetText};
-        //let data = {userId : 123};
+       // let data = {userId : 123, tweetText :tweetObj.tweetText};
+       debugger;
+        evt.preventDefault();
+        let {tweetText, tweetImages} = this.state;
+        let form_data = new FormData();
+       // let form_data = new FormData(evt.target);
+        let userId = '123';
+        form_data.set('userId', userId);
+        //ADD LATER
+        form_data.append('tweetImages', tweetImages);
+        form_data.set('tweetText',tweetText);
+       
         let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet";
         axios.defaults.withCredentials = true;
         axios({
             method: 'post',
             url: postURL,        
-            data: data,
+            data: form_data,
             config: { headers: { 'Content-Type': 'multipart/form-data' } },
             //headers: {"Authorization" : `Bearer ${token}`} 
         })
@@ -108,7 +89,6 @@ export class TweetContent extends Component {
     }
 
     submitHandler = (evt) =>{
-        debugger;
         evt.preventDefault();
         let target = evt.target;
         var formData = new FormData(evt.target);
@@ -118,6 +98,8 @@ export class TweetContent extends Component {
     }
 
     getUserTweets = () => {
+        //get user id from local storage
+
         let data = {userId : 123};
         //let data = {userId : 123};
         let postURL = "http://"+settings.hostname+":"+settings.port+"/getUserTweets";
@@ -143,20 +125,66 @@ export class TweetContent extends Component {
             });
     }
 
+    onFileChange(files) {
+        debugger;
+        if (files == null || files.length == 0) return;
+        let file = files[0];
+        let tweetImages = this.state.tweetImages; 
+        tweetImages.push(file);
+        this.setState({
+            tweetImages : tweetImages
+        });
+       /* let userId = '123';
+        let tweetText = 'sample';
+        const data = new FormData();
+        data.append("tweetimage", file, file.name);
+        data.set('userId', userId);
+        //ADD LATER
+        //data.append('tweetImages', tweetImages);
+        data.set('tweetText',tweetText);
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet";
+        axios.defaults.withCredentials = true;
+        axios({
+            method: 'post',
+            url: postURL,        
+            data: data,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } },
+            //headers: {"Authorization" : `Bearer ${token}`} 
+        })
+            .then((response) => {
+                if (response.status >= 500) {
+                    throw new Error("Bad response from server");
+                }
+                return response.data;
+            })
+            .then((responseData) => {
+                swal(responseData.message);
+                
+            }).catch(function (err) {
+                console.log(err)
+            });*/
+
+        
+    }
+    
+    tweetTextHandler(target){
+        let tweetText = target.value;
+        this.setState({
+            tweetText
+        });
+    }
+
     render(){
-        let allTweetsComponent;
-        if(this.state.allTweets && this.state.allTweets.length > 0){
-            allTweetsComponent = <FollowersTweets allTweets = {this.state.allTweets} />;
-        }
         return (
             <div>
-                <form onSubmit = {this.submitHandler}>
-                    <textarea name="tweetText" className = "form-control"></textarea>
+                <form onSubmit = {this.writeATweet}>
+                    <textarea name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className = "form-control"></textarea>
+                    <input id="profile-image-upload" class="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
                     <button className = "btn btn-success" type="submit">Submit</button>
                 </form>
                 <Button onClick = {this.getUserTweets}>Get Tweets</Button>
                 <Button onClick = {this.generateFakeData}>generateFakeData</Button>
-                {allTweetsComponent}
+                <DashboardTweets />
             </div>
         );
     }

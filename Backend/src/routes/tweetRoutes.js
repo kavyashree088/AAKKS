@@ -10,13 +10,46 @@ var kafka = require('../kafka/client');
 //const passport = require('../../config/passport');
 //var requireAuth = passport.authenticate('jwt', { session: false });
 
-router.post('/writeATweet',  function (req, res) {
+//const upload = require('../../service');
+require('dotenv').config()
+
+var aws = require('aws-sdk');
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+const uuidv4 = require('uuid/v4');
+const path = require('path');
+
+var s3 = new aws.S3({
+    secretAccessKey: "X19a/52Dm2VeHosnm+nBPelThchLyfG0kaax0FlC",
+    accessKeyId: "AKIA2MHADI4IZQ5E5M7B",
+    region: "us-east-2"
+});
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: "twitter-g12-bucket",
+        acl: 'public-read',
+        key: function (req, file, cb) {
+            console.log("in multer...");
+            console.log(file)
+            const newFilename = `${uuidv4()}${path.extname(file.originalname)}`
+            console.log("new file name:");
+            console.log(newFilename);
+            cb(null, newFilename);
+        }
+    })
+});
+
+router.post('/writeATweet',  upload.single('tweetImages'), function (req, res) {
     console.log("Inside write a tweet");
     console.log("Requestbody is ::");
     console.log(req.body);
     let {userId, tweetText}  = req.body;
-    let tweetDetails =  {userId, tweetText, isRetweet : 'false', 'actualTweetId' : ''} ;
-
+    console.log("ref files..");
+    console.log(req.file);
+    let currTimeStamp = Date.now();
+    let tweetDetails =  {userId, tweetText, isRetweet : 'false', 'actualTweetId' : '', createdAt : currTimeStamp} ;
     kafka.make_request('tweetTopics',{'path':'writeATweet', 'tweetDetails' : tweetDetails}, function(err,result){
       var responseObj = {
         status : false,
@@ -28,7 +61,7 @@ router.post('/writeATweet',  function (req, res) {
       }
       else if (result.status === 200)
       {
-        console.log('tweet is added to  successfully!');
+        console.log('tweet is added successfully!');
         responseObj.status = true;
         responseObj.message = result.message;
         redisClient.del("tweets_"+userId);
@@ -158,7 +191,7 @@ router.post('/replyATweet', function(req, res){
   });
 });
 
-router.post('/getFollowersTweets', function(req, res){
+router.post('/getDashboardTweets', function(req, res){
   let {userId} = req.body;
   //get followers list  from local storage
   let followersList = ["333", "222" , "111", "123"];
@@ -218,7 +251,8 @@ router.post('/bookmarkATweet', function(req, res){
 
 router.post('/retweetATweet', function(req, res){
   let {userId, actualTweetId, tweetText} = req.body;
-  let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId} ;
+  let currTimeStamp = Date.now();
+  let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId, createdAt : currTimeStamp} ;
   kafka.make_request('tweetTopics', {'path':'writeATweet', tweetDetails}, function(err,result){
     var responseObj = {
       status : false,

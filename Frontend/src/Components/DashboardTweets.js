@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import { Row, Col, Card } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
+import { connect } from 'react-redux';
+import {getDashboardTweets} from '../JS/Actions/tweetAction.js';
+
 const settings = require("../config/settings.js");
 
-export class FollowersTweets extends Component {
-   state = {
-       allTweets : []
-   };
-   constructor(props){
-       super(props);
-       this.state.allTweets = this.props.allTweets;
-   }
+export class DashboardTweets extends Component {
+    componentDidMount() {
+        /*let postURL = "http://"+settings.hostname+":"+settings.port+"/getDashboardTweets";
+        //TODO :get userId from local storage
+        //TODO :or get followers list from local storage and send it
+        let data = {userId : 123, url : postURL};
+        axios.defaults.withCredentials = true;
+        this.props.getDashboardTweets(data);*/
+    }
+
    render(){
-       let allTweets = this.state.allTweets;
+       debugger;
+       let allTweets = this.props.dashboardTweets;
        let tweetsMarkup = [];
        if(allTweets && allTweets.length > 0){
            for(let i= 0; i< allTweets.length; i++){
@@ -52,4 +58,21 @@ class TweetComponent extends Component {
         );
     }
 }
-export default FollowersTweets;
+//export default DashboardTweets;
+
+
+const mapStateToProps = (state, ownProps) => {
+    console.log("in map state to props..");
+    console.log(state);
+    return{
+        dashboardTweets : state.tweetReducer.dashboardTweets
+    }
+}
+//export default SignupBuyer;
+const mapDispatchToProps = function(dispatch){
+    return {
+        getDashboardTweets : (dataObj) => dispatch(getDashboardTweets(dataObj)),
+        //signupOwner : (formData) => dispatch(signupBuyer(formData))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardTweets);
