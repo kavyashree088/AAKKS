@@ -177,8 +177,8 @@ export class TweetContent extends Component {
                                 {/** added dropdown */}
                                 <i class="fas fa-retweet fa-lg dropdown" data-toggle="dropdown" style={{color:"grey"}}> <span style={{fontWeight:"normal"}}> 10</span></i>  <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" class="retweet-list" style={{color:"black",fontSize:"32"}} >Retweet</a></li>
-                                    <li><a href="#" class="retweet-list" style={{color:"black",fontSize:"32"}} data-toggle="modal" data-target="#tweetModal">Retweet with a comment</a></li>
+                                    <li><a href="#" class=" dropdown-item " style={{color:"black",fontSize:"32"}} ><i class="fas fa-pen" style={{color:"grey"}}></i>&nbsp; &nbsp;&nbsp;Retweet</a></li>
+                                    <li><a href="#" class="dropdown-item" style={{color:"black",fontSize:"32"}} data-toggle="modal" data-target="#tweetModal"><i class="fas fa-retweet" style={{color:"grey"}}></i>&nbsp; &nbsp;Retweet with a comment</a></li>
                                 </ul>
                             
                             
