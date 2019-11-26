@@ -4,7 +4,8 @@ import axios from "axios";
 import swal from 'sweetalert';
 import FollowersTweets from "./FollowersTweets.js";
 import '../CSS/tweetArea.css';
-
+import TweetModal from './TweetModal';
+import ReplyModal from './ReplyModal';
 import {
     Card,
     CardImg,
@@ -15,7 +16,7 @@ import {
     CardLink
   } from "reactstrap";
 
-  const settings = require("../Config/settings");
+const settings = require("../Config/settings");
 
 export class TweetContent extends Component {
     state = {
@@ -126,10 +127,6 @@ export class TweetContent extends Component {
         
     }
 
-
-
-
-
     render(){
         let allTweetsComponent;
         if(this.state.allTweets && this.state.allTweets.length > 0){
@@ -137,6 +134,7 @@ export class TweetContent extends Component {
         }
         return (
             <div>
+               
                 <div>
                     <form onSubmit = {this.submitHandler}>
                         <h5 style={{fontWeight:"bolder"}}>Home</h5>
@@ -157,38 +155,45 @@ export class TweetContent extends Component {
                         
                     </div>
                 </div>
-
-
                 <div class="tweet-container">
                     <div class="tweet-body">
-                    <Card >
-                    <CardBody>
-                        <CardTitle style={{fontWeight:"bolder"}}>Times Now<span style={{color:"grey",fontWeight:"normal"}}> @timesnow</span></CardTitle>
-                        {/* <CardSubtitle>Card subtitle</CardSubtitle>
-                    </CardBody>
-                    {<img width="100%" src="/assets/318x180.svg" alt="Card image cap" />}
-                    <CardBody> */}
-                        <CardText>oneplus says hit by data breach, usernames, addresses leaked.</CardText>
-                        <CardLink href="#">Card Link</CardLink>
-                        <CardLink href="#">Another Link</CardLink>
-                        <br/><br/>
-                        <div><i class="fas fa-heart fa-lg" style={{color:"red"}} onClick={this.like}></i><span>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></div>
-                        <a onClick={this.like}><i class="like far fa-heart fa-lg" style={{color:"grey"}}>20</i></a><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
-                        <i class="far fa-comment fa-lg" style={{color:"grey"}}> 55</i><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
-                        <i class="fas fa-retweet fa-lg" style={{color:"grey"}}> <span style={{fontWeight:"normal    "}}> 10</span></i><span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
-                    </CardBody>
+                        <Card >
+                            <CardBody>
+                                <CardTitle style={{fontWeight:"bolder"}}>Times Now<span style={{color:"grey",fontWeight:"normal"}}> @timesnow</span></CardTitle>
+                                {/* <CardSubtitle>Card subtitle</CardSubtitle>
+                            
+                            {<img width="100%" src="/assets/318x180.svg" alt="Card image cap" />}
+                            */}
+                                
+                                <CardText>oneplus says hit by data breach, usernames, addresses leaked.</CardText>
+                                <CardLink href="#"> Link1</CardLink>
+                                <CardLink href="#"> Link2</CardLink>
+                                <br/><br/>
+                                <div><i class="fas fa-heart fa-lg" style={{color:"red"}} onClick={this.like}></i>       <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></div>
+                                <a onClick={this.like}><i class="like far fa-heart fa-lg" style={{color:"grey"}}>20</i></a>     <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                                <i class="far fa-comment fa-lg" style={{color:"grey"}} data-toggle="modal" data-target="#replyModal"> 55</i>      <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
 
-                    </Card>
+                                
+                                {/** added dropdown */}
+                                <i class="fas fa-retweet fa-lg dropdown" data-toggle="dropdown" style={{color:"grey"}}> <span style={{fontWeight:"normal"}}> 10</span></i>  <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" class="retweet-list" style={{color:"black",fontSize:"32"}} >Retweet</a></li>
+                                    <li><a href="#" class="retweet-list" style={{color:"black",fontSize:"32"}} data-toggle="modal" data-target="#tweetModal">Retweet with a comment</a></li>
+                                </ul>
+                            
+                            
+                                <i class="far fa-bookmark fa-lg" style={{color:"grey"}}></i>
+
+                            </CardBody>
+
+                        
+                        </Card>
                     
                     </div>
-    </div>
-
-
-
-
-
-
-         </div>
+                </div>
+                <TweetModal/>
+                <ReplyModal/>
+             </div>
         );
     }
 }
