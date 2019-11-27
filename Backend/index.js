@@ -48,8 +48,9 @@ testDBConection = async() => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-const loginSignup = require('./Routes/LoginSignup')
+const loginSignupRoutes = require('./Routes/LoginSignup')
 const tweetRoutes = require('./Routes/tweetRoutes');
+const profileDetailsRoutes = require('./Routes/ProfileDetails')
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
 
@@ -85,5 +86,7 @@ app.use(bodyParser.urlencoded({
 }));
 
  app.use(bodyParser.json());
- app.use('/', loginSignup);
+ app.use('/', loginSignupRoutes);
  app.use('/', tweetRoutes);
+ app.use('/', profileDetailsRoutes);
+

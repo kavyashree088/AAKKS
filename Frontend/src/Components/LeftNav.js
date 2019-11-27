@@ -1,7 +1,89 @@
 import React, { Component } from "react";
 import "../CSS/navbar.css"
+import Dropdown from 'react-bootstrap/Dropdown'
+import config from './../Config/settings'
+import axios from 'axios';
+
 
 export default class LeftNav extends Component {
+
+    //delete an account
+    //deactivate an account
+    //Logout
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            redirectPageName : undefined, 
+            deleteAccountFlag: true,
+            deactivateAccountFlag : true
+        }
+        this.handleLogout = this.handleLogout.bind(this);
+        this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
+        this.handleDeactivateAccount = this.handleDeactivateAccount.bind(this);
+    }
+
+
+    handleLogout = () => {
+        localStorage.clear();
+        console.log("Local Storage cleared!");
+        window.location = "/";
+    }
+
+    handleDeactivateAccount = (e) =>{
+        let username = localStorage.getItem('username')
+        e.preventDefault();
+        axios.defaults.withCredentials = true;
+        axios.post('http://' + config.hostname + ':'+ config.port + '/deactivateAccount', username)
+            .then(response => {
+                console.log("Status Code : ", response.status);
+                console.log("Response from Sign Up " + response);
+                console.log(response);
+                if (response.data.deactivate === true) {
+                    
+                    this.setState({
+                        message: "Account successfully Deactivated",
+                        deactivateAccountFlag: true
+                    })
+                } else {
+                    this.setState({
+                        message: "Account Deactivation Failed",
+                        deactivateAccountFlag: false
+                    })
+                }
+            });
+    }
+
+
+    handleDeleteAccount = (e) =>{
+        let username = localStorage.getItem('username')
+        e.preventDefault();
+        axios.defaults.withCredentials = true;
+        axios.post('http://' + config.hostname + ':'+ config.port + '/deleteAccount', username)
+            .then(response => {
+                console.log("Status Code : ", response.status);
+                console.log("Response from Sign Up " + response);
+                console.log(response);
+                if (response.data.delete === true) {
+                    
+                    this.setState({
+                        deleteAccountFlag: true,
+                        message: "Account successfully Deleted"
+                    })
+                } else {
+                    this.setState({
+                        deleteAccountFlag: false,
+                        message: "Account Deletion Failed"
+                    })
+                }
+            });
+    }
+
+
+
+
+
     render() {
         let linksMarkup = this.props.links.map((link, index) => {
             let linkMarkup = link.active ? (
@@ -39,6 +121,8 @@ export default class LeftNav extends Component {
                 </li>
 
                 {linksMarkup}
+                
+                
             </div >
         )
     }

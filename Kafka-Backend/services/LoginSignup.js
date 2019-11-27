@@ -25,6 +25,12 @@ exports.loginSignupService = function loginSignupService(msg, callback) {
         case "login":
             login(msg, callback);
             break;
+        case "deactivateAccount":
+            deactivateAccount(msg, callback)
+            break;
+        case "deleteAccount":
+            deleteAccount(msg, callback)
+            break;
     }
 };
 
@@ -120,6 +126,67 @@ async function login(msg, callback) {
     }
 }
 
+function deactivateAccount(msg, callback) {
 
+    console.log("In deactivateAccount profile. Msg: ", msg);
+    Users.findOneAndUpdate({ 'username': msg.username }, {
+        $set:
+        {
+            "active": false,
+        }
+    }, function (err, results) {
+        if (err) {
+            console.log(err);
+            callback(err, "Database Error");
+        } else {
+            if (results) {
+                console.log("results:", results);
+                callback(null, { status: 200 });
+            }
+            else {
+                console.log("No results found");
+                callback(null, { status: 205 });
+            }
+        }
+    });
+}
+
+function deleteAccount(msg, callback) {
+
+    console.log("In deleteAccount profile. Msg: ", msg);
+    //DELETE FROM userMysql WHERE username = ?;
+
+    Users.findOneAndDelete({ 'username': msg.username },async function (err, results) {
+        if (err) {
+            console.log(err);
+            callback(err, "Database Error");
+        } else {
+            if (results) {
+                console.log("results:", results);
+                callback(null, { status: 200 });
+                
+                let con = await dbConnection();
+    
+                try {
+                    await con.query("START TRANSACTION");
+                    
+                    let result = await con.query('Delete FROM userMysql WHERE username = ?', [msg.username]);
+                    await con.query("COMMIT");
+                    return result;
+                } catch (ex) {
+                    console.log(ex);
+                    throw ex;
+                } finally {
+                    await con.release();
+                    await con.destroy();
+                }
+            }
+            else {
+                console.log("No results found");
+                callback(null, { status: 205 });
+            }
+        }
+    });
+}
 
 //module.exports = router;

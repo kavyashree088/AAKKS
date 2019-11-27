@@ -8,15 +8,15 @@ import TweetContent from "./TweetContent";
 class Home extends Component {
     render() {
         let links = [
-            { label: 'Home', link: '/', className: "fas fa-home", active: true },
+            { label: 'Home', link: '/home', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
 
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
-            { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
+            { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" }
+            // { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];
         return (
             <div>

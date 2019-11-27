@@ -25,7 +25,7 @@ class Explore extends Component {
 
     render() {
         let links = [
-            { label: 'Home', link: '/', className: "fas fa-home" },
+            { label: 'Home', link: '/home', className: "fas fa-home" },
             { label: 'Explore', link: '/explore', className: "fas fa-hashtag", active: true },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },

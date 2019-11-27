@@ -1,17 +1,17 @@
 
 var connection = new require('./kafka/Connection');
 
-//topics file
-var SignupSignin = require('./services/LoginSignup')
 var dbConnection = require('./database/dbConnectionPool');
 
 //topics file
 var tweetTopics = require('./services/tweetTopics.js');
+var profileTopic = require('./services/ProfileTopic.js')
+var SignupSignin = require('./services/LoginSignup')
+
 
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
-//var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
 var connStr = config.connection_string;
 console.log(connStr);
 
@@ -53,10 +53,17 @@ function handleTopicRequest(topic_name, fname) {
         break;
       case 'loginSignuptopic':
         SignupSignin.loginSignupService(data.data, function (err, res) {
-          console.log("app.js")
+          console.log("in switch case loginSignuptopic")
           response(data, res, producer);
           return;
         });
+        break;
+      case 'profileTopic':
+        profileTopic.profileTopicService(data.data, function(err, res){
+          console.log("in switch case profileTopic")
+          response(data, res, producer)
+          return;
+        })
         break;
     }
   })
@@ -85,3 +92,4 @@ function response(data, res, producer) {
 //second argument is a function that will handle this topic request
 handleTopicRequest("loginSignuptopic", SignupSignin);
 handleTopicRequest("tweetTopics", tweetTopics);
+handleTopicRequest("profileTopic", profileTopic);
