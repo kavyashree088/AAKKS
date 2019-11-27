@@ -6,7 +6,7 @@ var ListSchema = new Schema(
   {
     listname: { type: String },
     creatorID: { type: String},
-    creatorName:{type : String},
+    creatorName: {type: String},
     creatorImage:{type: String},
     description: { type: String },
     mobile: { type: Number },

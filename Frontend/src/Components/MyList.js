@@ -22,6 +22,10 @@ import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 //import Modal from "react-modal";
+import OwnedList from './OwnedList';
+import SubscribedList from './SusbscribedList';
+import MemberList from './MemberList';
+
 
 const config = {
   headers:{
@@ -29,6 +33,8 @@ const config = {
       'Content-Type': 'application/json'
     }
 }
+
+let pageRefresh=false;
 
 const ListTabs = props => {
   return (
@@ -54,31 +60,15 @@ const ListTabs = props => {
         </TabList>
 
         <TabPanel tabId="one">
-          <p>Tab 1 content</p>
+          <OwnedList/>
         </TabPanel>
 
         <TabPanel tabId="two">
-          <p>Tab 2 content</p>
-          <h2 className="sub-heading element-animate mb-5">
-            Many valuable information regarding the public health and welfare,
-            disease outbreaks and their trend are available in the form of
-            unstructured data lying in different news portals, Facebook,
-            Twitter. It becomes important to become aware of the current
-            diseases and to filter out relevant and correct information. This is
-            especially important for commercial pharmacies as their need to be
-            updated with the current outbreak in their region and also be ready
-            stock-wise for the drugs needed to treat them. Our objective with
-            Well-Pharma is to address this problem and built a system for the
-            pharmacies which will analyse the disease outbreaks in all regions
-            and carry out a disease-to-drug mapping and alert the pharmacist so
-            as to keep the stock ready. WellPharma will be a Web Application -
-            built as an automated system for querying filtering and visualising
-            the disease outbreak and to stock their respective drugs.
-          </h2>
+        <SubscribedList/>
         </TabPanel>
 
         <TabPanel tabId="three">
-          <p>Tab 3 content</p>
+          <MemberList/>
         </TabPanel>
       </Tabs>
     </div>
@@ -100,12 +90,8 @@ class List extends Component {
       members:[]
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
-
+    pageRefresh=false;
   }
-
-
-
-
   inputChangeHandler = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -137,7 +123,10 @@ console.log("Hi there I am in create list")
 e.preventDefault();
 const data = {
   listname: this.state.listname,
-  creator:localStorage.getItem('username'),
+  // creatorID:localStorage.getItem('username'),
+  // creatorName:localStorage.getItem('firstName'),
+  creatorID:"123",
+  creatorName:"Alaukika Diwanji",
   description: this.state.description,
   members: this.state.members
 };
@@ -150,6 +139,7 @@ axios
   .then(response => {
     console.log("Status Code : ", response.status);
     alert(response.data.msg);
+    pageRefresh=true;
     this.handleClose();
 })
 }
@@ -157,7 +147,10 @@ axios
 
 
   render() {
-
+    let redi=null;
+if(pageRefresh){
+  redi=window.location.reload()
+}
     const { tags, suggestions } = this.state;
     let links = [
       { label: "Home", link: "/", className: "fas fa-home", active: true },
@@ -201,17 +194,18 @@ let modalContent=null;
             <LeftNav links={links}></LeftNav>
           </Col>
           <Col className="col-sm-6">
-            <h5 style={{ paddingTop: "2%" }}>
+            {redi}
+            <div style={{ fontSize:"18px",paddingTop: "2%" }}>
               <b>Lists</b>
               <i
                 style={{ colour: "blue" }}
                 className="far fa-edit float-right fa-list-alt"
                 onClick={this.handleNewList}
               ></i>
-            </h5>
-            <small style={{ marginTop: "0%", color: "rgb(124, 124, 124)" }}>
-              @AlaukikaD
-            </small>
+            </div>
+            <div style={{ fontSize:"14px",marginTop: "0%", color: "rgb(124, 124, 124)" }}>
+             <b>@AlaukikaD</b> 
+            </div>
             
 {console.log("blehhh")}
             <ListTabs />

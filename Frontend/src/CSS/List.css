@@ -170,13 +170,14 @@ a:active {
   width:100%;
   height:50px;
   text-align:left;
+  border-color: rgb(243, 243, 243);
 }
 
 .listbutton2 {
   width:100%;
   height:50px;
   color:rgb(196, 52, 52);
-  
+  border-color: rgb(243, 243, 243);
 }
 
 .listbutton:hover {
@@ -188,15 +189,90 @@ a:active {
   width:100%;
   height:50px;
   color:rgba(29, 161, 242, 1);
+  border-color: rgb(243, 243, 243);
 }
 
 .listbutton1:hover {
-  background-color:rgb(222, 240, 252) ;
+  background-color:rgb(231, 245, 255) ;
+  
 }
 .listbutton2:hover {
-  background-color: rgb(255, 230, 230);
+  background-color: rgb(248, 237, 237);
+ 
+}
+.modalbutton{
+border-color:#ffffff;
 }
 
+.modalbutton:hover{
+ text-decoration-line: underline;
+  }
+
+
+.listSpecificButton{
+  background-color: #ffffff;
+  margin:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:18px;
+  padding-right:18px;
+  border-radius: 25px;
+  font-weight: bold;
+  border-color: rgba(29, 161, 242, 1);
+  color:rgba(29, 161, 242, 1);
+}
+
+.savebutton{
+  background-color: rgba(29, 161, 242, 1);
+          float: right;
+          margin: 0 4%;
+          width:80px;
+          height:40px;
+          border-radius:25px;
+          color: white;
+          padding: 8px;
+}
+
+.savebutton:disabled{
+  background-color: rgb(155, 155, 155);
+}
+
+.listSpecificButtonv2{
+ 
+  margin:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:18px;
+  padding-right:18px;
+  border-radius: 25px;
+  font-weight: bold;
+  background-color:  rgba(29, 161, 242, 1);
+  border-color: rgba(29, 161, 242, 1);
+  color:#ffffff;
+}
+
+.listSpecificButtonv2:hover{
+  border-color: rgba(29, 161, 242, 1);
+  color:rgba(29, 161, 242, 1);
+  background-color: #ffffff;
+}
+
+.listSpecificButton:hover{
+  background-color:  rgba(29, 161, 242, 1);
+  border-color: rgba(29, 161, 242, 1);
+  color:#ffffff;
+}
+
+
+.listButtonv4{
+  width:700px;
+  text-align: left;
+  border-color: rgb(243, 243, 243);
+}
+
+.listButtonv4:hover {
+  background-color: rgb(245, 245, 245);
+}
 
 .messageActive {
   background-color: rgb(245, 248, 250);
@@ -210,124 +286,3 @@ a:active {
   padding: 2rem;
 }
 
-
- /* .vertical-menu {
-  height: calc(100vh - 4rem);
-}
-.side-bar {
-  width: 275px;
-  align-items: stretch;
-  border: 0 solid black;
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-basis: auto;
-  flex-direction: column;
-  flex-shrink: 0;
-  margin-bottom: 0px;
-  margin-left: 70px;
-  margin-right: 0px;
-  margin-top: 0px;
-  min-height: 0px;
-  min-width: 0px;
-  padding-bottom: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 0px;
-  position: relative;
-  z-index: 0;
-}
-.navbar-side {
-  height: 100%;
-  width: 23%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 0;
-  list-style: none;
-  border-right: 2px solid rgb(180, 177, 177);
-  background-color: white;
-  overflow-y: scroll;
-  z-index: 1000;
-}
-.navbar-side-item {
-  padding: 0.5rem 3rem;
-  margin: 0;
-  height: 3rem;
-  font-size: 1.2rem;
-}
-
-.side-link:hover {
-  background-color: rgb(229, 244, 253);
-  color: rgba(29, 161, 242, 1);
-}
-
-.side-link {
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-radius: 25px;
-  cursor: pointer;
-  color: black;
-  text-decoration: none;
-}
-
-.active {
-  color: rgba(29, 161, 242, 1);
-}
-.navbar-side-right {
-  height: 100%;
-  width: 25%;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0;
-  list-style: none;
-  border-left: 2px solid rgb(180, 177, 177);
-  background-color: white;
-  overflow-y: scroll;
-  z-index: 1000;
-}
-.ip2 {
-  border-radius: 25px;
-}
-a:hover,
-a:visited,
-a:link,
-a:active {
-  text-decoration: none;
-}
-.message {
-  cursor: pointer;
-  color: rgba(29, 161, 242, 1);
-  padding: 0.5rem;
-}
-.message:hover {
-  background-color: rgb(187, 226, 250);
-}
-
-.padLeft {
-  padding-left: 0.5rem;
-}
-
-.lightFont {
-  color: rgb(204, 197, 197);
-}
-
-.messageActive {
-  background-color: rgb(245, 248, 250);
-  border-right: 2px solid rgba(29, 161, 242, 1);
-  padding: 0.5rem;
-}
-
-.messageText {
-  position: absolute;
-  bottom: 0px;
-  padding: 2rem;
-} */
-
-  

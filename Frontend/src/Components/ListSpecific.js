@@ -1,110 +1,162 @@
 import React, { Component, useState } from "react";
-import {
-  Row,
-  Col,
-  Container,
-  FormControl,
-  Modal,
-  InputGroup,
-  Form,
-  Image,
-  FormGroup,
-  Button,
-  ButtonGroup
-} from "react-bootstrap";
-import { Input } from "reactstrap";
+import { Row, Col, Modal, Image } from "react-bootstrap";
 import "../CSS/navbar.css";
 import "../CSS/List.css";
 import LeftNav from "./LeftNav";
-import classnames from "classnames";
-import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
-//import "react-web-tabs/dist/react-web-tabs.css";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
-//import Modal from "react-modal";
+import { Redirect } from "react-router";
 
 const config = {
-  headers:{
-      'Authorization': "Bearer " + localStorage.getItem("jwtToken"),
-      'Content-Type': 'application/json'
-    }
-}
-
-const ListTabs = props => {
-  return (
-    <div>
-      <Tabs
-        defaultTab="one"
-        onChange={tabId => {
-          console.log(tabId);
-        }}
-      >
-        <TabList>
-          <Tab style={{ width: "33%" }} tabFor="one">
-            Tweets
-          </Tab>
-
-          <Tab style={{ width: "33%" }} tabFor="two">
-          Members
-          </Tab>
-
-          <Tab style={{ width: "33%" }} tabFor="three">
-            Subscribers
-          </Tab>
-        </TabList>
-
-        <TabPanel tabId="one">
-          <p>Tab 1 content</p>
-        </TabPanel>
-
-        <TabPanel tabId="two">
-          <p>Tab 2 content</p>
-          <h2 className="sub-heading element-animate mb-5">
-            Many valuable information regarding the public health and welfare,
-            disease outbreaks and their trend are available in the form of
-            unstructured data lying in different news portals, Facebook,
-            Twitter. It becomes important to become aware of the current
-            diseases and to filter out relevant and correct information. This is
-            especially important for commercial pharmacies as their need to be
-            updated with the current outbreak in their region and also be ready
-            stock-wise for the drugs needed to treat them. Our objective with
-            Well-Pharma is to address this problem and built a system for the
-            pharmacies which will analyse the disease outbreaks in all regions
-            and carry out a disease-to-drug mapping and alert the pharmacist so
-            as to keep the stock ready. WellPharma will be a Web Application -
-            built as an automated system for querying filtering and visualising
-            the disease outbreak and to stock their respective drugs.
-          </h2>
-        </TabPanel>
-
-        <TabPanel tabId="three">
-          <p>Tab 3 content</p>
-        </TabPanel>
-      </Tabs>
-    </div>
-  );
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    "Content-Type": "application/json"
+  }
 };
 
-let showFlag=false;
-
-
- 
-class List extends Component {
+class ListSpecific extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listname: "",
-      description: "",
-      
-      infoShow:false,
-      members:[]
+      goBackFlag: false,
+      subscribers: [],
+      infoShow: false,
+      members: [],
+      isModalOpen: false,
+      isMember: false,
+      goToListInfo: false
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
-
   }
 
+  handleEditClick = e => {
+    this.setState({
+      goToListInfo: true
+    });
+  };
 
+  goToBack = e => {
+    this.setState({
+      goBackFlag: true
+    });
+  };
+  handleShowMember = () => {
+    const data = {
+      listID: this.props.location.state.list[0]._id
+    };
+    console.log(data);
+    console.log("blehelhe");
+    //set the with credentials to true
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        "http://" + hostAddress + ":" + port + "/showMember/showMember",
+        data,
+        config
+      )
+      .then(response => {
+        console.log("Hello Member Data received:", response.data);
+        this.setState({
+          isMember: true,
+          isModalOpen: true,
+          members: this.state.members.concat(response.data)
+        });
+      });
+  };
 
+  subscribeList = e => {
+    const data = {
+      listID: this.props.location.state.list[0]._id,
+      // userID:localStorage.getItem('username')
+      userID: "123"
+    };
+    console.log(data);
+    console.log(this.props.location.state.list);
+    //set the with credentials to true
+
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        "http://" + hostAddress + ":" + port + "/subscribeList/subscribeList",
+        data,
+        config
+      )
+      .then(response => {
+        console.log("Hello Subsc Data received:", response.data);
+        //alert("Yoo!")
+        this.setState({
+          goBackFlag: true
+        });
+      });
+  };
+
+  unsubscribeList = e => {
+    const data = {
+      listID: this.props.location.state.list[0]._id,
+      // userID:localStorage.getItem('username')
+      userID: "123"
+    };
+    console.log(data);
+    console.log(this.props.location.state.list);
+    //set the with credentials to true
+
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        "http://" +
+          hostAddress +
+          ":" +
+          port +
+          "/unsubscribeList/unsubscribeList",
+        data,
+        config
+      )
+      .then(response => {
+        console.log("Hello Subsc Data received:", response.data);
+        this.setState({
+          goBackFlag: true
+        });
+        //alert("Yoo!")
+      });
+  };
+
+  handleShowSubscriber = () => {
+    const data = {
+      listID: this.props.location.state.list[0]._id
+    };
+    console.log(data);
+    console.log(this.props.location.state.list);
+    //set the with credentials to true
+
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        "http://" + hostAddress + ":" + port + "/showSubscriber/showSubscriber",
+        data,
+        config
+      )
+      .then(response => {
+        console.log("Hello Subsc Data received:", response.data);
+        this.setState({
+          isMember: false,
+          isModalOpen: true,
+          subscribers: this.state.subscribers.concat(response.data)
+        });
+      });
+  };
+
+  handleClose = () => {
+    this.setState({
+      isModalOpen: false,
+      isMember: false,
+      subscribers: [],
+      members: []
+    });
+  };
 
   inputChangeHandler = e => {
     this.setState({
@@ -112,63 +164,152 @@ class List extends Component {
     });
   };
 
- 
-
-
-
-createList=(e)=>{
-//prevent page from refresh
-console.log("Hi there I am in list info")
-e.preventDefault();
-// const data = {
-//   listname: this.state.listname,
-//   creator:localStorage.getItem('username'),
-//   description: this.state.description,
-//   members: this.state.members
-// };
-// console.log(data)
-// //set the with credentials to true
-// axios.defaults.withCredentials = true;
-// //make a post request with the user data
-// axios
-//   .post("http://" + hostAddress + ":" + port + "/createList/createList", data,config)
-//   .then(response => {
-//     console.log("Status Code : ", response.status);
-//     alert(response.data.msg);
-//     this.handleClose();
-// })
-}
-
-
-
   render() {
+    let modalTitle = "";
+    let modalContent = null;
+    let display = [];
+    if (!this.state.isMember) {
+      modalTitle = "List Subscribers";
 
-let display=null;
-if(!this.state.infoShow){
-  display=(<div>
-    <h5 style={{ paddingTop: "2%" }}>
-      <b>Lists</b>
-      <i
-        style={{ colour: "blue" }}
-        
-        className="fas float-right fa-info-circle"
-        onClick={this.showListDetails}
-      ></i>
-    </h5>
-    <small style={{ marginTop: "0%", color: "rgb(124, 124, 124)" }}>
-      @AlaukikaD
-    </small>
-    
-{console.log("blehhh")}
-    <ListTabs />
-    </div>)
-}else{
-  display=(<ListInfo listID="{abc}"/>)
-}
+      if (this.state.subscribers.length != 0) {
+        modalContent = this.state.subscribers.map(listItem => {
+          display.push(
+            <div style={{ borderColor: "#808080" }}>
+              <Image
+                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                style={{
+                  height: "48px",
+                  width: "48px",
+                  margin: "8px"
+                }}
+                roundedCircle
+                alt=""
+              ></Image>
 
+              <span>
+                <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                  {listItem.firstName}
+                </b>
+              </span>
+              <span>
+                <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                  {listItem.lastName}
+                </b>
+              </span>
+              <span style={{ fontSize: "14px", color: "#808080" }}>
+                <b>@{listItem.username}</b>
+              </span>
+            </div>
+          );
+        });
+      } else {
+        display.push(
+          <div>
+            <div style={{ fontSize: "20px", textAlign: "center" }}>
+              <b>There aren't any subscribers of this list</b>
+            </div>
+            <p style={{ textAlign: "center" }}>
+              When people subscribe, they'll show up here.
+            </p>
+          </div>
+        );
+      }
+    } else {
+      modalTitle = "List Members";
 
+      if (this.state.members.length != 0) {
+        modalContent = this.state.members.map(listItem => {
+          display.push(
+            <div style={{ borderColor: "#808080" }}>
+              <Image
+                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                style={{
+                  height: "48px",
+                  width: "48px",
+                  margin: "8px"
+                }}
+                roundedCircle
+                alt=""
+              ></Image>
 
-    const { tags, suggestions } = this.state;
+              <span>
+                <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                  {listItem.firstName}
+                </b>
+              </span>
+              <span>
+                <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                  {listItem.lastName}
+                </b>
+              </span>
+              <span style={{ fontSize: "14px", color: "#808080" }}>
+                <b>@{listItem.username}</b>
+              </span>
+            </div>
+          );
+        });
+      } else {
+        display.push(
+          <div>
+            <div style={{ fontSize: "20px", textAlign: "center" }}>
+              <b> There isn't anyone in this list</b>
+            </div>
+            <p style={{ textAlign: "center" }}>
+              When people subscribe, they'll show up here.
+            </p>
+          </div>
+        );
+      }
+    }
+
+    let buttonShow = null;
+
+    // if(this.props.location.state.list[0].creatorID==localStorage.getItem('username')){
+    if (this.props.location.state.list[0].creatorID == "123") {
+      buttonShow = (
+        <button
+          class="listSpecificButton"
+          onClick={this.handleEditClick.bind(this)}
+        >
+          Edit List
+        </button>
+      );
+    } else {
+      var t = this.props.location.state.list[0].subscriberID.filter(
+        id => id == "123"
+      );
+      console.log("Alaukika says:", t);
+      // if(this.props.location.state.list[0].subscriberID.filter(id=>id==localStorage.getItem('username'))==null){
+      if (t.length != 0) {
+        buttonShow = (
+          <button class="listSpecificButton" onClick={this.unsubscribeList}>
+            Unsubscribe
+          </button>
+        );
+      } else {
+        buttonShow = (
+          <button class="listSpecificButtonv2" onClick={this.subscribeList}>
+            Subscribe
+          </button>
+        );
+      }
+    }
+
+    let redirec = null;
+    if (this.state.goBackFlag) {
+      redirec = <Redirect to="/List" />;
+    }
+    if (this.state.goToListInfo) {
+      redirec = (
+        <Redirect
+          to={{
+            pathname: "/ListInfo",
+            state: { list: this.props.location.state.list[0] }
+          }}
+        />
+      );
+    }
+
     let links = [
       { label: "Home", link: "/", className: "fas fa-home", active: true },
       { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
@@ -180,15 +321,100 @@ if(!this.state.infoShow){
       { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
     ];
 
-
     return (
       <div>
         <Row>
           <Col className="col-sm-3">
             <LeftNav links={links}></LeftNav>
           </Col>
+
           <Col className="col-sm-6">
-            
+            {redirec}
+            <div>
+              <div style={{ width: "100%", borderBottom: "solid black 2px" }}>
+                <div style={{ fontSize: "18px", paddingTop: "2%" }}>
+                  <i
+                    style={{ colour: "blue", marginRight: "13px" }}
+                    className="fas fa-arrow-left"
+                    onClick={this.goToBack}
+                  ></i>
+                  <b>{this.props.location.state.list[0].listname}</b>
+                </div>
+
+                <div
+                  style={{
+                    color: "#808080",
+                    fontSize: "14px",
+                    marginLeft: "24px"
+                  }}
+                >
+                  <b>@{this.props.location.state.list[0].creatorID}</b>
+                </div>
+              </div>
+              <img
+                style={{ width: "100%", height: "45%" }}
+                src="https://pbs.twimg.com/media/EEDaJw0U4AADASA?format=jpg&name=medium"
+              ></img>
+              <div style={{ textAlign: "center" }}>
+                <div>
+                  <br></br>
+                  <b>{this.props.location.state.list[0].listname}</b>
+                </div>
+                <div>
+                  <br></br>
+                  {this.props.location.state.list[0].description}
+                  <br></br>
+                  <br></br>
+                </div>
+                <div>
+                  <span>
+                    {" "}
+                    <Image
+                      src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                      style={{
+                        height: "30px",
+                        width: "30px",
+                        margin: "8px"
+                      }}
+                      roundedCircle
+                      alt=""
+                    ></Image>
+                  </span>
+                  <span>
+                    <b>{this.props.location.state.list[0].creatorName} </b>{" "}
+                  </span>
+                  <span style={{ color: "#808080" }}>
+                    <b>@{this.props.location.state.list[0].creatorID}</b>{" "}
+                  </span>
+                </div>
+                <div>
+                  <button class="modalbutton" onClick={this.handleShowMember}>
+                    <span style={{ margin: "10px" }}>
+                      <b>{this.props.location.state.list[0].memberID.length}</b>
+                    </span>
+                    <span style={{ color: "#808080", margin: "10px 0 10px 0" }}>
+                      <b>Members</b>
+                    </span>
+                  </button>
+
+                  <button
+                    class="modalbutton"
+                    onClick={this.handleShowSubscriber}
+                  >
+                    <span style={{ margin: "10px" }}>
+                      <b>
+                        {this.props.location.state.list[0].subscriberID.length}
+                      </b>
+                    </span>
+                    <span style={{ margin: "10px 0 10px 0", color: "#808080" }}>
+                      <b>Subscribers</b>
+                    </span>
+                  </button>
+                </div>
+                {buttonShow}
+                <hr></hr>
+              </div>
+            </div>
           </Col>
           <Col className="col-sm-3">
             <div class="navbar-side-right" id="navbarSide">
@@ -196,17 +422,18 @@ if(!this.state.infoShow){
             </div>
           </Col>
         </Row>
+        <Modal show={this.state.isModalOpen} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{modalTitle}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalContent}
+            {display}
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
 }
 
-export default List;
-
-
-
-
- 
-
-
- 
+export default ListSpecific;
