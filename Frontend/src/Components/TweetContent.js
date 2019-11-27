@@ -127,6 +127,10 @@ export class TweetContent extends Component {
         
     }
 
+    cardbtn=(event)=>{
+
+        alert("hi")
+    }
     render(){
         let allTweetsComponent;
         if(this.state.allTweets && this.state.allTweets.length > 0){
@@ -157,6 +161,7 @@ export class TweetContent extends Component {
                 </div>
                 <div class="tweet-container">
                     <div class="tweet-body">
+                        <a class="a-card card-block text-decoration-none" href="http://localhost:3000/TweetPage" >
                         <Card >
                             <CardBody>
                                 <CardTitle style={{fontWeight:"bolder"}}>Times Now<span style={{color:"grey",fontWeight:"normal"}}> @timesnow</span></CardTitle>
@@ -171,14 +176,14 @@ export class TweetContent extends Component {
                                 <br/><br/>
                                 <div><i class="fas fa-heart fa-lg" style={{color:"red"}} onClick={this.like}></i>       <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></div>
                                 <a onClick={this.like}><i class="like far fa-heart fa-lg" style={{color:"grey"}}>20</i></a>     <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
-                                <i class="far fa-comment fa-lg" style={{color:"grey"}} data-toggle="modal" data-target="#replyModal"> 55</i>      <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                                <a  data-toggle="modal" data-target="#replyModal"><i class="far fa-comment fa-lg" style={{color:"grey"}}> 55</i></a>      <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
 
                                 
                                 {/** added dropdown */}
                                 <i class="fas fa-retweet fa-lg dropdown" data-toggle="dropdown" style={{color:"grey"}}> <span style={{fontWeight:"normal"}}> 10</span></i>  <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" class=" dropdown-item " style={{color:"black",fontSize:"32"}} ><i class="fas fa-pen" style={{color:"grey"}}></i>&nbsp; &nbsp;&nbsp;Retweet</a></li>
-                                    <li><a href="#" class="dropdown-item" style={{color:"black",fontSize:"32"}} data-toggle="modal" data-target="#tweetModal"><i class="fas fa-retweet" style={{color:"grey"}}></i>&nbsp; &nbsp;Retweet with a comment</a></li>
+                                    <li><a href="#" class=" dropdown-item "><i class="fas fa-pen" style={{color:"grey"}}></i>&nbsp; &nbsp;&nbsp;Retweet</a></li>
+                                    <li><a href="#" class="dropdown-item"  data-toggle="modal" data-target="#tweetModal"><i class="fas fa-retweet" style={{color:"grey"}}></i>&nbsp; &nbsp;Retweet with a comment</a></li>
                                 </ul>
                             
                             
@@ -188,6 +193,7 @@ export class TweetContent extends Component {
 
                         
                         </Card>
+                        </a>
                     
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import Signup from "./Components/LandingPage/Signup"
 import LandingPage from './Components/LandingPage/LandingPage'
 import Explore from './Components/Explore';
 import Messages from './Components/Messages';
+import TweetPage from './Components/TweetPage';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route exact path="/Signup" component={Signup}></Route>
           <Route path="/Explore" component={Explore}></Route>
           <Route path="/Messages" component={Messages}></Route>
+          <Route path="/TweetPage" component={TweetPage}></Route>
         </Switch>
       </Router>
 
