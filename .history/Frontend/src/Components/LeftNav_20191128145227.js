@@ -11,49 +11,49 @@ export default class LeftNav extends Component {
     //deactivate an account
     //Logout
 
-    // constructor(props) {
-    //     super(props)
+    constructor(props) {
+        super(props)
     
-    //     this.state = {
-    //         redirectPageName : undefined, 
-    //         deleteAccountFlag: true,
-    //         deactivateAccountFlag : true
-    //     }
-    //     this.handleLogout = this.handleLogout.bind(this);
-    //     this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
-    //     this.handleDeactivateAccount = this.handleDeactivateAccount.bind(this);
-    // }
+        this.state = {
+            redirectPageName : undefined, 
+            deleteAccountFlag: true,
+            deactivateAccountFlag : true
+        }
+        this.handleLogout = this.handleLogout.bind(this);
+        this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
+        this.handleDeactivateAccount = this.handleDeactivateAccount.bind(this);
+    }
 
 
-    // handleLogout = () => {
-    //     localStorage.clear();
-    //     console.log("Local Storage cleared!");
-    //     window.location = "/";
-    // }
+    handleLogout = () => {
+        localStorage.clear();
+        console.log("Local Storage cleared!");
+        window.location = "/";
+    }
 
-    // handleDeactivateAccount = (e) =>{
-    //     let username = localStorage.getItem('username')
-    //     e.preventDefault();
-    //     axios.defaults.withCredentials = true;
-    //     axios.post('http://' + config.hostname + ':'+ config.port + '/deactivateAccount', username)
-    //         .then(response => {
-    //             console.log("Status Code : ", response.status);
-    //             console.log("Response from Sign Up " + response);
-    //             console.log(response);
-    //             if (response.data.deactivate === true) {
+    handleDeactivateAccount = (e) =>{
+        let username = localStorage.getItem('username')
+        e.preventDefault();
+        axios.defaults.withCredentials = true;
+        axios.post('http://' + config.hostname + ':'+ config.port + '/deactivateAccount', username)
+            .then(response => {
+                console.log("Status Code : ", response.status);
+                console.log("Response from Sign Up " + response);
+                console.log(response);
+                if (response.data.deactivate === true) {
                     
-    //                 this.setState({
-    //                     message: "Account successfully Deactivated",
-    //                     deactivateAccountFlag: true
-    //                 })
-    //             } else {
-    //                 this.setState({
-    //                     message: "Account Deactivation Failed",
-    //                     deactivateAccountFlag: false
-    //                 })
-    //             }
-    //         });
-    // }
+                    this.setState({
+                        message: "Account successfully Deactivated",
+                        deactivateAccountFlag: true
+                    })
+                } else {
+                    this.setState({
+                        message: "Account Deactivation Failed",
+                        deactivateAccountFlag: false
+                    })
+                }
+            });
+    }
 
 
     
