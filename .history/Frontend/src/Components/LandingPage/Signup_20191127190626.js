@@ -73,18 +73,10 @@ class Signup extends Component {
         })
     }
     stateChangeHandler = (e) => {
-        var isValidState = /()/.test(e.target.value)
-        if(isValidState){
-            this.setState({
-                state: e.target.value
-            })
-        }
-        else{
-            this.setState({
-                message: "Please enter valid State"
-            })
-        }
-        
+
+        this.setState({
+            state: e.target.value
+        })
     }
     cityChangeHandler = (e) => {
         this.setState({

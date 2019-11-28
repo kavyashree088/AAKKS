@@ -73,7 +73,7 @@ class Signup extends Component {
         })
     }
     stateChangeHandler = (e) => {
-        var isValidState = /()/.test(e.target.value)
+        var isValidState = /(i:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))/.test(e.target.value)
         if(isValidState){
             this.setState({
                 state: e.target.value

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router'
@@ -11,7 +12,6 @@ import Col from 'react-bootstrap/Col'
 import './../../CSS/SignupPage.css'
 
 let faker = require('faker')
-const validator = require('validator');
 
 
 
@@ -73,18 +73,10 @@ class Signup extends Component {
         })
     }
     stateChangeHandler = (e) => {
-        var isValidState = /()/.test(e.target.value)
-        if(isValidState){
-            this.setState({
-                state: e.target.value
-            })
-        }
-        else{
-            this.setState({
-                message: "Please enter valid State"
-            })
-        }
-        
+
+        this.setState({
+            state: e.target.value
+        })
     }
     cityChangeHandler = (e) => {
         this.setState({
@@ -92,18 +84,10 @@ class Signup extends Component {
         })
     }
     zipcodeChangeHandler = (e) => {
-        var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
-        if (isValidZip){
-            this.setState({
-                zipcode: e.target.value
-            })
-        }
-        else {
-            this.setState({
-                message: "Please enter valid Zipcode"
-            })
-        }
-       
+        var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test("90210");
+        this.setState({
+            zipcode: e.target.value
+        })
     }
 
     submitSignUp = (e) => {
