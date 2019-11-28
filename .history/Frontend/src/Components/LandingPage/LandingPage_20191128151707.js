@@ -38,9 +38,8 @@ class LandingPage extends Component {
     }
 
     usernameChangeHandler = (e) => {
-        var str = (e.target.value).toLowerCase()
         this.setState({
-            username: str
+            username: e.target.value
         })
     }
     passwordChangeHandler = (e) => {

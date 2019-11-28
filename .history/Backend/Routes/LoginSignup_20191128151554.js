@@ -34,8 +34,7 @@ router.post('/signup', function (req, res) {
       "username": req.body.username,
       "email": formatEmail,
       "password": enPassword,
-      "firstName": req.body.firstName,
-      "lastName":req.body.lastName
+      "firstName": req.body.firstName
     }
 
     kafka.make_request('loginSignuptopic', { "path": "signup", "inputData": inputData, "data": req.body, "formatEmail": formatEmail }, function (err, result) {

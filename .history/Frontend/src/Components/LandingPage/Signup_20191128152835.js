@@ -74,9 +74,8 @@ class Signup extends Component {
     }
 
     usernameChangeHandler = (e) => {
-        var str = (e.target.value).toLowerCase()
         this.setState({
-            username: str
+            username: e.target.value
         })
     }
 
@@ -115,8 +114,7 @@ class Signup extends Component {
         if (isValidZip){
             this.setState({
                 //finishedSignUp: true,
-                zipcode: e.target.value,
-                message: ""
+                zipcode: e.target.value
             })
         }
         else {

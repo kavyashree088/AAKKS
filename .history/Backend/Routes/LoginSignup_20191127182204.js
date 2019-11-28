@@ -34,8 +34,7 @@ router.post('/signup', function (req, res) {
       "username": req.body.username,
       "email": formatEmail,
       "password": enPassword,
-      "firstName": req.body.firstName,
-      "lastName":req.body.lastName
+      "firstName": req.body.firstName
     }
 
     kafka.make_request('loginSignuptopic', { "path": "signup", "inputData": inputData, "data": req.body, "formatEmail": formatEmail }, function (err, result) {
@@ -82,7 +81,7 @@ router.post('/login', function (req, res) {
             expiresIn: 7200 // expires in 2 hours
           });
           req.session.user = result.username;
-          res.status(200).json({ validUser: true, responseMessage: 'Login Successfully', token: token, info: { username: result.username, firstname: result.firstname, lastname: result.lastname } });
+          res.status(200).json({ validUser: true, responseMessage: 'Login Successfully', token: token, info: { username: result.username, firstname: result.firstname } });
           console.log("User found in DB and token is", token);
         } else {
           console.log("Authentication failed. Passwords did not match");

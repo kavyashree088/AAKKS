@@ -114,7 +114,7 @@ async function login(msg, callback) {
         password = result[0].password
         firstname = result[0].firstName
         username = result[0].username
-        lastname = result[0].lastName
+        lastname = result[0].lastname
         Users.findOneAndUpdate({ 'username': msg.username }, {
             $set:
             {

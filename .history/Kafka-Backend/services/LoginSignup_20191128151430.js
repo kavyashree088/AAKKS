@@ -114,7 +114,7 @@ async function login(msg, callback) {
         password = result[0].password
         firstname = result[0].firstName
         username = result[0].username
-        lastname = result[0].lastName
+        lastname = result[0].lastname
         Users.findOneAndUpdate({ 'username': msg.username }, {
             $set:
             {
@@ -123,8 +123,17 @@ async function login(msg, callback) {
         }, function (err, results) {
             if (err) {
                 console.log(err);
-                callback(err, "Mongo db Database Error");
-            } 
+                callback(err, "Database Error");
+            } else {
+                if (results) {
+                    console.log("results:", results);
+                    callback(null, { status: 200 });
+                }
+                else {
+                    console.log("No results found");
+                    callback(null, { status: 205 });
+                }
+            }
         });
 
         callback(null, {password, firstname, lastname, username,status:200})
