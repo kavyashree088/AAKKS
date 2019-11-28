@@ -32,7 +32,7 @@ class LandingPage extends Component {
         this.submitSignup = this.submitSignup.bind(this)
 
     }
-    componentWillMount = () => {
+    componentWillMount=()=>{
         localStorage.clear();
 
     }
