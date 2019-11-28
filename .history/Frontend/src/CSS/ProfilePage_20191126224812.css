@@ -1,0 +1,19 @@
+.coverImageStyle {
+    bottom: 0px;
+    height: 100%;
+    top: 30px;
+    width: 100%;
+    z-index: -1;
+}
+.roundedCircle{
+    margin-left: -4px;
+
+    margin-bottom: -4px;
+    margin-top: -18%;
+    width: 25%;
+    transition-property: background-color, box-shadow;
+
+    transition-duration: 0.2s;
+
+    min-width: 49px;
+}
