@@ -52,6 +52,7 @@ const loginSignupRoutes = require('./Routes/LoginSignup')
 const tweetRoutes = require('./Routes/tweetRoutes');
 const profileDetailsRoutes = require('./Routes/ProfileDetails')
 
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
 
 //use cors to allow cross origin resource sharing
@@ -86,6 +87,7 @@ app.use(bodyParser.urlencoded({
 }));
 
  app.use(bodyParser.json());
+
  app.use('/', loginSignupRoutes);
  app.use('/', tweetRoutes);
  app.use('/', profileDetailsRoutes);
