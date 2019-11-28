@@ -82,13 +82,11 @@ class Signup extends Component {
         var isValidEmail = /\S+@\S+\.\S+/.test(e.target.value)
         if(isValidEmail){
             this.setState({
-                finishedSignUp: true,
                 email: e.target.value
             })
         }
         else{
             this.setState({
-                finishedSignUp: false,
                 message:"please enter valid email"
             })
         }
@@ -124,13 +122,11 @@ class Signup extends Component {
         var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
         if (isValidZip){
             this.setState({
-                finishedSignUp: true,
                 zipcode: e.target.value
             })
         }
         else {
             this.setState({
-                finishedSignUp: false,
                 message: "Please enter valid Zipcode"
             })
         }

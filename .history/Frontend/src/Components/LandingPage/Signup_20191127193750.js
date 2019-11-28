@@ -56,20 +56,9 @@ class Signup extends Component {
         })
     }
     passwordChangeHandler = (e) => {
-        var isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/.test(e.target.value)
-        if(isValidPassword){
-            this.setState({
-                finishedSignUp: true,
-                userPassword: e.target.value
-            })
-        }
-        else{
-            this.setState({
-                finishedSignUp: false,
-                message: "Please enter a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
-            })
-        }
-        
+        this.setState({
+            userPassword: e.target.value
+        })
     }
 
     usernameChangeHandler = (e) => {
@@ -79,40 +68,28 @@ class Signup extends Component {
     }
 
     emailChangeHandler = (e) => {
-        var isValidEmail = /\S+@\S+\.\S+/.test(e.target.value)
-        if(isValidEmail){
+        this.setState({
+            email: e.target.value
+        })
+    }
+    stateChangeHandler = (e) => {
+        var isValidState = /(([Aa][EeLlKkSsZzRr])|([Cc][AaOoTt])|([Dd][EeCc])|([Ff][MmLl])|([Gg][AaUu])|([Hh][Ii])|([Ii][DdLlNnAa])|([Kk][SsYy])|([Ll][Aa])|([Mm][EeHhDdAaIiNnSsOoTt])|([Nn][EeVvHhJjMmYyCcDd])|([Mm][Pp])|([Oo][HhKkRr])|([Pp][WwAaRr])|([Rr][Ii])|([Ss][CcDd])|([Tt][NnXx])|([Uu][Tt])|([Vv][TtIiAa])|([Ww][AaVvIiYy]))/.test(e.target.value)
+        var isValidAbb =/(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])/.test(e.value.target)
+        if(isValidState){
             this.setState({
-                finishedSignUp: true,
-                email: e.target.value
+                state: e.target.value
+            })
+        }
+        else if(isValidAbb){
+            this.setState({
+                state: e.target.value
             })
         }
         else{
             this.setState({
-                finishedSignUp: false,
-                message:"please enter valid email"
+                message: "Please enter valid state"
             })
         }
-        
-    }
-    stateChangeHandler = (e) => {
-       // var isValidState = /(([Aa][EeLlKkSsZzRr])|([Cc][AaOoTt])|([Dd][EeCc])|([Ff][MmLl])|([Gg][AaUu])|([Hh][Ii])|([Ii][DdLlNnAa])|([Kk][SsYy])|([Ll][Aa])|([Mm][EeHhDdAaIiNnSsOoTt])|([Nn][EeVvHhJjMmYyCcDd])|([Mm][Pp])|([Oo][HhKkRr])|([Pp][WwAaRr])|([Rr][Ii])|([Ss][CcDd])|([Tt][NnXx])|([Uu][Tt])|([Vv][TtIiAa])|([Ww][AaVvIiYy]))/.test(e.target.value)
-        //var isValidAbb =//;
-        
-        // if(isValidState){
-        //     this.setState({
-        //         state: e.target.value
-        //     })
-        // }
-        // else if(isValidAbb){
-        //     this.setState({
-        //         state: e.target.value
-        //     })
-        // }
-        // else{
-        //     this.setState({
-        //         message: "Please enter valid state"
-        //     })
-        // }
         
     }
     cityChangeHandler = (e) => {
@@ -124,13 +101,11 @@ class Signup extends Component {
         var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
         if (isValidZip){
             this.setState({
-                finishedSignUp: true,
                 zipcode: e.target.value
             })
         }
         else {
             this.setState({
-                finishedSignUp: false,
                 message: "Please enter valid Zipcode"
             })
         }
@@ -141,7 +116,6 @@ class Signup extends Component {
         //console.log("in submit ")
         e.preventDefault();
         console.log(this.state.message)
-       
 
         const data = {
             firstName: this.state.firstName,

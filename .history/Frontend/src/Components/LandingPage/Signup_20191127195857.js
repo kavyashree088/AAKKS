@@ -130,7 +130,6 @@ class Signup extends Component {
         }
         else {
             this.setState({
-                finishedSignUp: false,
                 message: "Please enter valid Zipcode"
             })
         }

@@ -124,7 +124,7 @@ class Signup extends Component {
         var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
         if (isValidZip){
             this.setState({
-                finishedSignUp: true,
+                //finishedSignUp: true,
                 zipcode: e.target.value
             })
         }

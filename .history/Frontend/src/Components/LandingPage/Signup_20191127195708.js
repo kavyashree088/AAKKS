@@ -59,13 +59,11 @@ class Signup extends Component {
         var isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/.test(e.target.value)
         if(isValidPassword){
             this.setState({
-                finishedSignUp: true,
                 userPassword: e.target.value
             })
         }
         else{
             this.setState({
-                finishedSignUp: false,
                 message: "Please enter a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
             })
         }
@@ -82,13 +80,11 @@ class Signup extends Component {
         var isValidEmail = /\S+@\S+\.\S+/.test(e.target.value)
         if(isValidEmail){
             this.setState({
-                finishedSignUp: true,
                 email: e.target.value
             })
         }
         else{
             this.setState({
-                finishedSignUp: false,
                 message:"please enter valid email"
             })
         }
@@ -124,13 +120,11 @@ class Signup extends Component {
         var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
         if (isValidZip){
             this.setState({
-                finishedSignUp: true,
                 zipcode: e.target.value
             })
         }
         else {
             this.setState({
-                finishedSignUp: false,
                 message: "Please enter valid Zipcode"
             })
         }
@@ -142,7 +136,7 @@ class Signup extends Component {
         e.preventDefault();
         console.log(this.state.message)
        
-
+        if(isValidEmail && isValidZip && isValidPassword){
         const data = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -183,6 +177,13 @@ class Signup extends Component {
                     })
                 }
             });
+        }
+        else{
+            this.setState({
+                finishedSignUp: false,
+                message: "Please enter Valid Details"
+            })
+        }
     }
 
 
