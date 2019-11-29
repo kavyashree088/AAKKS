@@ -93,8 +93,8 @@ function response(data, res, producer) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 //handleTopicRequest("loginSignuptopic", SignupSignin);
-//handleTopicRequest("tweetTopics", tweetTopics);
-
-handleTopicRequest("messageTopics", messageTopics);
-handleTopicRequest("tweetTopics", tweetTopics)
+handleTopicRequest("tweetTopics", tweetTopics);
 handleTopicRequest("loginSignuptopic", SignupSignin);
+handleTopicRequest("messageTopics", messageTopics);
+//handleTopicRequest("tweetTopics", tweetTopics)
+
