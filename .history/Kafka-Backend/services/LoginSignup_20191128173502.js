@@ -42,7 +42,7 @@ async function signup(msg, callback) {
     //console.log(msg)
     let con = await dbConnection();
 
-    Users.findOne({ email: msg.formatEmail }, { username: msg.data.username }, async function (err, rows) {
+    Users.findOne({ email: msg.formatEmail},{ username: msg.data.username },  async function (err, rows) {
         if (err) {
             console.log(err);
             console.log("unable to read the database");
@@ -74,7 +74,7 @@ async function signup(msg, callback) {
                     }
                 });
                 //Save the user in MySQL database
-                try {
+                try {    
                     await con.query("START TRANSACTION");
                     let savedUser = await con.query('INSERT INTO userMysql SET ?', [msg.inputData]);
                     await con.query("COMMIT");
@@ -83,7 +83,7 @@ async function signup(msg, callback) {
                     console.log(ex);
                     await con.query("ROLLBACK");
                     console.log(ex);
-                    //callback(null, { status: 500 });
+                    callback(null, { status: 500 });
                     throw ex;
                 } finally {
                     await con.release();
@@ -100,43 +100,37 @@ async function signup(msg, callback) {
 async function login(msg, callback) {
 
     console.log("In login topic service. Msg: ", msg);
-
+    
     let con = await dbConnection();
-
+    
     try {
         await con.query("START TRANSACTION");
-
+        
         let result = await con.query('SELECT * FROM userMysql WHERE username = ?', [msg.username]);
         await con.query("COMMIT");
-        if (!result[0]) {
-            console.log("Unable to find user");
-            callback(null, { status: 205 })
-        } else {
-            result = JSON.parse(JSON.stringify(result));
-            console.log("result in login db")
-            console.log(result)
-            console.log(result[0].password)
-            password = result[0].password
-            firstname = result[0].firstName
-            username = result[0].username
-            lastname = result[0].lastName
-            Users.findOneAndUpdate({ 'username': msg.username }, {
-                $set:
-                {
-                    "active": true,
-                }
-            }, function (err, results) {
-                if (err) {
-                    console.log(err);
-                    callback(err, "Mongo db Database Error");
-                }
-            });
+        result = JSON.parse(JSON.stringify(result));
+        console.log("result in login db")
+        console.log(result)
+        console.log(result[0].password)
+        password = result[0].password
+        firstname = result[0].firstName
+        username = result[0].username
+        lastname = result[0].lastName
+        Users.findOneAndUpdate({ 'username': msg.username }, {
+            $set:
+            {
+                "active": true,
+            }
+        }, function (err, results) {
+            if (err) {
+                console.log(err);
+                callback(err, "Mongo db Database Error");
+            } 
+        });
 
-            callback(null, { password, firstname, lastname, username, status: 200 })
+        callback(null, {password, firstname, lastname, username,status:200})
 
-            return result;
-        }
-
+        return result;
     } catch (ex) {
         console.log(ex);
         throw ex;
@@ -160,7 +154,7 @@ function deactivateAccount(msg, callback) {
             callback(err, "Database Error");
         } else {
             if (results) {
-                //  console.log("results:", results);
+              //  console.log("results:", results);
                 callback(null, { status: 200 });
             }
             else {
@@ -177,13 +171,13 @@ async function deleteAccount(msg, callback) {
     //DELETE FROM userMysql WHERE username = ?;
 
     let con = await dbConnection();
-
+    
     try {
         await con.query("START TRANSACTION");
-
+        
         let result = await con.query('DELETE FROM userMysql WHERE username = ?', [msg.username]);
         await con.query("COMMIT");
-
+        
         Users.findOneAndUpdate({ 'username': msg.username }, {
             $set:
             {
@@ -193,10 +187,10 @@ async function deleteAccount(msg, callback) {
             if (err) {
                 console.log(err);
                 callback(err, "Mongo db Database Error");
-            }
+            } 
         });
 
-        callback(null, { message: "Account has been deleted", status: 200 })
+        callback(null, {message : "Account has been deleted",status:200})
 
         return result;
     } catch (ex) {

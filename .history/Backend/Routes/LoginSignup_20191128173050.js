@@ -49,11 +49,7 @@ router.post('/signup', function (req, res) {
       else if (result.status === 200) {
         console.log("User Added");
         res.status(200).json({ responseMessage: 'Successfully Added!' });
-      }else if(result.status === 205){
-        console.log("User already exists");
-        res.status(200).json({ responseMessage: 'User Already exists!' });
-      } 
-      else {
+      } else {
         console.log("User already exists");
         res.status(200).json({ responseMessage: 'User Already exists!' });
       }
@@ -90,7 +86,7 @@ router.post('/login', function (req, res) {
           console.log("User found in DB and token is", token);
         } else {
           console.log("Authentication failed. Passwords did not match");
-          res.status(500).json({ responseMessage: 'Invalid credentials' })
+          res.status(200).json({ responseMessage: 'Invalid credentials' })
 
         }
       })

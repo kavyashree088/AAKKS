@@ -11,18 +11,18 @@ import config from './../Config/settings'
 import { Redirect } from 'react-router'
 
 
-export class DeactivateAccount extends Component {
+export class DeleteAccount extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            deactivate: false,
+            delete: false,
             firstname:'',
             username:'',
         }
         
-        this.deactivateButton = this.deactivateButton.bind(this)
+        this.deleteButton = this.deleteButton.bind(this)
 
     }
 
@@ -34,7 +34,7 @@ export class DeactivateAccount extends Component {
     }
 
 
-    deactivateButton = () => {
+    deleteButton = () => {
 
         let username = localStorage.getItem('username')
         let token = localStorage.getItem('token')
@@ -47,20 +47,20 @@ export class DeactivateAccount extends Component {
         console.log(data.username)
         axios({
             method: 'post',
-                url: 'http://'+config.hostname+':3001/deactivateAccount',
+                url: 'http://'+config.hostname+':3001/deleteAccount',
                 data,
                 config: { headers: { 'Content-Type': 'application/json' } },
                 headers: { "Authorization": `Bearer ${token}` }
             }).then(response => {
             if (response.status === 200) {
-                console.log('Account deactivated');
+                console.log('Account deleted');
                 this.setState({
-                    deactivate: true
+                    delete: true
                 })
                
             } else {
-                //alert('failed to Account deactivated');
-                console.log('Failed to Account deactivated');
+                //alert('failed to Account deleted');
+                console.log('Failed to Account deleted');
             }
         }).catch(error => {
             console.log(error);
@@ -70,7 +70,7 @@ export class DeactivateAccount extends Component {
     
     render() {
        // var next;
-        if(this.state.deactivate){
+        if(this.state.delete){
             return <Redirect to="/" />
         }
         let links = [
@@ -100,17 +100,16 @@ export class DeactivateAccount extends Component {
 
                         <div>
                             <h3>
-                            This will deactivate your account
+                            This will delete your account
                             </h3>
-                            <p>@{this.state.username}</p>
                             <br></br>
                             <p>
-                            You’re about to start the process of deactivating your Twitter account. 
+                            You’re about to start the process of deleting your Twitter account. 
                             Your display name, <b>@{this.state.username}</b>, and public profile will no longer be viewable on Twitter.com, 
                             Twitter for iOS, or Twitter for Android.
                             </p>
                             <center>
-                            <Button  onClick={this.deactivateButton} variant="danger">Deactivate</Button>
+                            <Button  onClick={this.deleteButton} variant="danger">Delete</Button>
                             </center>
                         </div>
 
@@ -131,4 +130,4 @@ export class DeactivateAccount extends Component {
     }
 }
 
-export default DeactivateAccount
+export default DeleteAccount

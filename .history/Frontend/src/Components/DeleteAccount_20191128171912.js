@@ -102,7 +102,6 @@ export class DeactivateAccount extends Component {
                             <h3>
                             This will deactivate your account
                             </h3>
-                            <p>@{this.state.username}</p>
                             <br></br>
                             <p>
                             You’re about to start the process of deactivating your Twitter account. 

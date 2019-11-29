@@ -11,13 +11,13 @@ import config from './../Config/settings'
 import { Redirect } from 'react-router'
 
 
-export class DeactivateAccount extends Component {
+export class DeleteAccount extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            deactivate: false,
+            delete: false,
             firstname:'',
             username:'',
         }
@@ -102,7 +102,6 @@ export class DeactivateAccount extends Component {
                             <h3>
                             This will deactivate your account
                             </h3>
-                            <p>@{this.state.username}</p>
                             <br></br>
                             <p>
                             You’re about to start the process of deactivating your Twitter account. 
@@ -131,4 +130,4 @@ export class DeactivateAccount extends Component {
     }
 }
 
-export default DeactivateAccount
+export default DeleteAccount

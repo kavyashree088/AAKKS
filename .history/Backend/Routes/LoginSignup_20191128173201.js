@@ -49,11 +49,7 @@ router.post('/signup', function (req, res) {
       else if (result.status === 200) {
         console.log("User Added");
         res.status(200).json({ responseMessage: 'Successfully Added!' });
-      }else if(result.status === 205){
-        console.log("User already exists");
-        res.status(200).json({ responseMessage: 'User Already exists!' });
-      } 
-      else {
+      } else {
         console.log("User already exists");
         res.status(200).json({ responseMessage: 'User Already exists!' });
       }

@@ -11,13 +11,13 @@ import config from './../Config/settings'
 import { Redirect } from 'react-router'
 
 
-export class DeactivateAccount extends Component {
+export class DeleteAccount extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            deactivate: false,
+            delete: false,
             firstname:'',
             username:'',
         }
@@ -47,13 +47,13 @@ export class DeactivateAccount extends Component {
         console.log(data.username)
         axios({
             method: 'post',
-                url: 'http://'+config.hostname+':3001/deactivateAccount',
+                url: 'http://'+config.hostname+':3001/deleteAccount',
                 data,
                 config: { headers: { 'Content-Type': 'application/json' } },
                 headers: { "Authorization": `Bearer ${token}` }
             }).then(response => {
             if (response.status === 200) {
-                console.log('Account deactivated');
+                console.log('Account deleted');
                 this.setState({
                     deactivate: true
                 })
@@ -102,7 +102,6 @@ export class DeactivateAccount extends Component {
                             <h3>
                             This will deactivate your account
                             </h3>
-                            <p>@{this.state.username}</p>
                             <br></br>
                             <p>
                             You’re about to start the process of deactivating your Twitter account. 
@@ -131,4 +130,4 @@ export class DeactivateAccount extends Component {
     }
 }
 
-export default DeactivateAccount
+export default DeleteAccount
