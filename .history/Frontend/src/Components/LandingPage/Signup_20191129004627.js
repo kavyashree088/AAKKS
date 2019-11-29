@@ -184,7 +184,7 @@ class Signup extends Component {
     render() {
 
         var nextpage = null
-        if (this.state.finishedSignUp === true && this.state.signup === true) {
+        if (this.state.finishedSignUp === true) {
             nextpage = <Redirect to="/" />
         }
         return (
