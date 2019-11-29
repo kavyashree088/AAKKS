@@ -111,10 +111,11 @@ export class UserProfile extends Component {
     }
 
     saveEditProfileModal = (profileDetails) => {
-        console.log("profileDetails")
-        console.log(profileDetails)
         let username = localStorage.getItem('username');
-    
+    //    let currentUsername = this.props.match.params.username;
+        // let currentUsername
+
+
         console.log("Getting details of user: ")
         console.log(username);
         axios.defaults.withCredentials = true;

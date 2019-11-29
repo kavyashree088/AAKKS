@@ -111,51 +111,7 @@ export class UserProfile extends Component {
     }
 
     saveEditProfileModal = (profileDetails) => {
-        console.log("profileDetails")
-        console.log(profileDetails)
-        let username = localStorage.getItem('username');
-    
-        console.log("Getting details of user: ")
-        console.log(username);
-        axios.defaults.withCredentials = true;
-       let token = localStorage.getItem('token')
-       console.log(token)
-        let data = {
-            profileDetails,
-            username
-                    }
-        axios({
-            method: 'post',
-                url: 'http://'+config.hostname+':3001/updateProfile',
-                data,
-                config: { headers: { 'Content-Type': 'application/json' } },
-                headers: { "Authorization": `Bearer ${token}` }
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('response from DB: ');
-                    console.log(response.data);
-                    
-                } else {
-                    console.log("Status Code: ", response.status);
-                    console.log(response.data.responseMessage);
-                }
-                this.setState({
-                    username: response.data.details.rows.username,
-                    firstName:response.data.details.rows.firstName,
-                    lastName: response.data.details.rows.lastName,
-                    email: response.data.details.rows.email,
-                    city: response.data.details.rows.city,
-                    state: response.data.details.rows.state,
-                    zipcode: response.data.details.rows.zipcode,
-                    description: response.data.details.rows.description,
-                    followers:response.data.details.rows.followers,
-                    following:response.data.details.rows.following,
-                    profilePicture: undefined,
-                })
-            }).catch(error => {
-                console.log(error);
-            });
+
        
     }
 

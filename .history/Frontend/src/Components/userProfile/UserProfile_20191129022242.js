@@ -111,22 +111,22 @@ export class UserProfile extends Component {
     }
 
     saveEditProfileModal = (profileDetails) => {
-        console.log("profileDetails")
-        console.log(profileDetails)
         let username = localStorage.getItem('username');
-    
+        let currentUsername = this.props.match.params.username;
+        // let currentUsername
+
+
         console.log("Getting details of user: ")
         console.log(username);
         axios.defaults.withCredentials = true;
        let token = localStorage.getItem('token')
        console.log(token)
         let data = {
-            profileDetails,
-            username
-                    }
+            username:currentUsername
+        }
         axios({
             method: 'post',
-                url: 'http://'+config.hostname+':3001/updateProfile',
+                url: 'http://'+config.hostname+':3001/getProfileDetails',
                 data,
                 config: { headers: { 'Content-Type': 'application/json' } },
                 headers: { "Authorization": `Bearer ${token}` }

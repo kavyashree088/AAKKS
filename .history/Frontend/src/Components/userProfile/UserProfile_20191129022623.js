@@ -112,7 +112,7 @@ export class UserProfile extends Component {
 
     saveEditProfileModal = (profileDetails) => {
         console.log("profileDetails")
-        console.log(profileDetails)
+        console.log(profileDetails.profileInfo)
         let username = localStorage.getItem('username');
     
         console.log("Getting details of user: ")
