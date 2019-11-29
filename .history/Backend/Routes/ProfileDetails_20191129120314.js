@@ -86,12 +86,11 @@ router.post('/updateProfile', function (req, res) {
   console.log("Inside updatePofile post request");
   console.log("Sending Request Body:");
 
-  console.log(req.body)
+  console.log(req.data)
   let username = req.body.username
-  let redisKey = "userProfile_" + username;
-  redisClient.del(redisKey);
+
   try {
-    kafka.make_request('profileTopic', { "path": "updateProfile", "data": req.body }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "updateProfile", "data": req.body.username }, function (err, result) {
       console.log("result")
       console.log(result)
 
@@ -100,8 +99,6 @@ router.post('/updateProfile', function (req, res) {
         res.status(500).json({ responseMessage: 'Database not responding' });
       }
       else if (result.status === 200) {
-        res.status(500).json({ responseMessage: result });
-        console.log(result)
       }
     })
   }

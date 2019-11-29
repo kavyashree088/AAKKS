@@ -218,9 +218,8 @@ export class UserProfile extends Component {
                             </Row>
                             <div>
                                 <p>@{this.state.username}</p>
-                                <p><b>Bio:</b><i>{this.state.description}</i></p>
-
-                                <p><b>Location:</b>{this.state.city}</p>
+                                <p>{this.state.description}</p>
+                                <p>{this.state.city}</p>
                                 <Row>
                                     <p>followers count   .</p>
 

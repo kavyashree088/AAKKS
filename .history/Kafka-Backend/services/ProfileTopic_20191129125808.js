@@ -45,46 +45,44 @@ async function updateProfile(msg, callback) {
 
     console.log("In user updateProfile topic service. Msg: ", msg);
     console.log(msg)
-    console.log(msg.data.profileDetails.username)
+    console.log(msg.data.profileDetails.description)
     let con = await dbConnection();
-    
+    Users.findOneAndUpdate({ username: msg.data.profileDetails.username }, {
+        $set: {
+            "firstName": msg.data.profileDetails.firstName,
+            "lastName": msg.data.profileDetails.lastName,
+            "description": msg.data.profileDetails.description,
+            "state": msg.data.profileDetails.state,
+            "city": msg.data.profileDetails.city,
+            "zipcode": msg.data.profileDetails.zipcode,
+        },
+        function (err, results) {
+            console.log("results:")
+            console.log(results);
+            if (err) {
+                console.log(err);
+                callback(err, "Database Error");
+            } else {
+                if (results) {
+                    console.log("results:")
+                    console.log(results);
+                    callback(null, { status: 200 });
+                    results.save(function (err) {
+                                        if (!err) {
+                                            callback(null, { status: 200, message: "item is added successfully!!" });
+                                        } else {
+                                            callback(null, { status: 200, message: "item not added!!" });
+                                        }
+                })
+            }
+                else {
+                    console.log("No results found");
+                    callback(null, { status: 205 });
+                }
+            }
+        }
+    })
     try {
-        Users.findOneAndUpdate({ 'username': msg.data.profileDetails.username }, {
-            $set: {
-                "firstName": msg.data.profileDetails.firstName,
-                "lastName": msg.data.profileDetails.lastName,
-                "description": msg.data.profileDetails.description,
-                "state": msg.data.profileDetails.state,
-                "city": msg.data.profileDetails.city,
-                "zipcode": msg.data.profileDetails.zipcode,
-            }},
-            async function (err, results) {
-                console.log("results:")
-                console.log(results);
-                console.log(err)
-                if (err) {
-                    console.log(err);
-                    callback(err, "Database Error");
-                } else {
-                    if (results) {
-                        console.log("results:")
-                        console.log(results);
-                        callback(null, { status: 200 });
-                        results.save(function (err) {
-                                            if (!err) {
-                                                callback(null, { status: 200, message: "item is added successfully!!" });
-                                            } else {
-                                                callback(null, { status: 200, message: "item not added!!" });
-                                            }
-                    })
-                }
-                    else {
-                        console.log("No results found");
-                        callback(null, { status: 205 });
-                    }
-                }
-            
-        })
         await con.query("START TRANSACTION");
         let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.profileDetails.firstName, msg.data.profileDetails.lastName]);
         await con.query("COMMIT");

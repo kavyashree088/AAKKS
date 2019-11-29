@@ -100,7 +100,6 @@ router.post('/updateProfile', function (req, res) {
         res.status(500).json({ responseMessage: 'Database not responding' });
       }
       else if (result.status === 200) {
-        res.status(500).json({ responseMessage: result });
         console.log(result)
       }
     })

@@ -49,7 +49,7 @@ async function updateProfile(msg, callback) {
     let con = await dbConnection();
     
     try {
-        Users.findOneAndUpdate({ 'username': msg.data.profileDetails.username }, {
+        Users.findOneAndUpdate({ username: msg.data.profileDetails.username }, {
             $set: {
                 "firstName": msg.data.profileDetails.firstName,
                 "lastName": msg.data.profileDetails.lastName,
@@ -57,8 +57,8 @@ async function updateProfile(msg, callback) {
                 "state": msg.data.profileDetails.state,
                 "city": msg.data.profileDetails.city,
                 "zipcode": msg.data.profileDetails.zipcode,
-            }},
-            async function (err, results) {
+            },
+            function (err, results) {
                 console.log("results:")
                 console.log(results);
                 console.log(err)
@@ -83,7 +83,7 @@ async function updateProfile(msg, callback) {
                         callback(null, { status: 205 });
                     }
                 }
-            
+            }
         })
         await con.query("START TRANSACTION");
         let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.profileDetails.firstName, msg.data.profileDetails.lastName]);

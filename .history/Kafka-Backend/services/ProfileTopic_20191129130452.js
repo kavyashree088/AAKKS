@@ -57,7 +57,7 @@ async function updateProfile(msg, callback) {
                 "state": msg.data.profileDetails.state,
                 "city": msg.data.profileDetails.city,
                 "zipcode": msg.data.profileDetails.zipcode,
-            }},
+            },
             async function (err, results) {
                 console.log("results:")
                 console.log(results);
@@ -83,7 +83,7 @@ async function updateProfile(msg, callback) {
                         callback(null, { status: 205 });
                     }
                 }
-            
+            }
         })
         await con.query("START TRANSACTION");
         let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.profileDetails.firstName, msg.data.profileDetails.lastName]);

@@ -89,7 +89,9 @@ router.post('/updateProfile', function (req, res) {
   console.log(req.body)
   let username = req.body.username
   let redisKey = "userProfile_" + username;
-  redisClient.del(redisKey);
+  redisClient.del("applicantProfile_" + msg.body.user_name);
+
+
   try {
     kafka.make_request('profileTopic', { "path": "updateProfile", "data": req.body }, function (err, result) {
       console.log("result")
@@ -100,7 +102,6 @@ router.post('/updateProfile', function (req, res) {
         res.status(500).json({ responseMessage: 'Database not responding' });
       }
       else if (result.status === 200) {
-        res.status(500).json({ responseMessage: result });
         console.log(result)
       }
     })

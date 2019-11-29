@@ -52,14 +52,14 @@ router.post('/getProfileDetails', function (req, res) {
           else if (result.status === 200) {
             redisClient.set(redisKey, JSON.stringify(result), function (error, response) {
               var status = 200;
-              let responseObj = {};
+                let responseObj={};
               if (error) {
                 console.log(error);
-
+                
               } else if (response) {
                 responseObj.status = 200;
                 responseObj.responseMessage = 'User exists!';
-                responseObj.details = response.result
+                responseObj.details=response.result
                 console.log(response.result)
                 console.log("user profile set to cache in redis!!");
                 redisClient.expire(redisKey, 100);
@@ -71,45 +71,66 @@ router.post('/getProfileDetails', function (req, res) {
             });
           }
 
-        });
+          });
+        }
+      })
+    }
+    catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Error at server side!!!' });
+    }
+  })
+
+
+  router.post('/updateProfile', function (req, res) {
+    console.log("Inside updatePofile post request");
+    console.log("Sending Request Body:");
+  
+    console.log(req.body)
+    let username = req.body.username
+  
+    try {
+      
+      
+  
+          kafka.make_request('profileTopic', { "path": "updateProfile", "data": req.body.username }, function (err, result) {
+            console.log("result")
+            console.log(result)
+  
+            if (err) {
+              console.log(err);
+              res.status(500).json({ responseMessage: 'Database not responding' });
+            }
+            else if (result.status === 200) {
+              redisClient.set(redisKey, JSON.stringify(result), function (error, response) {
+                var status = 200;
+                  let responseObj={};
+                if (error) {
+                  console.log(error);
+                  
+                } else if (response) {
+                  responseObj.status = 200;
+                  responseObj.responseMessage = 'User exists!';
+                  responseObj.details=response.result
+                  console.log(response.result)
+                  console.log("user profile set to cache in redis!!");
+                  redisClient.expire(redisKey, 100);
+                } else {
+                  responseObj.status = 200;
+                  responseObj.responseMessage = 'User does not exists!';
+                }
+                res.status(status).json(responseObj);
+              });
+            }
+  
+            });
+          }
+        })
+      }
+      catch (e) {
+        console.log(e);
+        res.status(500).json({ message: 'Error at server side!!!' });
       }
     })
-  }
-  catch (e) {
-    console.log(e);
-    res.status(500).json({ message: 'Error at server side!!!' });
-  }
-})
-
-
-router.post('/updateProfile', function (req, res) {
-  console.log("Inside updatePofile post request");
-  console.log("Sending Request Body:");
-
-  console.log(req.body)
-  let username = req.body.username
-  let redisKey = "userProfile_" + username;
-  redisClient.del(redisKey);
-  try {
-    kafka.make_request('profileTopic', { "path": "updateProfile", "data": req.body }, function (err, result) {
-      console.log("result")
-      console.log(result)
-
-      if (err) {
-        console.log(err);
-        res.status(500).json({ responseMessage: 'Database not responding' });
-      }
-      else if (result.status === 200) {
-        res.status(500).json({ responseMessage: result });
-        console.log(result)
-      }
-    })
-  }
-
-  catch (e) {
-    console.log(e);
-    res.status(500).json({ message: 'Error at server side!!!' });
-  }
-})
-
-module.exports = router
+  
+        module.exports = router
