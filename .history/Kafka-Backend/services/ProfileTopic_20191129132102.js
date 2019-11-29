@@ -71,11 +71,11 @@ async function updateProfile(msg, callback) {
                         console.log(results);
                         callback(null, { status: 200 });
                         results.save(function (err) {
-                            if (!err) {
-                                callback(null, { status: 200, message: "user updated successfully!!" });
-                            } else {
-                                callback(null, { status: 200, message: "user updated failed!!" });
-                            }
+                                            if (!err) {
+                                                callback(null, { status: 200, message: "user updated successfully!!" });
+                                            } else {
+                                                callback(null, { status: 200, message: "user updated failed!!" });
+                                            }
                     })
                 }
                     else {

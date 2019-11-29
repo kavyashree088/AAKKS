@@ -88,8 +88,6 @@ export class UserProfile extends Component {
                         following:response.data.details.rows.following,
                         profilePicture: undefined,
                     })
-                    // localStorage.setItem("username", response.data.info.username);
-                    // localStorage.setItem("firstname", response.data.info.firstname);
                     localStorage.setItem('firstname',response.data.details.rows.firstName)
                     localStorage.setItem('lastname', response.data.details.rows.lastName)
                     
