@@ -36,7 +36,7 @@ async function signup(msg, callback) {
     //console.log(msg)
     let con = await dbConnection();
 
-    Users.findOne({ email: msg.formatEmail},{ username: msg.data.username }, async function (err, rows) {
+    Users.findOne({ email: msg.formatEmail }, { username: msg.data.username }, async function (err, rows) {
         if (err) {
             console.log(err);
             console.log("unable to read the database");
@@ -68,7 +68,7 @@ async function signup(msg, callback) {
                     }
                 });
                 //Save the user in MySQL database
-                try {    
+                try {
                     await con.query("START TRANSACTION");
                     let savedUser = await con.query('INSERT INTO userMysql SET ?', [msg.inputData]);
                     await con.query("COMMIT");
@@ -93,12 +93,12 @@ async function signup(msg, callback) {
 async function login(msg, callback) {
 
     console.log("In login topic service. Msg: ", msg);
-    
+
     let con = await dbConnection();
-    
+
     try {
         await con.query("START TRANSACTION");
-        
+
         let result = await con.query('SELECT * FROM userMysql WHERE username = ?', [msg.username]);
         await con.query("COMMIT");
         result = JSON.parse(JSON.stringify(result));
@@ -108,7 +108,7 @@ async function login(msg, callback) {
         password = result[0].password
         firstname = result[0].firstName
         username = result[0].username
-        callback(null, {password, firstname, username,status:200})
+        callback(null, { password, firstname, username, status: 200 })
 
         return result;
     } catch (ex) {

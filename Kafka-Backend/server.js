@@ -1,16 +1,31 @@
+var connection = new require('./kafka/Connection');
+
+//topics file
+var SignupSignin = require('./services/LoginSignup')
+var dbConnection = require('./database/dbConnectionPool');
 
 var connection = new require('./kafka/Connection');
 
 //topics file
 var tweetTopics = require('./services/tweetTopics.js');
+var messageTopics = require('./services/messageTopics.js')
 
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
-const messageTopics = require("./services/messageTopics.js")
 //var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
 var connStr = config.connection_string;
 console.log(connStr);
+
+//MySQL DB Connection 
+testDBConection = async () => {
+  let con = await dbConnection();
+  if (con) {
+    console.log("Connected to Database");
+  }
+}
+testDBConection();
+
 mongoose.connect(connStr, { useNewUrlParser: true, poolSize: 10 }, function (err) {
   if (err) throw err;
   else {
@@ -34,19 +49,20 @@ function handleTopicRequest(topic_name, fname) {
     switch (topic_name) {
       case "tweetTopics":
         tweetTopics.tweetTopicService(data.data, function (err, res) {
+          console.log(res)
           response(data, res, producer);
           return;
         });
         break;
       case 'loginSignuptopic':
         SignupSignin.loginSignupService(data.data, function (err, res) {
-          console.log("app.js")
+          console.log(res)
           response(data, res, producer);
           return;
         });
         break;
       case "messageTopics":
-        messageTopics.messageTopics(data.data, function (err, res) {
+        messageTopics.messageService(data.data, function (err, res) {
           response(data, res, producer);
           return;
         });
@@ -76,4 +92,9 @@ function response(data, res, producer) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("tweetTopics", tweetTopics);
+//handleTopicRequest("loginSignuptopic", SignupSignin);
+//handleTopicRequest("tweetTopics", tweetTopics);
+
+handleTopicRequest("messageTopics", messageTopics);
+handleTopicRequest("tweetTopics", tweetTopics)
+handleTopicRequest("loginSignuptopic", SignupSignin);

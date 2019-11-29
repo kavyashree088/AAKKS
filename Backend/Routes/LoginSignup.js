@@ -34,7 +34,7 @@ router.post('/signup', function (req, res) {
       "username": req.body.username,
       "email": formatEmail,
       "password": enPassword,
-      "firstName":req.body.firstName
+      "firstName": req.body.firstName
     }
 
     kafka.make_request('loginSignuptopic', { "path": "signup", "inputData": inputData, "data": req.body, "formatEmail": formatEmail }, function (err, result) {
@@ -64,31 +64,31 @@ router.post('/login', function (req, res) {
   console.log(req.query.userPassword)
   password = req.query.userPassword
 
-  kafka.make_request('loginSignuptopic', { "path": "login","username":req.query.username, "body": req.query }, function (err, result) {
+  kafka.make_request('loginSignuptopic', { "path": "login", "username": req.query.username, "body": req.query }, function (err, result) {
     console.log(result)
     if (err) {
       res.status(500).json({ responseMessage: 'Database not responding' });
     }
-    if(result){
+    if (result) {
       console.log("result.password")
       console.log(result.status)
       console.log(result.password)
       crypt.compareHash(password, result.password, function (err, isMatch) {
         if (isMatch && !err) {
-            console.log("Login Successful");
-            
-            var token = jwt.sign({ username: result.username, firstname: result.firstname }, config.secret_key, {
-              expiresIn: 7200 // expires in 2 hours
-            });
-            req.session.user = result.username;
-            res.status(200).json({ validUser: true, responseMessage: 'Login Successfully' , token: token, info: { username: result.username, firstname: result.firstname }  });
-            console.log("User found in DB and token is", token);
+          console.log("Login Successful");
+
+          var token = jwt.sign({ username: result.username, firstname: result.firstname }, config.secret_key, {
+            expiresIn: 7200 // expires in 2 hours
+          });
+          req.session.user = result.username;
+          res.status(200).json({ validUser: true, responseMessage: 'Login Successfully', token: token, info: { username: result.username, firstname: result.firstname } });
+          console.log("User found in DB and token is", token);
         } else {
-            console.log("Authentication failed. Passwords did not match");
-            res.status(200).json({responseMessage: 'Invalid credentials' })
-            
+          console.log("Authentication failed. Passwords did not match");
+          res.status(200).json({ responseMessage: 'Invalid credentials' })
+
         }
-    })
+      })
     }
   })
 })

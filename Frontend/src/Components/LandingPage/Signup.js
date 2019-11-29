@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import rooturl from './../../Config/settings.js'
+import { rooturl } from './../../Config/settings.js'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -112,6 +112,7 @@ class Signup extends Component {
         })
 
         axios.defaults.withCredentials = true;
+        console.log(rooturl)
         axios.post('http://' + rooturl + ':3001/signup', data)
             .then(response => {
                 console.log("frontend")
@@ -121,7 +122,7 @@ class Signup extends Component {
                 //console.log(response.message)
                 console.log(response.data.responseMessage)
 
-                if (response.data.responseMessage=== 'Successfully Added!') {
+                if (response.data.responseMessage === 'Successfully Added!') {
                     this.setState({
                         finishedSignUp: true,
                         message: "User signed up successfully"
@@ -194,7 +195,7 @@ class Signup extends Component {
                                     </Row>
                                 </Form.Group>
                                 <p class="text-danger">{this.state.message}</p>
-                                
+
                                 <Button variant="primary" type="submit" onClick={this.submitSignUp}>
                                     Create your account
                             </Button>
