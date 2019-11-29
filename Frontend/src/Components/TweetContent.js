@@ -5,10 +5,9 @@ import swal from 'sweetalert';
 import DashboardTweets from "./DashboardTweets.js";
 import '../CSS/tweetArea.css';
 
-
-
 const settings = require("../config/settings.js");
 var faker = require('faker');
+const {getUserFullName, getUserName} = require('./tweetApis.js');
 
 export class TweetContent extends Component {
     state = {
@@ -62,10 +61,10 @@ export class TweetContent extends Component {
         let {tweetText, tweetImages} = this.state;
         let form_data = new FormData();
        // let form_data = new FormData(evt.target);
-        let userId = '1000';
-        let userName = 'user1';
-        form_data.set('userId', userId);
-        form_data.set('userName', userName);
+        let username = getUserName();
+        let userFullName = getUserFullName();
+        form_data.set('userFullName', userFullName);
+        form_data.set('username', username);
         //ADD LATER
         //TODO: add profile pic as well. take it from local storage
         form_data.append('tweetImages', tweetImages);
@@ -86,7 +85,7 @@ export class TweetContent extends Component {
                 return response.data;
             })
             .then((responseData) => {
-                swal(responseData.message);
+                //swal(responseData.message);
                 this.setState({
                     tweetText :""
                 });
@@ -105,42 +104,14 @@ export class TweetContent extends Component {
         this.writeATweet(tweetObj);
     }
 
-    getUserTweets = () => {
-        //get user id from local storage
-
-        let data = {userId : 123};
-        //let data = {userId : 123};
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/getUserTweets";
-        axios.defaults.withCredentials = true;
-        axios({
-            method: 'post',
-            url: postURL,        
-            data: data,
-            config: { headers: { 'Content-Type': 'multipart/form-data' } },
-            //headers: {"Authorization" : `Bearer ${token}`} 
-        })
-            .then((response) => {
-                if (response.status >= 500) {
-                    throw new Error("Bad response from server");
-                }
-                return response.data;
-            })
-            .then((responseData) => {
-                swal(responseData.message);
-                
-            }).catch(function (err) {
-                console.log(err)
-            });
-    }
-
     onFileChange(files) {
         debugger;
         if (files == null || files.length == 0) return;
         let file = files[0];
-        let tweetImages = this.state.tweetImages; 
-        tweetImages.push(file);
+       // let tweetImages = this.state.tweetImages; 
+        //tweetImages.push(file);
         this.setState({
-            tweetImages : tweetImages
+            tweetImages : file
         });
        /* let userId = '123';
         let tweetText = 'sample';
@@ -185,14 +156,8 @@ export class TweetContent extends Component {
     render(){
         /*
         <div>
-                <form onSubmit = {this.writeATweet}>
-                    <textarea name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className = "form-control"></textarea>
-                    <input id="profile-image-upload" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
-                    <button className = "btn btn-success" type="submit">Submit</button>
-                </form>
                 <Button onClick = {this.getUserTweets}>Get Tweets</Button>
                 <Button onClick = {this.generateFakeData}>generateFakeData</Button>
-                <DashboardTweets />
             </div>
         */
         return (
@@ -203,7 +168,7 @@ export class TweetContent extends Component {
               <form onSubmit = {this.writeATweet}>
                 <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus value={this.state.tweetText}></textarea>
                 <div style={{display:'inline-block'}}>
-                <div class="image-upload">
+                <div className="image-upload">
                     <label for="input-file">
                     <i id="image" className="far fa-image fa-2x"></i>
                     </label>

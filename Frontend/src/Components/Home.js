@@ -28,7 +28,7 @@ class Home extends Component {
                         <TweetContent/>
                     </Col>
                     <Col className="col-sm-3">
-                        <div class="navbar-side-right" id="navbarSide">
+                        <div className="navbar-side-right" id="navbarSide">
                             here
                         </div>
 

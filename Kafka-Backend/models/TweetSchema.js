@@ -3,11 +3,11 @@ var Schema = mongoose.Schema;
 
 //schema
 TweetSchema = new Schema({
-  userId: {
+  userFullName: {
     type: String,
     default: ''
   },
-  userName : {
+  username : {
     type: String,
     default : ""
   },
@@ -37,7 +37,11 @@ TweetSchema = new Schema({
       default : 0
   },
   lists:[],
-  bookmarks:[]
+  bookmarks:[],
+  isRetweet : {
+    type : String,
+    default :'false'
+  }
 });
 
 module.exports = mongoose.model('tweets', TweetSchema);
