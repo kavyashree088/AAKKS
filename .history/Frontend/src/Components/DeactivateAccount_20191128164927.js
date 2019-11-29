@@ -39,12 +39,10 @@ export class DeactivateAccount extends Component {
         let username = localStorage.getItem('username')
         let token = localStorage.getItem('token')
         
-        
         axios.defaults.withCredentials = true;
         let data = {
             username
         }
-        console.log(data.username)
         axios({
             method: 'post',
                 url: 'http://'+config.hostname+':3001/deactivateAccount',
@@ -69,9 +67,9 @@ export class DeactivateAccount extends Component {
 
     
     render() {
-       // var next;
-        if(this.state.deactivate){
-            return <Redirect to="/" />
+        var next;
+        if(deactivate){
+            
         }
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home", active: true },

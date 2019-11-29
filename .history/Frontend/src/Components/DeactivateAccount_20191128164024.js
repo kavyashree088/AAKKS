@@ -8,9 +8,6 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import config from './../Config/settings'
 
-import { Redirect } from 'react-router'
-
-
 export class DeactivateAccount extends Component {
 
     constructor(props) {
@@ -37,26 +34,20 @@ export class DeactivateAccount extends Component {
     deactivateButton = () => {
 
         let username = localStorage.getItem('username')
-        let token = localStorage.getItem('token')
-        
         
         axios.defaults.withCredentials = true;
         let data = {
             username
         }
-        console.log(data.username)
         axios({
             method: 'post',
-                url: 'http://'+config.hostname+':3001/deactivateAccount',
+                url: 'http://'+config.hostname+':3001/getProfileDetails',
                 data,
                 config: { headers: { 'Content-Type': 'application/json' } },
                 headers: { "Authorization": `Bearer ${token}` }
             }).then(response => {
             if (response.status === 200) {
                 console.log('Account deactivated');
-                this.setState({
-                    deactivate: true
-                })
                
             } else {
                 //alert('failed to Account deactivated');
@@ -69,10 +60,6 @@ export class DeactivateAccount extends Component {
 
     
     render() {
-       // var next;
-        if(this.state.deactivate){
-            return <Redirect to="/" />
-        }
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
@@ -109,7 +96,7 @@ export class DeactivateAccount extends Component {
                             Twitter for iOS, or Twitter for Android.
                             </p>
                             <center>
-                            <Button  onClick={this.deactivateButton} variant="danger">Deactivate</Button>
+                            <Button variant="danger">Deactivate</Button>
                             </center>
                         </div>
 

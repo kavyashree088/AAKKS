@@ -119,7 +119,7 @@ router.post('/deactivateAccount', function (req, res) {
   console.log(req.body.username)
 //  console.log(req.params.data);
 
-  kafka.make_request('loginSignuptopic', { "path": "deactivateAccount", "username": req.body.username }, function (err, result) {
+  kafka.make_request('loginSignuptopic', { "path": "deactivateAccount", "username": req.data.username }, function (err, result) {
     console.log(result)
     if (err) {
       res.status(500).json({ responseMessage: 'Database not responding' });

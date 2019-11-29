@@ -8,9 +8,6 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import config from './../Config/settings'
 
-import { Redirect } from 'react-router'
-
-
 export class DeactivateAccount extends Component {
 
     constructor(props) {
@@ -39,12 +36,10 @@ export class DeactivateAccount extends Component {
         let username = localStorage.getItem('username')
         let token = localStorage.getItem('token')
         
-        
         axios.defaults.withCredentials = true;
         let data = {
             username
         }
-        console.log(data.username)
         axios({
             method: 'post',
                 url: 'http://'+config.hostname+':3001/deactivateAccount',
@@ -54,9 +49,6 @@ export class DeactivateAccount extends Component {
             }).then(response => {
             if (response.status === 200) {
                 console.log('Account deactivated');
-                this.setState({
-                    deactivate: true
-                })
                
             } else {
                 //alert('failed to Account deactivated');
@@ -69,10 +61,6 @@ export class DeactivateAccount extends Component {
 
     
     render() {
-       // var next;
-        if(this.state.deactivate){
-            return <Redirect to="/" />
-        }
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },

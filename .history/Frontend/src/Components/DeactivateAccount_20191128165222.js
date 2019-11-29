@@ -44,7 +44,6 @@ export class DeactivateAccount extends Component {
         let data = {
             username
         }
-        console.log(data.username)
         axios({
             method: 'post',
                 url: 'http://'+config.hostname+':3001/deactivateAccount',

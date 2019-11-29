@@ -3,12 +3,6 @@ import React, { Component } from 'react'
 
 import { Row, Col } from 'react-bootstrap'
 import LeftNav from './LeftNav';
-import Button from 'react-bootstrap/Button'
-
-import axios from 'axios';
-import config from './../Config/settings'
-
-import { Redirect } from 'react-router'
 
 
 export class DeactivateAccount extends Component {
@@ -19,60 +13,21 @@ export class DeactivateAccount extends Component {
         this.state = {
             deactivate: false,
             firstname:'',
-            username:'',
         }
-        
-        this.deactivateButton = this.deactivateButton.bind(this)
+
+        // this.deactivateChangeHandler = this.deactivateChangeHandler.bind(this)
+        // this.yesButtonOnSubmit = this.yesButtonOnSubmit.bind(this)
 
     }
 
     componentWillMount = () =>{
         this.setState({
             firstname: localStorage.getItem('firstname'),
-            username: localStorage.getItem('username'),
-        })
-    }
-
-
-    deactivateButton = () => {
-
-        let username = localStorage.getItem('username')
-        let token = localStorage.getItem('token')
-        
-        
-        axios.defaults.withCredentials = true;
-        let data = {
-            username
-        }
-        console.log(data.username)
-        axios({
-            method: 'post',
-                url: 'http://'+config.hostname+':3001/deactivateAccount',
-                data,
-                config: { headers: { 'Content-Type': 'application/json' } },
-                headers: { "Authorization": `Bearer ${token}` }
-            }).then(response => {
-            if (response.status === 200) {
-                console.log('Account deactivated');
-                this.setState({
-                    deactivate: true
-                })
-               
-            } else {
-                //alert('failed to Account deactivated');
-                console.log('Failed to Account deactivated');
-            }
-        }).catch(error => {
-            console.log(error);
         })
     }
 
     
     render() {
-       // var next;
-        if(this.state.deactivate){
-            return <Redirect to="/" />
-        }
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
@@ -102,15 +57,13 @@ export class DeactivateAccount extends Component {
                             <h3>
                             This will deactivate your account
                             </h3>
-                            <br></br>
+                            
                             <p>
                             You’re about to start the process of deactivating your Twitter account. 
-                            Your display name, <b>@{this.state.username}</b>, and public profile will no longer be viewable on Twitter.com, 
+                            Your display name, @username, and public profile will no longer be viewable on Twitter.com, 
                             Twitter for iOS, or Twitter for Android.
+
                             </p>
-                            <center>
-                            <Button  onClick={this.deactivateButton} variant="danger">Deactivate</Button>
-                            </center>
                         </div>
 
                         <div>
