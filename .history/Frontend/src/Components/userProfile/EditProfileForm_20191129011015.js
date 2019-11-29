@@ -106,7 +106,7 @@ export class EditProfileForm extends Component {
 
 
     render() {
-        console.log(this.props);
+
         let imageDiv = (<div className='buttons fadein'>
             <div className='button'>
                 <label htmlFor='single'>

@@ -103,7 +103,6 @@ export class UserProfile extends Component {
             showEditButtonModal: true,
         })
     }
-
     closeEditProfileModal = () => {
         this.setState({
             showEditButtonModal: false,
@@ -157,7 +156,7 @@ export class UserProfile extends Component {
         if (this.state.showEditButtonModal) {
 
             EditProfileFormDOM = <EditProfileForm
-                onClose={this.closeEditProfileModal}
+                onClose={this.closeEditprofileModal}
                 onSave={this.saveEditProfileModal}
                 profileInfo={this.state}
             />;

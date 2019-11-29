@@ -74,7 +74,7 @@ router.post('/login', function (req, res) {
     if (err) {
       res.status(500).json({ responseMessage: 'Database not responding' });
     }
-    if (result.status==200) {
+    if (result) {
       console.log("result.password")
       console.log(result.status)
       console.log(result.password)
@@ -94,10 +94,6 @@ router.post('/login', function (req, res) {
 
         }
       })
-    }
-    else {
-      console.log("Authentication failed. Passwords did not match");
-      res.status(200).json({ responseMessage: 'Invalid credentials' })
     }
   })
 })

@@ -95,10 +95,6 @@ router.post('/login', function (req, res) {
         }
       })
     }
-    else {
-      console.log("Authentication failed. Passwords did not match");
-      res.status(200).json({ responseMessage: 'Invalid credentials' })
-    }
   })
 })
 

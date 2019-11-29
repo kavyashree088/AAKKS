@@ -52,13 +52,11 @@ class Signup extends Component {
             firstName: e.target.value
         })
     }
-
     lastNameChangeHandler = (e) => {
         this.setState({
             lastName: e.target.value
         })
     }
-
     passwordChangeHandler = (e) => {
         var isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/.test(e.target.value)
         if(isValidPassword){
@@ -101,83 +99,71 @@ class Signup extends Component {
         }
         
     }
-
     stateChangeHandler = (e) => {
-        let userInputState = e.target.value;
-        const states = new Set([
-            'al', 'alabama',
-            'ak', 'alaska',
-            'az', 'arizona',
-            'ar', 'arkansas',
-            'ca', 'california',
-            'co', 'colorado',
-            'ct', 'connecticut',
-            'de', 'delaware',
-            'dc', 'district of columbia',
-            'fl', 'florida',
-            'ga', 'georgia',
-            'hi', 'hawaii',
-            'id', 'idaho',
-            'il', 'illinois',
-            'in', 'indiana',
-            'ia', 'iowa',
-            'ks', 'kansas',
-            'ky', 'kentucky',
-            'la', 'louisiana',
-            'me', 'maine',
-            'md', 'maryland',
-            'ma', 'massachusetts',
-            'mi', 'michigan',
-            'mn', 'minnesota',
-            'ms', 'mississippi',
-            'mo', 'missouri',
-            'mt', 'montana',
-            'ne', 'nebraska',
-            'nv', 'nevada',
-            'nh', 'new hampshire',
-            'nj', 'new jersey',
-            'nm', 'new mexico',
-            'ny', 'new york',
-            'nc', 'north carolina',
-            'nd', 'north dakota',
-            'oh', 'ohio',
-            'ok', 'oklahoma',
-            'or', 'oregon',
-            'pa', 'pennsylvania',
-            'ri', 'rhode island',
-            'sc', 'south carolina',
-            'sd', 'south dakota',
-            'tn', 'tennessee',
-            'tx', 'texas',
-            'ut', 'utah',
-            'vt', 'vermont',
-            'va', 'virginia',
-            'wa', 'washington',
-            'wv', 'west virginia',
-            'wi', 'wisconsin',
-            'wy', 'wyoming'
+
+        const states = ([
+            'AL', 'Alabama',
+            'AK', 'Alaska',
+            'AZ', 'Arizona',
+            'AR', 'Arkansas',
+            'CA', 'California',
+            'CO', 'Colorado',
+            'CT', 'Connecticut',
+            'DE', 'Delaware',
+            'DC', 'District of Columbia',
+            'FL', 'Florida',
+            'GA', 'Georgia',
+            'HI', 'Hawaii',
+            'ID', 'Idaho',
+            'IL', 'Illinois',
+            'IN', 'Indiana',
+            'IA', 'Iowa',
+            'KS', 'Kansas',
+            'KY', 'Kentucky',
+            'LA', 'Louisiana',
+            'ME', 'Maine',
+            'MD', 'Maryland',
+            'MA', 'Massachusetts',
+            'MI', 'Michigan',
+            'MN', 'Minnesota',
+            'MS', 'Mississippi',
+            'MO', 'Missouri',
+            'MT', 'Montana',
+            'NE', 'Nebraska',
+            'NV', 'Nevada',
+            'NH', 'New Hampshire',
+            'NJ', 'New Jersey',
+            'NM', 'New Mexico',
+            'NY', 'New York',
+            'NC', 'North Carolina',
+            'ND', 'North Dakota',
+            'OH', 'Ohio',
+            'OK', 'Oklahoma',
+            'OR', 'Oregon',
+            'PA', 'Pennsylvania',
+            'RI', 'Rhode Island',
+            'SC', 'South Carolina',
+            'SD', 'South Dakota',
+            'TN', 'Tennessee',
+            'TX', 'Texas',
+            'UT', 'Utah',
+            'VT', 'Vermont',
+            'VA', 'Virginia',
+            'WA', 'Washington',
+            'WV', 'West Virginia',
+            'WI', 'Wisconsin',
+            'WY', 'Wyoming'
         ]);  
         
-        if (states.has(userInputState.toLowerCase()) === true) {
-            console.log(userInputState.toLowerCase());
-            this.setState({
-                state: userInputState,
-                message:""
-            })
-        } else {
-            this.setState({
-                finishedSignUp: false,
-                message: "Please enter valid State"
-            })
-        }
+        this.setState({
+            state: e.target.value
+        })
     }
-
     cityChangeHandler = (e) => {
         this.setState({
             city: e.target.value
         })
     }
-
     zipcodeChangeHandler = (e) => {
         var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
         if (isValidZip){
@@ -245,6 +231,8 @@ class Signup extends Component {
                 }
             });
     }
+
+
 
     render() {
 
