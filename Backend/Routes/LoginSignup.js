@@ -34,7 +34,9 @@ router.post('/signup', function (req, res) {
       "username": req.body.username,
       "email": formatEmail,
       "password": enPassword,
-      "firstName": req.body.firstName
+
+      "firstName": req.body.firstName,
+      "lastName": req.body.lastName
     }
 
     kafka.make_request('loginSignuptopic', { "path": "signup", "inputData": inputData, "data": req.body, "formatEmail": formatEmail }, function (err, result) {
@@ -48,7 +50,11 @@ router.post('/signup', function (req, res) {
       else if (result.status === 200) {
         console.log("User Added");
         res.status(200).json({ responseMessage: 'Successfully Added!' });
-      } else {
+      } else if (result.status === 205) {
+        console.log("User already exists");
+        res.status(200).json({ responseMessage: 'User Already exists!' });
+      }
+      else {
         console.log("User already exists");
         res.status(200).json({ responseMessage: 'User Already exists!' });
       }
@@ -69,7 +75,8 @@ router.post('/login', function (req, res) {
     if (err) {
       res.status(500).json({ responseMessage: 'Database not responding' });
     }
-    if (result) {
+
+    if (result.status == 200) {
       console.log("result.password")
       console.log(result.status)
       console.log(result.password)
@@ -81,7 +88,7 @@ router.post('/login', function (req, res) {
             expiresIn: 7200 // expires in 2 hours
           });
           req.session.user = result.username;
-          res.status(200).json({ validUser: true, responseMessage: 'Login Successfully', token: token, info: { username: result.username, firstname: result.firstname } });
+          res.status(200).json({ validUser: true, responseMessage: 'Login Successfully', token: token, info: { username: result.username, firstname: result.firstname, lastname: result.lastname } });
           console.log("User found in DB and token is", token);
         } else {
           console.log("Authentication failed. Passwords did not match");
@@ -89,6 +96,49 @@ router.post('/login', function (req, res) {
 
         }
       })
+    }
+    else {
+      console.log("Authentication failed. Passwords did not match");
+      res.status(200).json({ responseMessage: 'Invalid credentials' })
+    }
+  })
+})
+
+router.post('/deleteAccount', function (req, res) {
+  console.log("Inside deleteAccount post request");
+  console.log("Request req.query:");
+  console.log(req.body);
+
+  kafka.make_request('loginSignuptopic', { "path": "deleteAccount", "username": req.body.username }, function (err, result) {
+    console.log(result)
+    if (err) {
+      res.status(500).json({ responseMessage: 'Database not responding' });
+    }
+    else {
+      console.log("result")
+      console.log(result)
+      res.status(200).json({ delete: true, responseMessage: 'Deletion Successfully' });
+
+    }
+  })
+})
+
+router.post('/deactivateAccount', function (req, res) {
+  console.log("Inside deactivateAccount post request");
+  console.log("Request req.body:");
+  console.log(req.body.username)
+  //  console.log(req.params.data);
+
+  kafka.make_request('loginSignuptopic', { "path": "deactivateAccount", "username": req.body.username }, function (err, result) {
+    console.log(result)
+    if (err) {
+      res.status(500).json({ responseMessage: 'Database not responding' });
+    }
+    else {
+      console.log("result")
+      console.log(result)
+      res.status(200).json({ deactivate: true, responseMessage: 'Deactivation Successfully' });
+
     }
   })
 })

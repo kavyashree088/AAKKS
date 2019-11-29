@@ -55,7 +55,10 @@ UserSchema = new Schema({
   },
 
   followers:[],
-  following:[]
+  following:[],
+
+  listMember : [],
+  listSubscriber : []
 });
     
 module.exports = mongoose.model('Users', UserSchema);

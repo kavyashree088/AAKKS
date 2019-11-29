@@ -1,8 +1,8 @@
-
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import { rooturl } from './../../Config/settings.js'
+
+import config from '../../Config/settings.js'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col'
 import './../../CSS/SignupPage.css'
 
 let faker = require('faker')
+const validator = require('validator');
 
 
 
@@ -29,7 +30,8 @@ class Signup extends Component {
             state: "",
             city: "",
             finishedSignUp: false,
-            message: ""
+            message: "",
+            signup:false,
         }
 
         this.firstNameChangeHandler = this.firstNameChangeHandler.bind(this)
@@ -45,53 +47,161 @@ class Signup extends Component {
         this.submitSignUp = this.submitSignUp.bind(this)
 
     }
+
     firstNameChangeHandler = (e) => {
         this.setState({
             firstName: e.target.value
         })
     }
+
     lastNameChangeHandler = (e) => {
         this.setState({
             lastName: e.target.value
         })
     }
+
     passwordChangeHandler = (e) => {
-        this.setState({
-            userPassword: e.target.value
-        })
+        var isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/.test(e.target.value)
+        if(isValidPassword){
+            this.setState({
+                //finishedSignUp: true,
+                userPassword: e.target.value,
+                message: ""
+            })
+        }
+        else{
+            this.setState({
+                finishedSignUp: false,
+                message: "Please enter a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
+            })
+        }
+        
     }
 
     usernameChangeHandler = (e) => {
+        var str = (e.target.value).toLowerCase()
         this.setState({
-            username: e.target.value
+            username: str
         })
     }
 
     emailChangeHandler = (e) => {
-        this.setState({
-            email: e.target.value
-        })
+        var isValidEmail = /\S+@\S+\.\S+/.test(e.target.value)
+        if(isValidEmail){
+            this.setState({
+                //finishedSignUp: true,
+                email: e.target.value,
+                message: ""
+            })
+        }
+        else{
+            this.setState({
+                finishedSignUp: false,
+                message:"please enter valid email"
+            })
+        }
+        
     }
+
     stateChangeHandler = (e) => {
-        this.setState({
-            state: e.target.value
-        })
+        let userInputState = e.target.value;
+        const states = new Set([
+            'al', 'alabama',
+            'ak', 'alaska',
+            'az', 'arizona',
+            'ar', 'arkansas',
+            'ca', 'california',
+            'co', 'colorado',
+            'ct', 'connecticut',
+            'de', 'delaware',
+            'dc', 'district of columbia',
+            'fl', 'florida',
+            'ga', 'georgia',
+            'hi', 'hawaii',
+            'id', 'idaho',
+            'il', 'illinois',
+            'in', 'indiana',
+            'ia', 'iowa',
+            'ks', 'kansas',
+            'ky', 'kentucky',
+            'la', 'louisiana',
+            'me', 'maine',
+            'md', 'maryland',
+            'ma', 'massachusetts',
+            'mi', 'michigan',
+            'mn', 'minnesota',
+            'ms', 'mississippi',
+            'mo', 'missouri',
+            'mt', 'montana',
+            'ne', 'nebraska',
+            'nv', 'nevada',
+            'nh', 'new hampshire',
+            'nj', 'new jersey',
+            'nm', 'new mexico',
+            'ny', 'new york',
+            'nc', 'north carolina',
+            'nd', 'north dakota',
+            'oh', 'ohio',
+            'ok', 'oklahoma',
+            'or', 'oregon',
+            'pa', 'pennsylvania',
+            'ri', 'rhode island',
+            'sc', 'south carolina',
+            'sd', 'south dakota',
+            'tn', 'tennessee',
+            'tx', 'texas',
+            'ut', 'utah',
+            'vt', 'vermont',
+            'va', 'virginia',
+            'wa', 'washington',
+            'wv', 'west virginia',
+            'wi', 'wisconsin',
+            'wy', 'wyoming'
+        ]);  
+        
+        if (states.has(userInputState.toLowerCase()) === true) {
+            console.log(userInputState.toLowerCase());
+            this.setState({
+                state: userInputState,
+                message:""
+            })
+        } else {
+            this.setState({
+                finishedSignUp: false,
+                message: "Please enter valid State"
+            })
+        }
     }
+
     cityChangeHandler = (e) => {
         this.setState({
             city: e.target.value
         })
     }
+
     zipcodeChangeHandler = (e) => {
-        this.setState({
-            zipcode: e.target.value
-        })
+        var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
+        if (isValidZip){
+            this.setState({
+                //finishedSignUp: true,
+                zipcode: e.target.value,
+                message: ""
+            })
+        }
+        else {
+            this.setState({
+                finishedSignUp: false,
+                message: "Please enter valid Zipcode"
+            })
+        }
+       
     }
 
     submitSignUp = (e) => {
         //console.log("in submit ")
         e.preventDefault();
         console.log(this.state.message)
+       
 
         const data = {
             firstName: this.state.firstName,
@@ -112,8 +222,9 @@ class Signup extends Component {
         })
 
         axios.defaults.withCredentials = true;
-        console.log(rooturl)
-        axios.post('http://' + rooturl + ':3001/signup', data)
+
+        axios.post('http://' + config.hostname + ':'+ config.port + '/signup', data)
+
             .then(response => {
                 console.log("frontend")
                 //console.log("Status Code : ", response.status);
@@ -125,23 +236,23 @@ class Signup extends Component {
                 if (response.data.responseMessage === 'Successfully Added!') {
                     this.setState({
                         finishedSignUp: true,
+                        signup: true,
                         message: "User signed up successfully"
                     })
                 } else {
                     this.setState({
                         finishedSignUp: false,
+                        signup: false,
                         message: "username already exists"
                     })
                 }
             });
     }
 
-
-
     render() {
 
         var nextpage = null
-        if (this.state.finishedSignUp === true) {
+        if (this.state.finishedSignUp === true && this.state.signup === true) {
             nextpage = <Redirect to="/" />
         }
         return (

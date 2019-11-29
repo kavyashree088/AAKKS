@@ -6,14 +6,18 @@ var dbConnection = require('./database/dbConnectionPool');
 
 var connection = new require('./kafka/Connection');
 
+var dbConnection = require('./database/dbConnectionPool');
+
 //topics file
 var tweetTopics = require('./services/tweetTopics.js');
 var messageTopics = require('./services/messageTopics.js')
+var profileTopic = require('./services/ProfileTopic.js')
+var SignupSignin = require('./services/LoginSignup')
 
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
-//var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
+
 var connStr = config.connection_string;
 console.log(connStr);
 
@@ -56,7 +60,6 @@ function handleTopicRequest(topic_name, fname) {
         break;
       case 'loginSignuptopic':
         SignupSignin.loginSignupService(data.data, function (err, res) {
-          console.log(res)
           response(data, res, producer);
           return;
         });
@@ -65,7 +68,14 @@ function handleTopicRequest(topic_name, fname) {
         messageTopics.messageService(data.data, function (err, res) {
           response(data, res, producer);
           return;
-        });
+        })
+        break;
+      case 'profileTopic':
+        profileTopic.profileTopicService(data.data, function (err, res) {
+          console.log("in switch case profileTopic")
+          response(data, res, producer)
+          return;
+        })
         break;
     }
   })
@@ -93,8 +103,7 @@ function response(data, res, producer) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 //handleTopicRequest("loginSignuptopic", SignupSignin);
-handleTopicRequest("tweetTopics", tweetTopics);
 handleTopicRequest("loginSignuptopic", SignupSignin);
 handleTopicRequest("messageTopics", messageTopics);
-//handleTopicRequest("tweetTopics", tweetTopics)
-
+handleTopicRequest("tweetTopics", tweetTopics);
+handleTopicRequest("profileTopic", profileTopic);

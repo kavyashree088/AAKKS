@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import FollowersTweets from "./FollowersTweets.js";
-const settings = require('./../Config/settings');
+const settings = require('../Config/settings');
 
 export class TweetContent extends Component {
     state = {

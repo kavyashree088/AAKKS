@@ -1,4 +1,6 @@
 var kafka = require('kafka-node');
+var config = require('../config/settings');
+const kafkaConn = config.kafka_host + ":" + config.kafka_port;
 
 function ConnectionProvider() {
     this.getConsumer = function (topic_name) {
@@ -14,7 +16,7 @@ function ConnectionProvider() {
     this.getProducer = function () {
 
         if (!this.kafkaProducerConnection) {
-            this.client = new kafka.KafkaClient("localhost:2181");
+            this.client = new kafka.KafkaClient(kafkaConn);
             var HighLevelProducer = kafka.HighLevelProducer;
             this.kafkaProducerConnection = new HighLevelProducer(this.client);
             console.log('Topic Producer is ready');

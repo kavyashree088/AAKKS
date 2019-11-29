@@ -1,0 +1,20 @@
+.coverImageStyle {
+    bottom: 0px;
+    height: 100%;
+    top: 30px;
+    width: 100%;
+    z-index: -1;
+}
+.img-thumbnail {
+    padding: .25rem;
+    padding-top: 0.25rem;
+    padding-right: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    max-width: 80%;
+    height: 150px;
+    margin-top: -15%;
+}

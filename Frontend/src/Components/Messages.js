@@ -124,13 +124,13 @@ class Messages extends Component {
     }
     render() {
         let links = [
-            { label: 'Home', link: '/', className: "fas fa-home" },
+            { label: 'Home', link: '/home', className: "fas fa-home" },
             { label: 'Explore', link: '/explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope", active: true },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
+            { label: 'Profile', link: '/profile', className: "fas fa-user-circle" },
             { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];
         let listMessages = this.state.userMessageList.map(messages => {
