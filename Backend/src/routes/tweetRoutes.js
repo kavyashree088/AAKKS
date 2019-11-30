@@ -83,11 +83,11 @@ router.post('/writeATweet',  upload.single('tweetImages'), function (req, res) {
 });
 
 router.post('/getUserTweets', function(req, res){
-  let {userId} = req.body;
+  let {username} = req.body;
   console.log("in getUserTweets");
   console.log(req.body);
   try {
-    let redisKey = "tweets_" + userId;
+    let redisKey = "tweets_" + username;
     redisClient.get(redisKey, async function(err, tweets) {
       if(err){
         console.log(err);
@@ -97,7 +97,7 @@ router.post('/getUserTweets', function(req, res){
         res.status(200).json({message: tweets});
       } else {
         console.log("tweets not cached in redis!!");
-        kafka.make_request('tweetTopics',{'path':'getUserTweets', userId}, function(err,result){
+        kafka.make_request('tweetTopics',{'path':'getUserTweets', username}, function(err,result){
           var responseObj = {
             status : false,
             message :""
@@ -142,8 +142,8 @@ router.post('/getUserTweets', function(req, res){
 });
 
 router.post('/likeATweet', function(req, res){
-  let {userId, tweetId} = req.body;
-  kafka.make_request('tweetTopics',{'path':'likeATweet', userId, tweetId}, function(err,result){
+  let {username, tweetId} = req.body;
+  kafka.make_request('tweetTopics',{'path':'likeATweet', username, tweetId}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -170,8 +170,8 @@ router.post('/likeATweet', function(req, res){
 });
 
 router.post('/unlikeATweet', function(req, res){
-  let {userId, tweetId} = req.body;
-  kafka.make_request('tweetTopics',{'path':'unlikeATweet', userId, tweetId}, function(err,result){
+  let {username, tweetId} = req.body;
+  kafka.make_request('tweetTopics',{'path':'unlikeATweet', username, tweetId}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -199,10 +199,10 @@ router.post('/unlikeATweet', function(req, res){
 
 
 router.post('/replyATweet', function(req, res){
-  let {userId, tweetId, replyText} = req.body;
+  let {username, tweetId, replyText} = req.body;
   console.log("in replyATweet..");
   console.log(req.body);
-  kafka.make_request('tweetTopics',{'path':'replyATweet', userId, tweetId, replyText}, function(err,result){
+  kafka.make_request('tweetTopics',{'path':'replyATweet', username, tweetId, replyText}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -258,8 +258,8 @@ router.post('/getDashboardTweets', function(req, res){
 });
 
 router.post('/bookmarkATweet', function(req, res){
-  let {userId, tweetId} = req.body;
-  kafka.make_request('tweetTopics', {'path':'bookmarkATweet', tweetId, userId}, function(err,result){
+  let {username, tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'bookmarkATweet', tweetId, username}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -286,8 +286,8 @@ router.post('/bookmarkATweet', function(req, res){
 });
 
 router.post('/unbookmarkATweet', function(req, res){
-  let {userId, tweetId} = req.body;
-  kafka.make_request('tweetTopics', {'path':'unbookmarkATweet', tweetId, userId}, function(err,result){
+  let {username, tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'unbookmarkATweet', tweetId, username}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -315,9 +315,9 @@ router.post('/unbookmarkATweet', function(req, res){
 
 
 router.post('/retweetWithComment', function(req, res){
-  let {userId, actualTweetId, tweetText} = req.body;
+  let {username, actualTweetId, tweetText} = req.body;
   let currTimeStamp = Date.now();
-  let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId, createdAt : currTimeStamp} ;
+  let tweetDetails =  {username, tweetText, isRetweet : 'true', actualTweetId, createdAt : currTimeStamp} ;
   kafka.make_request('tweetTopics', {'path':'writeATweet', tweetDetails}, function(err,result){
     var responseObj = {
       status : false,
@@ -345,8 +345,8 @@ router.post('/retweetWithComment', function(req, res){
 });
 
 router.post('/retweetWithoutComment', function(req, res){
-  let {userId, tweetId} = req.body;
-  kafka.make_request('tweetTopics', {'path':'retweetWithoutComment', tweetId, userId}, function(err,result){
+  let {username, tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'retweetWithoutComment', tweetId, username}, function(err,result){
     var responseObj = {
       status : false,
       message :''
@@ -376,9 +376,9 @@ router.post('/retweetWithoutComment', function(req, res){
 
 
 router.post('/deleteATweet', function(req, res){
-  let {userId, tweetId} = req.body;
-  //let tweetDetails =  {userId, tweetText, isRetweet : 'true', actualTweetId} ;
-  kafka.make_request('tweetTopics', {'path':'deleteATweet', tweetId, userId}, function(err,result){
+  let {username, tweetId} = req.body;
+  //let tweetDetails =  {username, tweetText, isRetweet : 'true', actualTweetId} ;
+  kafka.make_request('tweetTopics', {'path':'deleteATweet', tweetId, username}, function(err,result){
     var responseObj = {
       status : false,
       message :''

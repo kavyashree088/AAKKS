@@ -28,8 +28,9 @@ export let processTweetText = (tweetText) => {
  }
 export let getUserFullName = () => {
     //TODO : combine localstorage firstname + " "+ lastname
-    return 'Anjali Bandaru';
+    return 'Keerthi Akella';
 }
 export let getUserName =() => {
+    //TODO : get from local storage
     return 'anjali';
 }

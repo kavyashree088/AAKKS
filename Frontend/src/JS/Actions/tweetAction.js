@@ -20,10 +20,12 @@ export const getDashboardTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            dispatch({
-                type: DASHBOARDTWEETS,
-                payload : responseData.message
-            })
+            if(responseData.status){
+                dispatch({
+                    type: DASHBOARDTWEETS,
+                    payload : responseData.message
+                });
+            }
         }).catch(function (err) {
             console.log(err)
         });

@@ -41,7 +41,7 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
 };
 
 let writeATweet = async(message, callback) => {
-    //let userId = message.userId;
+    //let username = message.username;
     let tweetDetails = message.tweetDetails;
     console.log("In tweet topics : writeATweet ", message);
     let tweetText = tweetDetails.tweetText;
@@ -70,8 +70,8 @@ let writeATweet = async(message, callback) => {
 };
 
 let replyATweet = (message, callback) => {
-    let {userId, tweetId, replyText} = message;
-    tweet.update({_id: tweetId}, {$push : {'replies' : {userId, replyText}}}, (err, result) => {
+    let {username, tweetId, replyText} = message;
+    tweet.update({_id: tweetId}, {$push : {'replies' : {username, replyText}}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -88,8 +88,8 @@ let replyATweet = (message, callback) => {
 }
 
 let getUserTweets = (message, callback) => {
-    let userId = message.userId;
-    tweet.find({userId}, (err, result)=>{
+    let username = message.username;
+    tweet.find({username}, (err, result)=>{
         if(err){
             console.log("unable to find in database", err);
             callback(err, "Database Error");
@@ -106,10 +106,9 @@ let getUserTweets = (message, callback) => {
 }
 
 let likeATweet = function(message, callback){
-    //let userId = message.userId;
-    let { tweetId, userId } = message;
+    let { tweetId, username } = message;
     console.log("In tweet topics : likeATweet ", message);
-    tweet.update({"_id" : tweetId}, {$push:{"likes":userId}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$push:{"likes":username}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -126,10 +125,10 @@ let likeATweet = function(message, callback){
 };
 
 let unlikeATweet = function(message, callback){
-    //remove userId from likes
-    let { tweetId, userId } = message;
+    //remove username from likes
+    let { tweetId, username } = message;
     console.log("In tweet topics : unlikeATweet ", message);
-    tweet.update({"_id" : tweetId}, {$pull:{"likes":userId}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$pull:{"likes":username}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -168,27 +167,64 @@ let processTweets = async (tweets) => {
 }
 
 let getDashboardTweets =  async (message, callback) => {
-    let followersList = ['999', '1000'];
-    console.log(followersList);
-    await tweet.find({userId : { $in : followersList } }).lean().exec(async(err, result) => {
-        if(err) {
+    let {username} = message;
+    let followingActive = [], following = [];
+    await user.findOne({username}, async (err, result) => {
+        if(err){
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
-        } else if(result){
-            console.log("tweets returned!!");
-            console.log(result);
-            result = await processTweets(result);
-             callback(null, { status: 200,  message: result });
         } else {
-           callback(null, { status: 200,  message:"tweets list cannot be returned!!" });
+            console.log("result  is..");
+            console.log(result);
+            if(result){
+               following = result.following; 
+               if(following && following.length > 0){
+                for(let i = 0; i < following.length; i++){
+                    let person1 = following[i];
+                    console.log("person1 is..");
+                    console.log(person1);
+                    await user.findOne({'username' : person1}, (err, result) => {
+                        console.log("user follower result..");
+                        console.log(result);
+                        if(result && result.active){
+                            followingActive.push(person1);
+                        }
+                    });
+                }
+              } 
+              console.log("followingactive..");
+              console.log(followingActive);
+              if(followingActive && followingActive.length > 0){
+                await tweet.find({username : { $in : followingActive } }).lean().exec(async(err, result) => {
+                    if(err) {
+                        console.log("unable to insert into database", err);
+                        callback(err, "Database Error");
+                    } else if(result){
+                        console.log("tweets returned!!");
+                        console.log(result);
+                        result = await processTweets(result);
+                        callback(null, { status: 200,  message: result });
+                    } else {
+                       callback(null, { status: 401,  message:"tweets list cannot be returned!!" });
+                    }
+                });
+               } else {
+                  callback(null, { status: 401,  message:"tweets list cannot be returned!!" });
+               }
+            } else {
+                callback(null, { status: 401,  message:"tweets list cannot be returned!!" });
+            }
         }
     });
+    
+  
+    
 };
 
 let bookmarkATweet = (message, callback) => {
-    let { userId, tweetId } = message;
+    let { username, tweetId } = message;
     console.log("in bookmarkATweet..", message);
-    tweet.update({"_id" : tweetId}, {$push: {'bookmarks' : userId}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$push: {'bookmarks' : username}}, (err, result) => {
         if(err) {
             console.log('unable to insert into database', err);
             callback(err, 'Database Error');
@@ -202,9 +238,9 @@ let bookmarkATweet = (message, callback) => {
 }
 
 let unbookmarkATweet = (message, callback) => {
-    let { userId, tweetId } = message;
+    let { username, tweetId } = message;
     console.log("in unbookmarkATweet..", message);
-    tweet.update({"_id" : tweetId}, {$pull: {'bookmarks' : userId}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$pull: {'bookmarks' : username}}, (err, result) => {
         if(err) {
             console.log('unable to insert into database', err);
             callback(err, 'Database Error');
@@ -218,7 +254,7 @@ let unbookmarkATweet = (message, callback) => {
 }
 
 let deleteATweet = (message, callback) => {
-    let { userId, tweetId } = message;
+    let { username, tweetId } = message;
     console.log("in bookmarkATweet..");
     tweet.remove({"_id" : tweetId}, (err, result) => {
         if(err) {
@@ -236,8 +272,8 @@ let deleteATweet = (message, callback) => {
 
 
 let retweetWithoutComment = (message, callback) => {
-    let {userId, tweetId}  = message;
-    tweet.update({'_id': tweetId}, {$push: {'retweets' : userId} }, (err, result) => {
+    let {username, tweetId}  = message;
+    tweet.update({'_id': tweetId}, {$push: {'retweets' : username} }, (err, result) => {
         if(err) {
             console.log('unable to delete into database', err);
             callback(err, 'Database Error');
