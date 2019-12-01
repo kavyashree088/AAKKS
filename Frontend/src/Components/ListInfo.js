@@ -176,27 +176,26 @@ class ListInfo extends Component {
     });
   };
 
-removeMemberFromList=value=>{
+  removeMemberFromList = value => {
+    const data = {
+      memberID: value,
+      listID: this.props.location.state.list._id
+    };
+    console.log("Data for remove member from list", data);
 
-  const data = {
-    memberID: value,
-    listID: this.props.location.state.list._id
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios
+      .post(
+        "http://" + hostAddress + ":" + port + "/removeMember/removeMember",
+        data,
+        config
+      )
+      .then(response => {
+        console.log("Hello add member Data received:", response.data);
+        this.goToBack();
+      });
   };
-  console.log("Data for remove member from list",data);
-
-  axios.defaults.withCredentials = true;
-  //make a post request with the user data
-  axios
-    .post(
-      "http://" + hostAddress + ":" + port + "/removeMember/removeMember",
-      data,
-      config
-    )
-    .then(response => {
-      console.log("Hello add member Data received:", response.data);
-      this.goToBack();
-    });
-}
 
   removeMember = value1 => {
     console.log(value1);
@@ -349,17 +348,22 @@ removeMemberFromList=value=>{
 
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
-
-         let removeButtonShow=null;
+          let removeButtonShow = null;
           // if(this.props.location.state.list.creatorID==localStorage.getItem('username')){
           if (this.props.location.state.list.creatorID == "alaukika") {
-            console.log("I am here")
-            removeButtonShow=(
-              <button class="removeButton"  onClick={this.removeMemberFromList.bind(this, listItem.username)}><b>Remove</b>
+            console.log("I am here");
+            removeButtonShow = (
+              <button
+                class="removeButton"
+                onClick={this.removeMemberFromList.bind(
+                  this,
+                  listItem.username
+                )}
+              >
+                <b>Remove</b>
               </button>
-            )
-
-         }
+            );
+          }
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
@@ -386,10 +390,7 @@ removeMemberFromList=value=>{
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
               </span>
-              <span  style={{ fontSize: "14px" }}>
-             
-                 {removeButtonShow}
-              </span>
+              <span style={{ fontSize: "14px" }}>{removeButtonShow}</span>
             </div>
           );
         });
@@ -578,8 +579,8 @@ removeMemberFromList=value=>{
       { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
       { label: "Notifications", link: "#home", className: "fas fa-bell" },
       { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
-      { label: "Bookmarks", link: "#home", className: "fas fa-bookmark" },
-      { label: "Lists", link: "#home", className: "fas fa-list-alt" },
+      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
+      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
       { label: "Profile", link: "#home", className: "fas fa-user-circle" },
       { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
     ];

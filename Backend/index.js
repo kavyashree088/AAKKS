@@ -60,7 +60,9 @@ const subscribeListRouter = require('./Routes/subscribeList');
 const unsubscribeListRouter = require('./Routes/unsubscribeList');
 const updateListRouter = require('./Routes/updateList');
 
-const bookmarkTweetRouter = require('./Routes/bookmarkTweet');
+const tweetRoutes = require('./Routes/tweetRoutes');
+
+//const bookmarkTweetRouter = require('./Routes/bookmarkTweet');
 const getBookmarksRouter = require('./Routes/getBookmarks');
 
 app.use('/createList',createListRouter);
@@ -79,7 +81,7 @@ app.use('/unsubscribeList',unsubscribeListRouter);
 app.use('/updateList',updateListRouter);
 
 app.use('/getBookmarks',getBookmarksRouter);
-app.use('/bookmarkTweet',bookmarkTweetRouter);
+//app.use('/bookmarkTweet',bookmarkTweetRouter);
 
 // const userActions = require("./routes/userActions");
 // const ownerAction = require("./routes/ownerActions");
@@ -90,6 +92,13 @@ app.use('/bookmarkTweet',bookmarkTweetRouter);
 // app.use(orderAction);
 // app.use("/message", messageAction);
 // app.use("/uploads", express.static(__dirname + "/uploads"));
+
+// app.get('/getTweetDetails', (req, res) => {
+//   console.log("in gettweetdetails..");
+//   console.log(req.body);
+// });
+// //app.use('/', tweetRoutes);
+// app.use('/', tweetRoutes);
 
 
 //start your server on port 3001

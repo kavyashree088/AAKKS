@@ -3,7 +3,7 @@ var connection = new require("./kafka/Connection");
 // var ownerService = require("./services/ownerService")
 // var orderService = require("./services/orderService")
 // var messageService = require("./services/messageService")
-// var tweetTopics = require('./services/tweetTopics.js');
+var tweetTopics = require('./services/tweetTopics.js');
 var listTopics = require('./services/listTopics');
 
 
@@ -36,6 +36,12 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+        case "tweetTopics":
+                tweetTopics.tweetTopicService(data.data, function (err, res) {
+                    response(data, res, producer);
+                    return;
+                });
+                break;
       // case "userActions":
       //   userService.userService(data.data, function (err, res) {
       //     response(data, res, producer);
@@ -60,12 +66,7 @@ function handleTopicRequest(topic_name, fname) {
     //       return;
     //     });
     //     break;
-    //     case "tweetTopics":
-    //             tweetTopics.tweetTopicService(data.data, function (err, res) {
-    //                 response(data, res, producer);
-    //                 return;
-    //             });
-    //             break;
+    
     }
   });
 }
@@ -93,7 +94,7 @@ function response(data, res, producer) {
 // handleTopicRequest("ownerActions", ownerService);
 // handleTopicRequest("orderActions", orderService);
 // handleTopicRequest("messageActions", messageService);
-// handleTopicRequest("tweetTopics", tweetTopics);
+handleTopicRequest("tweetTopics", tweetTopics);
  handleTopicRequest("listTopics", listTopics);
 
 

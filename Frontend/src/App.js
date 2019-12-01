@@ -7,6 +7,7 @@ import Messages from './Components/Messages';
 import List from './Components/MyList';
 import ListSpecific from './Components/ListSpecific';
 import ListInfo from './Components/ListInfo';
+import Bookmarks from './Components/BookmarkMain';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path="/ListSpecific" component={ListSpecific}></Route>
           <Route path="/ListInfo" component={ListInfo}></Route>
           <Route path="/Messages" component={Messages}></Route>
+          <Route path="/Bookmarks" component={Bookmarks}></Route>
         </Switch>
       </Router>
 

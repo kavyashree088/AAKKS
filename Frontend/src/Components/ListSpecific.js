@@ -6,6 +6,7 @@ import LeftNav from "./LeftNav";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
+import ListTweets from './ListTweets';
 
 const config = {
   headers: {
@@ -76,7 +77,7 @@ class ListSpecific extends Component {
     const data = {
       listID: this.props.location.state.list[0]._id,
       // userID:localStorage.getItem('username')
-      userID: "123"
+      userID: "alaukika"
     };
     console.log(data);
     console.log(this.props.location.state.list);
@@ -103,7 +104,7 @@ class ListSpecific extends Component {
     const data = {
       listID: this.props.location.state.list[0]._id,
       // userID:localStorage.getItem('username')
-      userID: "123"
+      userID: "alaukika"
     };
     console.log(data);
     console.log(this.props.location.state.list);
@@ -322,8 +323,8 @@ class ListSpecific extends Component {
       { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
       { label: "Notifications", link: "#home", className: "fas fa-bell" },
       { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
-      { label: "Bookmarks", link: "#home", className: "fas fa-bookmark" },
-      { label: "Lists", link: "#home", className: "fas fa-list-alt" },
+      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
+      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
       { label: "Profile", link: "#home", className: "fas fa-user-circle" },
       { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
     ];
@@ -420,6 +421,7 @@ class ListSpecific extends Component {
                 </div>
                 {buttonShow}
                 <hr></hr>
+                <ListTweets listID={this.props.location.state.list[0]._id}/>
               </div>
             </div>
           </Col>

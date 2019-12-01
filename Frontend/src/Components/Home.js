@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
+import TweetContent from "./TweetContent";
 
 class Home extends Component {
     render() {
@@ -9,7 +10,7 @@ class Home extends Component {
             { label: 'Home', link: '/', className: "fas fa-home", active: true },
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
-            { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
+            { label: 'Messages', link: '#home', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
@@ -23,10 +24,11 @@ class Home extends Component {
 
                     </Col>
                     <Col className="col-sm-6">
-                        Here Main Content
+                    <h5 style={{fontWeight:"bolder"}}>Home</h5>
+                        <TweetContent/>
                     </Col>
                     <Col className="col-sm-3">
-                        <div class="navbar-side-right" id="navbarSide">
+                        <div className="navbar-side-right" id="navbarSide">
                             here
                         </div>
 
