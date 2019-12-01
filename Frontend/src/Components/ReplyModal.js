@@ -11,6 +11,7 @@ import {
   CardLink
 } from "reactstrap";
 import { replyATweet} from '../JS/Actions/tweetAction.js';
+import { getUserName, getUserFullName } from "./tweetApis.js";
 const settings = require("../config/settings.js");
 const {processTweetText} = require('./tweetApis.js');
 class ReplyModalInner extends Component{
@@ -27,8 +28,10 @@ class ReplyModalInner extends Component{
     replyClickHandler(){
       let tweetId = this.props.currentTweet._id;
       let {replyText} = this.state;
-      let userId = "123";
-      let data = {tweetId, replyText, userId};
+      //let userId = "123";
+      let username = getUserName();
+      let userFullName = getUserFullName();
+      let data = {tweetId, replyText, username, userFullName};
       let postURL = 'http://'+settings.hostname+':'+settings.port+'/replyATweet';
       let dataObj = { data, url : postURL};
       this.props.replyATweet(dataObj);

@@ -37,6 +37,9 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
         case 'retweetWithComment':
             retweetWithComment(msg, callback);
             break;
+        case 'getTweetDetails':
+            getTweetDetails(msg, callback);
+            break;
     }
 };
 
@@ -69,9 +72,17 @@ let writeATweet = async(message, callback) => {
     });
 };
 
-let replyATweet = (message, callback) => {
-    let {username, tweetId, replyText} = message;
-    tweet.update({_id: tweetId}, {$push : {'replies' : {username, replyText}}}, (err, result) => {
+let replyATweet = async (message, callback) => {
+    let {username, userFullName, tweetId, replyText} = message;
+    let profilePic= '';
+    await user.findOne({username}, (err, result) => {
+        console.log("result is..");
+        console.log(result);
+        if(!err && result){
+            profilePic = result.profilePicture;
+        }
+    });
+    tweet.update({_id: tweetId}, {$push : {'replies' : {username, userFullName, profilePic, replyText}}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -105,10 +116,16 @@ let getUserTweets = (message, callback) => {
     });
 }
 
-let likeATweet = function(message, callback){
-    let { tweetId, username } = message;
+let likeATweet = async function(message, callback){
+    let { tweetId, username, userFullName } = message;
+    let profilePic= '';
+    await user.findOne({username}, (err, result) => {
+        if(!err && result){
+            profilePic = result.profilePicture;
+        }
+    });
     console.log("In tweet topics : likeATweet ", message);
-    tweet.update({"_id" : tweetId}, {$push:{"likes":username}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$push:{"likes":{username, userFullName, profilePic}}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -128,7 +145,7 @@ let unlikeATweet = function(message, callback){
     //remove username from likes
     let { tweetId, username } = message;
     console.log("In tweet topics : unlikeATweet ", message);
-    tweet.update({"_id" : tweetId}, {$pull:{"likes":username}}, (err, result) => {
+    tweet.update({"_id" : tweetId}, {$pull:{"likes":{'username':username}}}, (err, result) => {
         if(err) {
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
@@ -215,11 +232,23 @@ let getDashboardTweets =  async (message, callback) => {
                 callback(null, { status: 401,  message:"tweets list cannot be returned!!" });
             }
         }
-    });
-    
-  
-    
+    }); 
 };
+
+let getTweetDetails = (message, callback) => {
+    let {tweetId} = message;
+    tweet.findOneAndUpdate({'_id':tweetId}, {$inc:{'views':1}}, {returnNewDocument : true}, (err,result) => {
+        if(err){
+            console.log('unable to insert into database', err);
+            callback(err, 'Database Error');
+        } else if (result){
+            console.log('returning tweet details...');
+            callback(null, {status:200, message: result});
+        } else {
+            callback(null, {status:401, message: "tweet details cannot be returned!"})
+        }
+    });
+}
 
 let bookmarkATweet = (message, callback) => {
     let { username, tweetId } = message;
@@ -271,9 +300,15 @@ let deleteATweet = (message, callback) => {
 
 
 
-let retweetWithoutComment = (message, callback) => {
-    let {username, tweetId}  = message;
-    tweet.update({'_id': tweetId}, {$push: {'retweets' : username} }, (err, result) => {
+let retweetWithoutComment = async (message, callback) => {
+    let {username, userFullName, tweetId}  = message;
+    let profilePic= '';
+    await user.findOne({username}, (err, result) => {
+        if(!err && result){
+            profilePic = result.profilePicture;
+        }
+    });
+    tweet.update({'_id': tweetId}, {$push: {'retweets' : {username, userFullName, profilePic} }} , (err, result) => {
         if(err) {
             console.log('unable to delete into database', err);
             callback(err, 'Database Error');

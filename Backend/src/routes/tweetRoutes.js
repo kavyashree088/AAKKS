@@ -41,6 +41,37 @@ var upload = multer({
     })
 });
 
+router.post('/getTweetDetails', function(req, res) {
+  console.log('in getTweetDetails');
+  console.log(req.body);
+  let {tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'getTweetDetails', tweetId}, function(err,result){
+    var responseObj = {
+      status : false,
+      message :""
+    };
+    let status = 200;
+    if (err) {
+      console.log(err);
+      status = 500;
+      responseObj.message = 'Database is not responding!!!';
+    }
+    else if (result.status === 200)
+    {
+      console.log('Tweet details returned successfully!');
+      responseObj.status = true;
+      responseObj.message = result.message;
+      //res.status(200).json(responseObj);
+    } else if (result.status === 401){
+      console.log('Tweet details cannot be returned!!');
+      responseObj.status = false;
+      responseObj.message = result.message;
+    }
+    res.status(status).json(responseObj);
+  });
+});
+
+
 router.post('/writeATweet',  upload.single('tweetImages'), function (req, res) {
     console.log("Inside write a tweet");
     console.log("Requestbody is ::");
@@ -142,8 +173,8 @@ router.post('/getUserTweets', function(req, res){
 });
 
 router.post('/likeATweet', function(req, res){
-  let {username, tweetId} = req.body;
-  kafka.make_request('tweetTopics',{'path':'likeATweet', username, tweetId}, function(err,result){
+  let {username, userFullName, tweetId} = req.body;
+  kafka.make_request('tweetTopics',{'path':'likeATweet', username, userFullName, tweetId}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -199,10 +230,10 @@ router.post('/unlikeATweet', function(req, res){
 
 
 router.post('/replyATweet', function(req, res){
-  let {username, tweetId, replyText} = req.body;
+  let {username, userFullName, tweetId, replyText} = req.body;
   console.log("in replyATweet..");
   console.log(req.body);
-  kafka.make_request('tweetTopics',{'path':'replyATweet', username, tweetId, replyText}, function(err,result){
+  kafka.make_request('tweetTopics',{'path':'replyATweet', username, userFullName, tweetId, replyText}, function(err,result){
     var responseObj = {
       status : false,
       message :""
@@ -256,6 +287,7 @@ router.post('/getDashboardTweets', function(req, res){
     res.status(status).json(responseObj);
   });
 });
+
 
 router.post('/bookmarkATweet', function(req, res){
   let {username, tweetId} = req.body;
@@ -345,8 +377,8 @@ router.post('/retweetWithComment', function(req, res){
 });
 
 router.post('/retweetWithoutComment', function(req, res){
-  let {username, tweetId} = req.body;
-  kafka.make_request('tweetTopics', {'path':'retweetWithoutComment', tweetId, username}, function(err,result){
+  let {username, userFullName, tweetId} = req.body;
+  kafka.make_request('tweetTopics', {'path':'retweetWithoutComment', tweetId, userFullName, username}, function(err,result){
     var responseObj = {
       status : false,
       message :''

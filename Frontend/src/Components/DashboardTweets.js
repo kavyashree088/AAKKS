@@ -27,11 +27,12 @@ export class DashboardTweets extends Component {
        let allTweets = this.props.dashboardTweets;
        let tweetsMarkup = [];
        if(allTweets && allTweets.length > 0){
-           for(let i= 0; i< allTweets.length; i++){
+           let i=0;
+           for( i= 0; i< allTweets.length; i++){
             tweetsMarkup.push(<TweetComponent key={i} tweet = { allTweets[i] }/>);
            }
-           tweetsMarkup.push(<ReplyModal/>)
-           tweetsMarkup.push(<TweetModal/>)
+           tweetsMarkup.push(<ReplyModal key={i+1}/>)
+           tweetsMarkup.push(<TweetModal key={i+2}/>)
            return tweetsMarkup;
        } else {
            return <div></div>;

@@ -4,7 +4,15 @@ import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import IndividualTweet from "./IndividualTweet";
 
-class Home extends Component {
+class TweetDisplay extends Component {
+    state = {
+        tweetId : ''
+    }
+    constructor(props){
+        super(props);
+        console.log(props);
+        this.state.tweetId = this.props && this.props.match.params.tweetId ? this.props.match.params.tweetId : '';
+    }
     render() {
         let links = [
             { label: 'Home', link: '/', className: "fas fa-home", active: true },
@@ -25,7 +33,7 @@ class Home extends Component {
                     </Col>
                     <Col className="col-sm-6">
                     <h5 style={{fontWeight:"bolder"}}>Tweet</h5>
-                        <IndividualTweet/>
+                        <IndividualTweet tweetId = {this.state.tweetId}/>
                     </Col>
                     <Col className="col-sm-3">
                         <div className="navbar-side-right" id="navbarSide">
@@ -39,4 +47,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default TweetDisplay;

@@ -9,7 +9,7 @@ import {
     CardLink
   } from "reactstrap";
 
-export let processTweetText = (tweetText) => {
+export const processTweetText = (tweetText) => {
     debugger;
     let hyperLinkExp = /http:\/\/[\w\.\/]*/g;
     let textArr = tweetText.split(' ');
@@ -26,11 +26,12 @@ export let processTweetText = (tweetText) => {
     }
     return <CardText> {textArr} </CardText>;
  }
-export let getUserFullName = () => {
+export const getUserFullName = () => {
     //TODO : combine localstorage firstname + " "+ lastname
-    return 'Keerthi Akella';
+    return 'Anjali Bandaru';
 }
-export let getUserName =() => {
+export const getUserName =() => {
     //TODO : get from local storage
     return 'anjali';
 }
+export const TWEETCHARLIMIT = '280';

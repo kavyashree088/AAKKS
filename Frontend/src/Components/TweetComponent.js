@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap';
 import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
@@ -17,8 +17,10 @@ import {
 import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import { TweetBody } from "./TweetBody.js";
+import $ from 'jquery';
 const settings = require("../config/settings.js");
 const {processTweetText, getUserName, getUserFullName} = require('./tweetApis.js');
+
 class TweetComponentInner extends Component {
     state = {
         tweetText : '',
@@ -27,22 +29,33 @@ class TweetComponentInner extends Component {
         username : '',
         likeClass : 'like far fa-heart fa-lg grey',
         bookmarkClass : 'fas fa-bookmark grey',
-        retweetClass : 'fas fa-retweet fa-lg dropdown grey',
-        currusername : ''
+        retweetClass : 'fas fa-retweet fa-lg dropdown grey'
     };
     constructor(props){
         super(props);
-        let currusername = getUserName();
+        let currUserName = getUserName();
         if(this.props.tweet){
             this.state.username = this.props.username;
             this.state.tweetText = this.props.tweet.tweetText;
             this.state.likesNum = this.props.tweet.likes.length > 0 ? this.props.tweet.likes.length : "";
             this.state.repliesNum = this.props.tweet.replies.length > 0 ? this.props.tweet.replies.length : "";
             this.state.retweetNum  = this.props.tweet.retweets.length > 0 ? this.props.tweet.retweets.length : "";
-            if(this.props.tweet.likes.includes(currusername)){
-                this.state.likeClass = 'like fas fa-heart fa-lg red';
+            this.state.likesNum = '';
+            let likes= this.props.tweet.likes;
+            if(likes.length > 0){
+                this.state.likesNum = likes.length;
+               // let currUserLiked = false;
+                for(let i=0; i < likes.length; i++){
+                    let like = likes[i];
+                    if(like.username === currUserName){
+                        //currUserLiked = true;
+                        this.state.likeClass = 'like fas fa-heart fa-lg red';
+                        break;
+                    }
+                }
             }
-            if(this.props.tweet.bookmarks.includes(currusername)){
+
+            if(this.props.tweet.bookmarks.includes(currUserName)){
                 this.state.bookmarkClass = 'fas fa-bookmark orange';
             }
             if(this.state.retweetNum > 0){
@@ -54,7 +67,8 @@ class TweetComponentInner extends Component {
 
     likeOrUnlikeATweet(currClass, tweetId){
         let username = getUserName();
-        let data = {username, tweetId};
+        let userFullName = getUserFullName();
+        let data = {username, userFullName, tweetId};
         axios.defaults.withCredentials = true;
         if(currClass.indexOf('red') != -1){
             let postURL = "http://"+settings.hostname+":"+settings.port+"/unlikeATweet";
@@ -109,10 +123,10 @@ class TweetComponentInner extends Component {
     }
     
     retweetWithoutComment(tweetId, userId){
-        debugger;
         axios.defaults.withCredentials = true;
         let username = getUserName();
-        let data = {username, tweetId};
+        let userFullName = getUserFullName();
+        let data = {username, userFullName, tweetId};
         let postURL = "http://"+settings.hostname+":"+settings.port+"/retweetWithoutComment";
         let dataObj = {data, url : postURL};
         this.props.retweetWithoutComment(dataObj);
@@ -145,23 +159,30 @@ class TweetComponentInner extends Component {
         }
     }
 
+    tweetClickHandler(url){
+        console.log("url is..");
+        console.log(url);
+        $(window)[0].location.href= url;
+    }
+
     render(){
         debugger;
        let {userFullName, username, userId, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic} = this.props.tweet;
        //let userFullName = firstName + " " + lastName;
        let tweetId = this.props.tweet._id;
-       //let repliesNum = replies ? replies.length : "";
-       //let likesNum = likes ? likes.length : "";
        let {likesNum, repliesNum, retweetNum } = this.state;
        //TODO get from local storage
        let {likeClass, bookmarkClass, retweetClass } = this.state;
        let userLinkUrl = '/profile/'+username;
+       //let tweetUrl = 'http://' + settings.frontendHostName +':' +settings.port +'/tweet/'+tweetId;
        let tweetUrl = '/tweet/'+tweetId;
        let profileImg = settings.s3bucket + profilePic;
+       
+       // <Link to ={tweetUrl}>
         return(
-            <div className="tweet-container">
+            <div className="tweet-container" onClick = {()=>{this.tweetClickHandler(tweetUrl)}}>
             <div className="tweet-body">
-            <a href = {tweetUrl} onClick = {()=>{this.props.setCurrentTweet(this.props.tweet)}} >
+            
             <Card >
             <CardBody>
                 <Row>
@@ -177,22 +198,21 @@ class TweetComponentInner extends Component {
                     {this.displayImages(media)}
                     {this.renderInnerTweet(isRetweet, actualTweetDetails)}
                     <br/><br/>
-                    <a onClick={() => this.likeOrUnlikeATweet(likeClass, tweetId)}> <i className={likeClass} ></i></a><span> {likesNum}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
-                    <a  data-toggle='modal' data-target='#replyModal' onClick = {()=>{this.props.setCurrentTweet(this.props.tweet)}}><i className='far fa-comment fa-lg grey'> {repliesNum}</i></a> <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                    <a onClick={(evt) => {evt.stopPropagation(); this.likeOrUnlikeATweet(likeClass, tweetId)}}> <i className={likeClass} ></i></a><span> {likesNum}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+                    <a  data-toggle='modal' data-target='#replyModal' onClick = {(evt)=>{evt.stopPropagation();this.props.setCurrentTweet(this.props.tweet)}}><i className='far fa-comment fa-lg grey'> {repliesNum}</i></a> <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
                     
                     {/** added dropdown */}
                     <i className={retweetClass} data-toggle="dropdown"> <span style={{fontWeight:"normal"}}> {retweetNum}</span></i>  <span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
                     <ul className="dropdown-menu">
-                        <li><a href="#" className=" dropdown-item grey" onClick={() => this.retweetWithoutComment(tweetId, userId)}><i className="fas fa-pen" ></i>&nbsp; &nbsp;&nbsp;Retweet</a></li>
-                        <li><a href="#" className="dropdown-item grey"  onClick = {()=>{this.props.setCurrentTweet(this.props.tweet)}}  data-toggle="modal" data-target="#tweetModal"><i className="fas fa-retweet"></i>&nbsp; &nbsp;Retweet with a comment</a></li>
+                        <li><a href="#" className=" dropdown-item grey" onClick={(evt) => {evt.stopPropagation(); this.retweetWithoutComment(tweetId, userId)}}><i className="fas fa-pen" ></i>&nbsp; &nbsp;&nbsp;Retweet</a></li>
+                        <li><a href="#" className="dropdown-item grey"  onClick = {(evt)=>{evt.stopPropagation(); this.props.setCurrentTweet(this.props.tweet)}}  data-toggle="modal" data-target="#tweetModal"><i className="fas fa-retweet"></i>&nbsp; &nbsp;Retweet with a comment</a></li>
                     </ul>
-                    <a onClick={() => this.bookmarkOrUnbookmarkATweet(bookmarkClass, tweetId)}><i className={bookmarkClass}></i></a>
+                    <a onClick={(evt) => {evt.stopPropagation(); this.bookmarkOrUnbookmarkATweet(bookmarkClass, tweetId)}}><i className={bookmarkClass}></i></a>
                 </Col>
                 </Row>
             </CardBody>
 
             </Card>
-            </a>
             </div>
             </div>
         );

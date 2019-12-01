@@ -33,7 +33,7 @@ TweetSchema = new Schema({
       default :""
   },
   views : {
-      type :String,
+      type :Number,
       default : 0
   },
   lists:[],

@@ -7,7 +7,7 @@ import '../CSS/tweetArea.css';
 
 const settings = require("../config/settings.js");
 var faker = require('faker');
-const {getUserFullName, getUserName} = require('./tweetApis.js');
+const {getUserFullName, getUserName, TWEETCHARLIMIT} = require('./tweetApis.js');
 
 export class TweetContent extends Component {
     state = {
@@ -166,17 +166,27 @@ export class TweetContent extends Component {
             <div className="space">
             <div>
               <form onSubmit = {this.writeATweet}>
-                <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus value={this.state.tweetText}></textarea>
-                <div style={{display:'inline-block'}}>
-                <div className="image-upload">
-                    <label for="input-file">
-                    <i id="image" className="far fa-image fa-2x"></i>
-                    </label>
-                    <input id="input-file" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
-                </div>
+                <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{borderColor:"white",fontSize:"21px"}} placeholder="What's happening?" autoFocus value={this.state.tweetText} maxLength={TWEETCHARLIMIT}></textarea>
+                
+                <Row>
+                    <Col xs ={1}>
+                    <div className="image-upload">
+                        <label for="input-file">
+                        <i id="image" className="far fa-image fa-2x"></i>
+                        </label>
+                        <input id="input-file" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
+                    </div>
+                    </Col >
+                   
+                    <Col className= 'offset-md-9' xs ={2} >
+                    <button className="btn btn-primary btn-circle" type="submit" style={{position:'absolute',  right:'60px',fontWeight:"bold"   }}>Tweet</button>
+                    </Col>
+                </Row>
+                <br/><br/><br/>
+                
                
-                <button className="btn btn-primary btn-circle" type="submit" style={{position:'absolute',  right:'60px',fontWeight:"bold"   }}>Tweet</button><br/><br/><br/>
-                </div>
+                
+               
               </form>  
               <DashboardTweets />
             </div>

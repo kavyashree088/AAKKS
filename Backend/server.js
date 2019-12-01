@@ -66,9 +66,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-
+app.get('/getTweetDetails', (req, res) => {
+  console.log("in gettweetdetails..");
+  console.log(req.body);
+});
 //app.use('/', tweetRoutes);
 app.use('/', tweetRoutes);
+
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
