@@ -24,11 +24,18 @@ class ListSpecific extends Component {
       members: [],
       isModalOpen: false,
       isMember: false,
-      goToListInfo: false
+      goToListInfo: false,
+      subscriberCount:this.props.location.state.list[0].subscriberID.length
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
+  
   }
 
+  componentDidMount(){
+    console.log("Alaukika12")
+    console.log(this.state.subscriberCount);
+    console.log("Alaukika12")
+  }
   handleEditClick = e => {
     this.setState({
       goToListInfo: true
@@ -265,7 +272,7 @@ class ListSpecific extends Component {
     let buttonShow = null;
 
     // if(this.props.location.state.list[0].creatorID==localStorage.getItem('username')){
-    if (this.props.location.state.list[0].creatorID == "123") {
+    if (this.props.location.state.list[0].creatorID == "alaukika") {
       buttonShow = (
         <button
           class="listSpecificButton"
@@ -276,7 +283,7 @@ class ListSpecific extends Component {
       );
     } else {
       var t = this.props.location.state.list[0].subscriberID.filter(
-        id => id == "123"
+        id => id == "alaukika"
       );
       console.log("Alaukika says:", t);
       // if(this.props.location.state.list[0].subscriberID.filter(id=>id==localStorage.getItem('username'))==null){

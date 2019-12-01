@@ -39,7 +39,7 @@ this.setState({
   componentWillMount() {
     const data = {
       //userID: localStorage.getItem("username")
-      userID: "123"
+      userID: "alaukika"
     };
     console.log(data);
     //set the with credentials to true

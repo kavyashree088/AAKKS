@@ -47,6 +47,8 @@ mongoose.connect(connStr, { useNewUrlParser: true, poolSize: 10, }, function(err
 
 const createListRouter = require('./Routes/createList');
 const addMemberRouter = require('./Routes/addMember');
+const removeMemberRouter = require('./Routes/removeMember');
+const findMemberRouter = require('./Routes/findMember');
 const deleteListRouter = require('./Routes/deleteList');
 const showListTweetRouter = require('./Routes/showListTweet');
 const showMemberRouter = require('./Routes/showMember');
@@ -58,8 +60,13 @@ const subscribeListRouter = require('./Routes/subscribeList');
 const unsubscribeListRouter = require('./Routes/unsubscribeList');
 const updateListRouter = require('./Routes/updateList');
 
+const bookmarkTweetRouter = require('./Routes/bookmarkTweet');
+const getBookmarksRouter = require('./Routes/getBookmarks');
+
 app.use('/createList',createListRouter);
 app.use('/addMember',addMemberRouter);
+app.use('/findMember',findMemberRouter);
+app.use('/removeMember',removeMemberRouter);
 app.use('/deleteList',deleteListRouter);
 app.use('/showListTweet',showListTweetRouter);
 app.use('/showMember',showMemberRouter);
@@ -70,6 +77,10 @@ app.use('/showSubscriber',showSubscriberRouter);
 app.use('/subscribeList',subscribeListRouter);
 app.use('/unsubscribeList',unsubscribeListRouter);
 app.use('/updateList',updateListRouter);
+
+app.use('/getBookmarks',getBookmarksRouter);
+app.use('/bookmarkTweet',bookmarkTweetRouter);
+
 // const userActions = require("./routes/userActions");
 // const ownerAction = require("./routes/ownerActions");
 // const orderAction = require("./routes/orderActions");
@@ -80,20 +91,6 @@ app.use('/updateList',updateListRouter);
 // app.use("/message", messageAction);
 // app.use("/uploads", express.static(__dirname + "/uploads"));
 
-app.get('/myname', function(req,res){
-  console.log("Hi I am here")
-  var {spawn}  = require('child_process');
-  var arg={me:"San Jose"}
-  const pyProg = spawn('python', ['./hello.py', req.query.me]);
-
-  pyProg.stdout.on('data', function(data) {
-
-      console.log(data.toString());
-      // res.send();
-      // res.write(data);
-      res.end(data.toString());
-  });
-})
 
 //start your server on port 3001
 app.listen(3001);

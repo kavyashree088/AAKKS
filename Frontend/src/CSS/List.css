@@ -221,7 +221,11 @@ border-color:#ffffff;
   border-color: rgba(29, 161, 242, 1);
   color:rgba(29, 161, 242, 1);
 }
-
+.removePadding{
+  padding-left:0px !important;
+  padding-right:0px !important;
+  width:50ch
+}
 .savebutton{
   background-color: rgba(29, 161, 242, 1);
           float: right;
@@ -286,3 +290,41 @@ border-color:#ffffff;
   padding: 2rem;
 }
 
+.inputList{
+  border-radius: 8px;
+              background-color: rgb(252, 252, 255);
+              border-bottom: solid black 1px;
+              height: 50px;
+}
+
+.wideinput{
+  width:40ch;
+}
+
+.levelClass{
+  margin:3%;
+  background-color:  rgba(29, 161, 242, 1);
+  padding:30%;
+  border-radius:7px;
+  color:white;
+}
+
+.tagbutton{
+  border-color: rgba(29, 161, 242, 1) solid 3px;
+  border-radius:16px;
+  padding:5px ;
+  color:rgba(29, 161, 242, 1);
+}
+.tagbutton:hover{
+background-color: rgb(231, 245, 255);
+}
+
+.removeButton{
+  background-color: rgb(204, 62, 62);
+  border-color:rgb(204, 62, 62);
+  color:white;
+  float:right;
+  border-radius:12px;
+padding:5px;
+margin:10px;
+}

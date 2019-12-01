@@ -39,6 +39,12 @@ exports.listTopicService = function listTopicService(msg, callback) {
     case "updateList":
       updateList(msg, callback);
       break;
+    case "findMember":
+      findMember(msg, callback);
+      break;
+    case "removeMember":
+      removeMember(msg, callback);
+        break;
   }
 };
 
@@ -69,25 +75,57 @@ console.log(list);
       var pkg = {
         msg: respmsg
       };
-      callback(null, pkg);
+      console.log("Hellooo alaukika is talking:",results._id);
+      var t=JSON.stringify(results._id); 
+      console.log(t);
+      console.log(t.slice(1,25))
+      var t1=t.slice(1,25);
+        Users.update({username:{$in:msg.listDetails.members}},{ $addToSet: { listMember:t1 } },{multi:true}, function(err,result,fields){
+        callback(null, pkg);
+        console.log("after callback");
+      })
+      
     }
   });
 };
 
-let addMember = function(msg, callback) {
+let findMember = function(msg, callback) {
   console.log(msg.listDetails);
-  Users.find(function(err,result,fields){
+  Users.find({username:msg.listDetails.username},function(err,result,fields){
     callback(null, result);
     console.log("after callback");
   })
 };
 
+let addMember = function(msg, callback) {
+  console.log(msg.listDetails);
+  Lists.update({_id:msg.listDetails.listID},{ $addToSet: { memberID: {$each:msg.listDetails.members} } }, function(err,result,fields){
+    Users.update({username:{$in:msg.listDetails.members}},{ $addToSet: { listMember: msg.listDetails.listID } },{multi:true}, function(err,result,fields){
+      callback(null, result);
+      console.log("after callback");
+    })
+  })
+};
+
+let removeMember = function(msg, callback) {
+  console.log(msg.listDetails);
+  Lists.updateOne({_id:msg.listDetails.listID},{ $pull: { memberID: msg.listDetails.memberID } }, function(err,result,fields){
+    Users.updateOne({username:msg.listDetails.memberID},{ $pull: { listMember: msg.listDetails.listID } }, function(err,result,fields){
+      callback(null, result);
+      console.log("after callback");
+    })
+  })
+};
+
+
 let deleteList = function(msg, callback) {
   console.log(msg.listDetails);
   Lists.findOneAndDelete({_id : msg.listDetails.listID},function(err,result,fields){
-    if(err) throw err;  
+    Users.update({},{ $pull: { listMember: msg.listDetails.listID } },{multi:true}, function(err,result,fields){
+      if(err) throw err;  
       callback(null, "List Deleted");
       console.log("after callback");
+    })   
   })
 };
 
@@ -174,3 +212,21 @@ let updateList = function(msg, callback) {
     console.log("after callback");
   })
 };
+
+//Bookmark services
+
+// let bookmarkTweet = function(msg, callback) {
+//   console.log(msg.tweetDetails);
+//   Tweets.update({_id:msg.tweetDetails.tweetID},{ $addToSet: { bookmarks: msg.tweetDetails.username } }, function(err,result,fields){
+//       callback(null, result);
+//       console.log("after callback");
+//   })
+// };
+
+// let getBookmarks = function(msg, callback) {
+//   console.log(msg.tweetDetails);
+//   Tweets.find({username:msg.tweetDetails.username}, function(err,result,fields){
+//     callback(null, result);
+//     console.log("after callback");
+//   })
+// };
