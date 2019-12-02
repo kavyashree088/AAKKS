@@ -42,6 +42,8 @@ class UserDetails extends Component {
             }).then(async response => {
                 await this.setState({ userProfile: response.data.details.rows });
             })
+        } else {
+            this.props.history.push("/");
         }
     }
 
