@@ -347,6 +347,7 @@ export class UserProfile extends Component {
 
         ];
         let currentUsername = this.props.match.params.username;
+
         if (this.state.redirectToFollowers) {
             console.log("Printing state information before redirecting");
             console.log(this.state);

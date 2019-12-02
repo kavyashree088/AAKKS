@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import EditProfileForm from './EditProfileForm'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import {Link} from 'react-router-dom'
 
 
 import axios from 'axios';
@@ -51,11 +50,10 @@ export class UserProfile extends Component {
         this.getLikes = this.getLikes.bind(this)
         this.getTweets = this.getTweets.bind(this)
         this.followersClickHandler = this.followersClickHandler.bind(this)
-        this.followingClickHandler = this.followingClickHandler.bind(this)
     }
 
 
-    componentDidMount = () => {
+    componentWillMount = () => {
 
         let username = localStorage.getItem('username');
         let currentUsername = this.props.match.params.username;
@@ -67,7 +65,6 @@ export class UserProfile extends Component {
         let data = {
             username: currentUsername
         }
-        
         axios({
             method: 'post',
             url: 'http://' + config.hostname + ':3001/getProfileDetails',
@@ -177,8 +174,7 @@ export class UserProfile extends Component {
     }
 
     followingClickHandler = (e) => {
-        // e.preventDefault();
-        console.log("Handling following click handler")
+        e.preventDefault();
         this.setState({
             redirectToFollowing: true,
         })
@@ -290,6 +286,8 @@ export class UserProfile extends Component {
 
     }
 
+
+
     getTweets = () => {
         let currentUsername = this.props.match.params.username;
         console.log("getTweets")
@@ -346,35 +344,29 @@ export class UserProfile extends Component {
             { label: 'Logout', link: '/delete', className: "fa fa-sign-out" },
 
         ];
-        let currentUsername = this.props.match.params.username;
+
         if (this.state.redirectToFollowers) {
-            console.log("Printing state information before redirecting");
-            console.log(this.state);
-            return (
             <Redirect
                 to={{
-                    pathname: '/followers',
+                    pathname: '/Followers',
                     state: 
                         {
                             followers: this.state.followers,
                             showFollowers: true,
-                            currentUsername: currentUsername,
                         }
                 }}
-            />);
+            />
         } else if (this.state.redirectToFollowing) {
-            console.log("Printing state information before redirecting to following");
-            console.log(this.state);  
-            return (
-            <Link
-                to= {{
-                    pathname: "/following",
-                    state:  {
-                    following : this.state.following,
-                    currentUsername: currentUsername,
-                    }
-                }}  
-            />);
+            <Redirect
+                to={{
+                    pathName: '/Following',
+                    state: 
+                        {   
+                            following: this.state.following,
+                            showFollowers: false,
+                        },
+                }}
+            />
         }
 
         let EditProfileFormDOM = [];
@@ -421,31 +413,10 @@ export class UserProfile extends Component {
 
                                 <p><b>Location: </b>{this.state.city}</p>
                                 <Row>
-                                <Link
-                                    style={{
-                                        marginRight: '10px',
-                                    }}
-                                    to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: true,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.followers.length} Followers</Link>
-                                    <Link
-                                        to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: false,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.following.length} Following</Link>
+                                    <p>{this.state.followers}</p>
+                                    <a href="/followers" onClick={this.followersClickHandler}>followers count</a>
+                                    <p>{this.state.following}</p>
+                                    <p> following count</p>
                                 </Row>
                             </div>
                             <div>

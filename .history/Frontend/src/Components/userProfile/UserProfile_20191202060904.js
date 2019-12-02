@@ -346,10 +346,11 @@ export class UserProfile extends Component {
             { label: 'Logout', link: '/delete', className: "fa fa-sign-out" },
 
         ];
-        let currentUsername = this.props.match.params.username;
+
         if (this.state.redirectToFollowers) {
             console.log("Printing state information before redirecting");
             console.log(this.state);
+            let currentUsername = this.props.match.params.username;
             return (
             <Redirect
                 to={{
@@ -365,6 +366,7 @@ export class UserProfile extends Component {
         } else if (this.state.redirectToFollowing) {
             console.log("Printing state information before redirecting to following");
             console.log(this.state);  
+            let currentUsername = this.props.match.params.username;          
             return (
             <Link
                 to= {{
@@ -421,27 +423,17 @@ export class UserProfile extends Component {
 
                                 <p><b>Location: </b>{this.state.city}</p>
                                 <Row>
-                                <Link
-                                    style={{
-                                        marginRight: '10px',
-                                    }}
-                                    to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: true,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.followers.length} Followers</Link>
+                                    <Button onClick={this.followersClickHandler}
+                                        style={
+                                            {
+                                                marginRight: '10px',
+                                            }
+                                        }>{this.state.followers.length} Followers</Button>
                                     <Link
                                         to= {{
-                                        pathname: "/follow",
+                                        pathname: "/following",
                                         state:  {
                                         following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: false,
                                         currentUsername: currentUsername,
                                         }
                                         }}  

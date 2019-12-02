@@ -24,8 +24,8 @@ class App extends Component {
           <Route exact path="/profile/:username" component={UserProfile}></Route>
           <Route exact path="/deactivate" component={Deactivate}></Route>
           <Route exact path="/delete" component={Delete}></Route>
-          <Route exact path="/follow" component={Follow}></Route>
-          <Route exact path="/follow" component={Follow}></Route>
+          <Route exact path="/followers" component={Follow}></Route>
+          <Route exact path="/following" component={Follow}></Route>
         </Switch>
       </Router>
 

@@ -9,7 +9,8 @@ import Messages from './Components/Messages';
 import UserProfile from './Components/UserProfile/UserProfile'
 import Deactivate from './Components/DeactivateAccount';
 import Delete from './Components/DeleteAccount'
-import Follow from './Components/UserProfile/Follow'
+import Followers from './Components/UserProfile/Follow'
+import Following from './Components/UserProfile/Following'
 
 class App extends Component {
   render() {
@@ -24,7 +25,6 @@ class App extends Component {
           <Route exact path="/profile/:username" component={UserProfile}></Route>
           <Route exact path="/deactivate" component={Deactivate}></Route>
           <Route exact path="/delete" component={Delete}></Route>
-          <Route exact path="/follow" component={Follow}></Route>
           <Route exact path="/follow" component={Follow}></Route>
         </Switch>
       </Router>

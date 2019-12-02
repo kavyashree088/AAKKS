@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import EditProfileForm from './EditProfileForm'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import {Link} from 'react-router-dom'
 
 
 import axios from 'axios';
@@ -32,17 +31,15 @@ export class UserProfile extends Component {
             zipcode: '',
             userPassword: '',
             description: '',
-            followers: [],
-            following: [],
+            followers:[],
+            following:[],
             profilePicture: undefined,
             isUser: true,
             updateDone: false,
             showEditButtonModal: false,
             thisButton: "Edit Profile",
-            likes: [],
-            tweets: "",
-            redirectToFollowers: false,
-            redirectToFollowing: false,
+            likes:[],
+            tweets:""
         }
         // this.updateProfile = this.updateProfile.bind(this);
         this.closeEditProfileModal = this.closeEditProfileModal.bind(this)
@@ -51,137 +48,124 @@ export class UserProfile extends Component {
         this.getLikes = this.getLikes.bind(this)
         this.getTweets = this.getTweets.bind(this)
         this.followersClickHandler = this.followersClickHandler.bind(this)
-        this.followingClickHandler = this.followingClickHandler.bind(this)
+
     }
 
 
-    componentDidMount = () => {
+    componentWillMount = () => {
 
         let username = localStorage.getItem('username');
         let currentUsername = this.props.match.params.username;
+        // let currentUsername
+
+
         console.log("Getting details of user: ")
         console.log(username);
         axios.defaults.withCredentials = true;
-        let token = localStorage.getItem('token')
-        console.log(token)
+       let token = localStorage.getItem('token')
+       console.log(token)
         let data = {
-            username: currentUsername
+            username:currentUsername
         }
-        
         axios({
             method: 'post',
-            url: 'http://' + config.hostname + ':3001/getProfileDetails',
-            data,
-            // config: { headers: { 'Content-Type': 'application/json' } },
-            // headers: { "Authorization": `Bearer ${token}` }
-        })
+                url: 'http://'+config.hostname+':3001/getProfileDetails',
+                data,
+                // config: { headers: { 'Content-Type': 'application/json' } },
+                // headers: { "Authorization": `Bearer ${token}` }
+            })
             .then(response => {
                 if (response.status === 200) {
                     console.log('response from DB: ');
                     console.log(response.data);
                     this.setState({
                         username: response.data.details.rows.username,
-                        firstName: response.data.details.rows.firstName,
+                        firstName:response.data.details.rows.firstName,
                         lastName: response.data.details.rows.lastName,
                         email: response.data.details.rows.email,
                         city: response.data.details.rows.city,
                         state: response.data.details.rows.state,
                         zipcode: response.data.details.rows.zipcode,
                         description: response.data.details.rows.description,
-                        followers: response.data.details.rows.followers,
-                        following: response.data.details.rows.following,
+                        followers:response.data.details.rows.followers,
+                        following:response.data.details.rows.following,
                         profilePicture: undefined,
                     })
                     // localStorage.setItem("username", response.data.info.username);
                     // localStorage.setItem("firstname", response.data.info.firstname);
-                    localStorage.setItem('firstname', response.data.details.rows.firstName)
+                    localStorage.setItem('firstname',response.data.details.rows.firstName)
                     localStorage.setItem('lastname', response.data.details.rows.lastName)
-
+                    
                 } else {
                     console.log("Status Code: ", response.status);
                     console.log(response.data.responseMessage);
                 }
-
+                
             }).catch(error => {
                 console.log(error);
             });
 
 
-        axios.defaults.withCredentials = true;
-        console.log(token)
-        console.log("data variable")
-        let tweetData = {
-            currentUsername
-        }
-
-        console.log(data)
-        axios({
-            method: 'get',
-            url: 'http://' + config.hostname + ':3001/getTweets',
-            tweetData,
-            config: { headers: { 'Content-Type': 'application/json' } },
-            headers: { "Authorization": `Bearer ${token}` }
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('response from DB: ');
-                    console.log(response.data);
-
-                } else {
-                    console.log("Status Code: ", response.status);
-                    console.log(response.data.responseMessage);
-                }
-                this.setState({
-                    tweets: response.data.details.rows.tweets,
-
+            axios.defaults.withCredentials = true;
+           console.log(token)
+           console.log("data variable")    
+            let tweetData = {
+                currentUsername
+            }
+                    
+            console.log(data)
+            axios({
+                method: 'get',
+                    url: 'http://'+config.hostname+':3001/getTweets',
+                    tweetData,
+                    config: { headers: { 'Content-Type': 'application/json' } },
+                    headers: { "Authorization": `Bearer ${token}` }
                 })
-            }).catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('response from DB: ');
+                        console.log(response.data);
+                        
+                    } else {
+                        console.log("Status Code: ", response.status);
+                        console.log(response.data.responseMessage);
+                    }
+                    this.setState({
+                        tweets: response.data.details.rows.tweets,
+                       
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
 
 
-        console.log(data)
-        axios({
-            method: 'get',
-            url: 'http://' + config.hostname + ':3001/getLikes',
-            data,
-            config: { headers: { 'Content-Type': 'application/json' } },
-            headers: { "Authorization": `Bearer ${token}` }
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('response from DB: ');
-                    console.log(response.data);
-
-                } else {
-                    console.log("Status Code: ", response.status);
-                    console.log(response.data.responseMessage);
-                }
-                this.setState({
-                    likes: response.data.details.rows.likes,
-
-                })
-            }).catch(error => {
-                console.log(error);
-            });
-
-
-
-    }
-
-    followersClickHandler = (e) => {
-        e.preventDefault();
-        this.setState({
-            redirectToFollowers: true,
-        })
-    }
-
-    followingClickHandler = (e) => {
-        // e.preventDefault();
-        console.log("Handling following click handler")
-        this.setState({
-            redirectToFollowing: true,
-        })
+                console.log(data)
+                axios({
+                    method: 'get',
+                        url: 'http://'+config.hostname+':3001/getLikes',
+                        data,
+                        config: { headers: { 'Content-Type': 'application/json' } },
+                        headers: { "Authorization": `Bearer ${token}` }
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            console.log('response from DB: ');
+                            console.log(response.data);
+                            
+                        } else {
+                            console.log("Status Code: ", response.status);
+                            console.log(response.data.responseMessage);
+                        }
+                        this.setState({
+                            likes: response.data.details.rows.likes,
+                           
+                        })
+                    }).catch(error => {
+                        console.log(error);
+                    });
+               
+           
+    
     }
 
     openEditProfileForm = () => {
@@ -200,135 +184,137 @@ export class UserProfile extends Component {
         console.log("profileDetails")
         console.log(profileDetails)
         let username = localStorage.getItem('username');
-
+    
         console.log("Getting details of user: ")
         console.log(username);
         axios.defaults.withCredentials = true;
-        let token = localStorage.getItem('token')
-        console.log(token)
-        console.log("data variable")
+       let token = localStorage.getItem('token')
+       console.log(token)
+       console.log("data variable")    
         let data = {
             profileDetails,
             username
         }
-
+                
         console.log(data)
         axios({
             method: 'post',
-            url: 'http://' + config.hostname + ':3001/updateProfile',
-            data,
-            config: { headers: { 'Content-Type': 'application/json' } },
-            headers: { "Authorization": `Bearer ${token}` }
-        })
+                url: 'http://'+config.hostname+':3001/updateProfile',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${token}` }
+            })
             .then(response => {
                 if (response.status === 200) {
                     console.log('response from DB: ');
                     console.log(response.data);
-
+                    
                 } else {
                     console.log("Status Code: ", response.status);
                     console.log(response.data.responseMessage);
                 }
                 this.setState({
                     username: response.data.details.rows.username,
-                    firstName: response.data.details.rows.firstName,
+                    firstName:response.data.details.rows.firstName,
                     lastName: response.data.details.rows.lastName,
                     email: response.data.details.rows.email,
                     city: response.data.details.rows.city,
                     state: response.data.details.rows.state,
                     zipcode: response.data.details.rows.zipcode,
                     description: response.data.details.rows.description,
-                    followers: response.data.details.rows.followers,
-                    following: response.data.details.rows.following,
+                    followers:response.data.details.rows.followers,
+                    following:response.data.details.rows.following,
                     profilePicture: undefined,
                 })
             }).catch(error => {
                 console.log(error);
             });
-
+       
     }
 
-    getLikes = () => {
+    getLikes = () =>{
         let currentUsername = this.props.match.params.username;
         console.log("getLikes")
-
+      
         console.log("Getting details of user: ")
         console.log(currentUsername);
         axios.defaults.withCredentials = true;
-        let token = localStorage.getItem('token')
-        console.log(token)
-        console.log("data variable")
+       let token = localStorage.getItem('token')
+       console.log(token)
+       console.log("data variable")    
         let data = {
             currentUsername
         }
-
+                
         console.log(data)
         axios({
             method: 'get',
-            url: 'http://' + config.hostname + ':3001/getLikes',
-            data,
-            config: { headers: { 'Content-Type': 'application/json' } },
-            headers: { "Authorization": `Bearer ${token}` }
-        })
+                url: 'http://'+config.hostname+':3001/getLikes',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${token}` }
+            })
             .then(response => {
                 if (response.status === 200) {
                     console.log('response from DB: ');
                     console.log(response.data);
-
+                    
                 } else {
                     console.log("Status Code: ", response.status);
                     console.log(response.data.responseMessage);
                 }
                 this.setState({
                     likes: response.data.details.rows.likes,
-
+                   
                 })
             }).catch(error => {
                 console.log(error);
             });
-
+       
 
     }
 
-    getTweets = () => {
+
+
+    getTweets = () =>{
         let currentUsername = this.props.match.params.username;
         console.log("getTweets")
-
+      
         console.log("Getting details of user: ")
         console.log(currentUsername);
         axios.defaults.withCredentials = true;
-        let token = localStorage.getItem('token')
-        console.log(token)
-        console.log("data variable")
+       let token = localStorage.getItem('token')
+       console.log(token)
+       console.log("data variable")    
         let data = {
             currentUsername
         }
-
+                
         console.log(data)
         axios({
             method: 'get',
-            url: 'http://' + config.hostname + ':3001/getTweets',
-            data,
-            config: { headers: { 'Content-Type': 'application/json' } },
-            headers: { "Authorization": `Bearer ${token}` }
-        })
+                url: 'http://'+config.hostname+':3001/getTweets',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${token}` }
+            })
             .then(response => {
                 if (response.status === 200) {
                     console.log('response from DB: ');
                     console.log(response.data);
-
+                    
                 } else {
                     console.log("Status Code: ", response.status);
                     console.log(response.data.responseMessage);
                 }
                 this.setState({
                     tweets: response.data.details.rows.tweets,
-
+                   
                 })
             }).catch(error => {
                 console.log(error);
             });
-
+       
 
     }
 
@@ -340,44 +326,15 @@ export class UserProfile extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
+            { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
             { label: 'Logout', link: '/delete', className: "fa fa-sign-out" },
 
         ];
-        let currentUsername = this.props.match.params.username;
-        if (this.state.redirectToFollowers) {
-            console.log("Printing state information before redirecting");
-            console.log(this.state);
-            return (
-            <Redirect
-                to={{
-                    pathname: '/followers',
-                    state: 
-                        {
-                            followers: this.state.followers,
-                            showFollowers: true,
-                            currentUsername: currentUsername,
-                        }
-                }}
-            />);
-        } else if (this.state.redirectToFollowing) {
-            console.log("Printing state information before redirecting to following");
-            console.log(this.state);  
-            return (
-            <Link
-                to= {{
-                    pathname: "/following",
-                    state:  {
-                    following : this.state.following,
-                    currentUsername: currentUsername,
-                    }
-                }}  
-            />);
-        }
 
         let EditProfileFormDOM = [];
+
         if (this.state.showEditButtonModal) {
 
             EditProfileFormDOM = <EditProfileForm
@@ -397,7 +354,7 @@ export class UserProfile extends Component {
                         <div>
                             <b>{this.state.firstName}</b>
                             <p>number of tweets</p>
-
+                            
                         </div>
 
                         <div>
@@ -421,44 +378,23 @@ export class UserProfile extends Component {
 
                                 <p><b>Location: </b>{this.state.city}</p>
                                 <Row>
-                                <Link
-                                    style={{
-                                        marginRight: '10px',
-                                    }}
-                                    to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: true,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.followers.length} Followers</Link>
-                                    <Link
-                                        to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: false,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.following.length} Following</Link>
+                                    <p>{this.state.followers}</p>
+                                    <a href = "/followers" onClick={this.followersClickHandler}>followers count</a>
+                                    <p>{this.state.following}</p>
+                                    <p> following count</p>
                                 </Row>
                             </div>
                             <div>
-                                <Tabs defaultActiveKey="profile" id="profileTweets">
-
-                                    <Tab className="profileTab" onSelect={this.getTweets} eventKey="tweets" title="Tweets">
-
+                                <Tabs  defaultActiveKey="profile" id="profileTweets">
+                                    
+                                    <Tab  className = "profileTab" onSelect = {this.getTweets} eventKey="tweets" title="Tweets">
+                                        
                                     </Tab>
-                                    <Tab eventKey="replies" title="Retweets" className="profileTab">
-
+                                    <Tab eventKey="replies" title="Retweets" className = "profileTab">
+                                        
                                     </Tab>
-                                    <Tab eventKey="likes" title="Likes" onSelect={this.getLikes} className="profileTab">
-
+                                    <Tab eventKey="likes" title="Likes" onSelect = {this.getLikes} className = "profileTab">
+                                        
                                     </Tab>
                                 </Tabs>
                             </div>

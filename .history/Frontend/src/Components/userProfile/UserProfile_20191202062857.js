@@ -347,6 +347,7 @@ export class UserProfile extends Component {
 
         ];
         let currentUsername = this.props.match.params.username;
+
         if (this.state.redirectToFollowers) {
             console.log("Printing state information before redirecting");
             console.log(this.state);
@@ -422,11 +423,8 @@ export class UserProfile extends Component {
                                 <p><b>Location: </b>{this.state.city}</p>
                                 <Row>
                                 <Link
-                                    style={{
-                                        marginRight: '10px',
-                                    }}
                                     to= {{
-                                        pathname: "/follow",
+                                        pathname: "/following",
                                         state:  {
                                         following : this.state.following,
                                         followers : this.state.followers,
@@ -434,10 +432,10 @@ export class UserProfile extends Component {
                                         currentUsername: currentUsername,
                                         }
                                         }}  
-                                    >{this.state.followers.length} Followers</Link>
+                                    >{this.state.following.length} Following</Link>
                                     <Link
                                         to= {{
-                                        pathname: "/follow",
+                                        pathname: "/following",
                                         state:  {
                                         following : this.state.following,
                                         followers : this.state.followers,

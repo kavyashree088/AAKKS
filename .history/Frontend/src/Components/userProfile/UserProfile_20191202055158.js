@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import EditProfileForm from './EditProfileForm'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import {Link} from 'react-router-dom'
 
 
 import axios from 'axios';
@@ -346,10 +345,11 @@ export class UserProfile extends Component {
             { label: 'Logout', link: '/delete', className: "fa fa-sign-out" },
 
         ];
-        let currentUsername = this.props.match.params.username;
+
         if (this.state.redirectToFollowers) {
             console.log("Printing state information before redirecting");
             console.log(this.state);
+            let currentUsername = this.props.match.params.username;
             return (
             <Redirect
                 to={{
@@ -365,15 +365,18 @@ export class UserProfile extends Component {
         } else if (this.state.redirectToFollowing) {
             console.log("Printing state information before redirecting to following");
             console.log(this.state);  
+            let currentUsername = this.props.match.params.username;          
             return (
-            <Link
-                to= {{
-                    pathname: "/following",
-                    state:  {
-                    following : this.state.following,
-                    currentUsername: currentUsername,
-                    }
-                }}  
+            <Redirect
+                to={{
+                    pathName: '/following',
+                    state: 
+                        {   
+                            following: this.state.following,
+                            showFollowers: false,
+                            currentUsername: currentUsername,
+                        },
+                }}
             />);
         }
 
@@ -421,31 +424,13 @@ export class UserProfile extends Component {
 
                                 <p><b>Location: </b>{this.state.city}</p>
                                 <Row>
-                                <Link
-                                    style={{
-                                        marginRight: '10px',
-                                    }}
-                                    to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: true,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.followers.length} Followers</Link>
-                                    <Link
-                                        to= {{
-                                        pathname: "/follow",
-                                        state:  {
-                                        following : this.state.following,
-                                        followers : this.state.followers,
-                                        showFollowers: false,
-                                        currentUsername: currentUsername,
-                                        }
-                                        }}  
-                                    >{this.state.following.length} Following</Link>
+                                    <a onClick={this.followersClickHandler}
+                                        style={
+                                            {
+                                                paddingRight: '10px',
+                                            }
+                                        }>{this.state.followers.length} Followers</a>
+                                    <a onClick={this.followingClickHandler}>{this.state.following.length} Following</a> 
                                 </Row>
                             </div>
                             <div>
