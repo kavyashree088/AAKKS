@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col,Image } from 'react-bootstrap';
 import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
@@ -12,7 +12,8 @@ import {
     CardBody,
     CardTitle,
     CardSubtitle,
-    CardLink
+    CardLink,
+    
   } from "reactstrap";
 import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
@@ -151,7 +152,18 @@ class TweetComponentInner extends Component {
             let imgArr= [];
             for(let i=0; i<media.length; i++){
                 let imgUrl = settings.s3bucket + media[i];
-                imgArr.push(<img key={i} src={imgUrl} style={{width:'100%'}} />);
+                imgArr.push(<img key={i} src={imgUrl} style={{width:'100%', height:'350px'}} />);
+                /*imgArr.push(<Image
+                    key={i}
+                    src={imgUrl}
+                    style={{
+                    height: "350px",
+                    width: "100%",
+                    margin: "8px"
+                    }}
+                    roundedCircle
+                    alt=""
+                    ></Image>);*/
             }
             return imgArr;
         } else {
@@ -179,6 +191,7 @@ class TweetComponentInner extends Component {
        let profileImg = settings.s3bucket + profilePic;
        
        // <Link to ={tweetUrl}>
+       // <img src = {profileImg} style={{width:'100%'}}/>
         return(
             <div className="tweet-container" onClick = {()=>{this.tweetClickHandler(tweetUrl)}}>
             <div className="tweet-body">
@@ -186,15 +199,23 @@ class TweetComponentInner extends Component {
             <Card >
             <CardBody>
                 <Row>
-                <Col xs={3}>
-                    <img src = {profileImg} style={{width:'100%'}}/>
+                <Col xs={2}>
+                <Image  src={profileImg}
+                    style={{
+                    height: "100px",
+                    width: "100px",
+                    margin: "8px"
+                    }}
+                    roundedCircle
+                    alt=""
+                    ></Image>
+                   
                 </Col>
                 <Col xs= {9}>
                     <a href = {userLinkUrl}>
                         <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{username}</span></CardTitle>
                     </a>
                     {processTweetText(tweetText)}
-                    <br/><br/>
                     {this.displayImages(media)}
                     {this.renderInnerTweet(isRetweet, actualTweetDetails)}
                     <br/><br/>

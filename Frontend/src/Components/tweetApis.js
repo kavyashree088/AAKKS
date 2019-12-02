@@ -10,7 +10,6 @@ import {
   } from "reactstrap";
 
 export const processTweetText = (tweetText) => {
-    debugger;
     let hyperLinkExp = /http:\/\/[\w\.\/]*/g;
     let textArr = tweetText.split(' ');
     for(let i=0; i<textArr.length; i++){

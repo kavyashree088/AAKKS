@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { replyATweet} from '../JS/Actions/tweetAction.js';
 import { getUserName, getUserFullName } from "./tweetApis.js";
+import $ from 'jquery';
 const settings = require("../config/settings.js");
 const {processTweetText} = require('./tweetApis.js');
 class ReplyModalInner extends Component{
@@ -38,6 +39,7 @@ class ReplyModalInner extends Component{
       this.setState({
         'replyText' : ''
       });
+      window.$('#replyModal').modal('hide');
     }
     changeHandler(evt){
       let target = evt.target;
@@ -50,7 +52,7 @@ class ReplyModalInner extends Component{
       if(!this.props.currentTweet){
         return <div></div>
       }
-      let { tweetText, userName, userFullName} = this.props.currentTweet;
+      let { tweetText, username, userFullName} = this.props.currentTweet;
       return (
           <div className='modal fade' id='replyModal'>
             <div className="modal-dialog modal-lg">
@@ -69,7 +71,7 @@ class ReplyModalInner extends Component{
                     <div className="tweet-body">
                       <Card >
                         <CardBody>
-                            <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{userName}</span></CardTitle>
+                            <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{username}</span></CardTitle>
                             {/* <CardSubtitle>Card subtitle</CardSubtitle>
                         
                         {<img width="100%" src="/assets/318x180.svg" alt="Card image cap" />}
@@ -81,7 +83,7 @@ class ReplyModalInner extends Component{
                     </div>
                   </div>
                   <div>
-                    <br/><p className='grey'>replying to @{userName}</p>
+                    <br/><p className='grey'>replying to @{username}</p>
                   </div>      
                   <div>
                       <textarea id="tweetArea" className="form-control" rows="4" onChange = {(evt) => this.changeHandler(evt) } style={{borderColor:"white",fontSize:"21px"}} placeholder="Tweet Your Reply" autoFocus value={this.state.replyText}></textarea>
@@ -89,7 +91,6 @@ class ReplyModalInner extends Component{
                 </div>
   
                 <div className="modal-footer">
-                  <i id="image" style={{position:'absolute',  left:'60px'}} className="far fa-image fa-2x"></i>
                   <button className="btn btn-primary btn-circle" type="submit" onClick = {(evt) => this.replyClickHandler(evt) } style={{position:'absolute',  right:'60px',fontWeight:"bold"   }}>Reply</button><br/><br/><br/>  
                 </div>
 

@@ -54,22 +54,31 @@ let writeATweet = async(message, callback) => {
     }
     let {username} = tweetDetails;
     let profilePic= '';
-    await user.findOne({username}, (err, result) => {
-        if(!err && result){
-            profilePic = result.profilePicture;
-        }
-    });
-    tweetDetails.profilePic = profilePic;
-    await tweet.create(tweetDetails, function(err, result){
+    await user.findOne({username}, async (err, result) => {
         if(err){
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
-       } else if(result) {
-           console.log("result is..");
-           console.log(result);
-           callback(null, { status: 200,  message:"Tweet is added successfully!!" });
-       }
+        } else if(result){
+            profilePic = result.profilePicture ? result.profilePicture : 'profileAlias.jpg';
+            tweetDetails.profilePic = profilePic;
+            await tweet.create(tweetDetails, function(err, result){
+                if(err){
+                    console.log("unable to insert into database", err);
+                    callback(err, "Database Error");
+               } else if(result) {
+                   console.log("result is..");
+                   console.log(result);
+                   callback(null, { status: 200,  message:"Tweet is added successfully!!" });
+               } else {
+                callback(null, { status: 401,  message:"Tweet cannot be added !!" });
+               }
+            });
+        } else {
+            callback(null, { status: 401,  message:"Tweet cannot be added !!" });
+        }
+        
     });
+    
 };
 
 let replyATweet = async (message, callback) => {
@@ -78,24 +87,32 @@ let replyATweet = async (message, callback) => {
     await user.findOne({username}, (err, result) => {
         console.log("result is..");
         console.log(result);
-        if(!err && result){
-            profilePic = result.profilePicture;
-        }
-    });
-    tweet.update({_id: tweetId}, {$push : {'replies' : {username, userFullName, profilePic, replyText}}}, (err, result) => {
-        if(err) {
+        if(err){
             console.log("unable to insert into database", err);
             callback(err, "Database Error");
-        } else if(result){
-           console.log("result is..");
-           console.log(result);
-           callback(null, { status: 200,  message:"reply is added successfully!" });
         } else {
-           console.log("result is..");
-           console.log(result);
-           callback(null, { status: 200,  message:"reply cannot be added!!" });
+            if(result){
+                profilePic = result.profilePicture ? result.profilePicture : 'profileAlias.jpg';
+                tweet.update({_id: tweetId}, {$push : {'replies' : {username, userFullName, profilePic, replyText}}}, (err, result) => {
+                    if(err) {
+                        console.log("unable to insert into database", err);
+                        callback(err, "Database Error");
+                    } else if(result){
+                       console.log("result is..");
+                       console.log(result);
+                       callback(null, { status: 200,  message:"reply is added successfully!" });
+                    } else {
+                       console.log("result is..");
+                       console.log(result);
+                       callback(null, { status: 401,  message:"reply cannot be added!!" });
+                    }
+                });
+            } else {
+                callback(null, { status: 401,  message:"reply cannot be added!!" });
+            }
         }
     });
+    
 }
 
 let getUserTweets = (message, callback) => {
@@ -120,25 +137,31 @@ let likeATweet = async function(message, callback){
     let { tweetId, username, userFullName } = message;
     let profilePic= '';
     await user.findOne({username}, (err, result) => {
-        if(!err && result){
-            profilePic = result.profilePicture;
-        }
-    });
-    console.log("In tweet topics : likeATweet ", message);
-    tweet.update({"_id" : tweetId}, {$push:{"likes":{username, userFullName, profilePic}}}, (err, result) => {
-        if(err) {
-            console.log("unable to insert into database", err);
+        if(err){
+            console.log("unable to find in database", err);
             callback(err, "Database Error");
-        } else if(result){
-           console.log("result is..");
-           console.log(result);
-           callback(null, { status: 200,  message:"like added successfully!" });
-        } else {
-           console.log("result is..");
-           console.log(result);
-           callback(null, { status: 200,  message:"like cannot be added!!" });
-       }
+       } else if(result){
+            profilePic = result.profilePicture ? result.profilePicture : 'profileAlias.jpg';
+            console.log("In tweet topics : likeATweet ", message);
+            tweet.update({"_id" : tweetId}, {$push:{"likes":{username, userFullName, profilePic}}}, (err, result) => {
+                if(err) {
+                    console.log("unable to insert into database", err);
+                    callback(err, "Database Error");
+                } else if(result){
+                    console.log("result is..");
+                    console.log(result);
+                    callback(null, { status: 200,  message:"like added successfully!" });
+                } else {
+                    console.log("result is..");
+                    console.log(result);
+                    callback(null, { status: 401,  message:"like cannot be added!!" });
+                }
+            });
+       } else {
+        callback(null, { status: 401,  message:"like cannot be added!!" });
+       } 
     });
+    
 };
 
 let unlikeATweet = function(message, callback){
@@ -304,18 +327,24 @@ let retweetWithoutComment = async (message, callback) => {
     let {username, userFullName, tweetId}  = message;
     let profilePic= '';
     await user.findOne({username}, (err, result) => {
-        if(!err && result){
-            profilePic = result.profilePicture;
-        }
-    });
-    tweet.update({'_id': tweetId}, {$push: {'retweets' : {username, userFullName, profilePic} }} , (err, result) => {
-        if(err) {
-            console.log('unable to delete into database', err);
-            callback(err, 'Database Error');
+        if(err){
+            console.log("unable to insert into database", err);
+            callback(err, "Database Error");
         } else if(result){
-            callback(null, {status:200, message:'tweet is retweeted'});
+            profilePic = result.profilePicture ? result.profilePicture : 'profileAlias.jpg';
+            tweet.update({'_id': tweetId}, {$push: {'retweets' : {username, userFullName, profilePic} }} , (err, result) => {
+                if(err) {
+                    console.log('unable to delete into database', err);
+                    callback(err, 'Database Error');
+                } else if(result){
+                    callback(null, {status:200, message:'tweet is retweeted'});
+                } else {
+                    callback(null, { status: 200,  message:'tweet  cannot be retweeted!!' });
+                }
+            });
         } else {
-            callback(null, { status: 200,  message:'tweet  cannot be deleted!!' });
+            callback(null, { status: 200,  message:'tweet  cannot be retweeted!!' });
         }
     });
+    
 }
