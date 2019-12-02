@@ -3,6 +3,11 @@ import 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 
 import GraphBar from './Graphs/GraphBar';
+import GraphPie from './Graphs/GraphPie';
+import GraphDoughnut from './Graphs/GraphDoughnut';
+import GraphLine from './Graphs/GraphLine';
+import GraphPolar from './Graphs/GraphPolar';
+import GraphHorizontalBar from './Graphs/GraphHorizontalBar';
 
 class Analytics extends Component {
 
@@ -28,39 +33,35 @@ class Analytics extends Component {
                     <h5>Analytics</h5>
                     </Navbar>
                 </div>
-                <div style={{width:'500px',marginLeft:'auto',marginRight:'auto'}}>
+                <div >
                     <div>
                         <GraphBar/>
                     </div>
-                    <br/>
-                    <br/>  
+                </div>
+                <div>
                     <div>
-                
+                   < GraphHorizontalBar/>
                     </div>
                 </div>
-                     <div></div>    
-                <div style={{display:'inline-block',float:'left'}}>
+                      
+                <div >
                     <div>
-                    
+                    <GraphDoughnut/>
                     </div>
-                    <br/>
-                    <br/>
+                </div>
+                <div>
                     <div>
-                
+                        <GraphPie/>
                     </div>
                 </div>
                 
-                <div style={{display:'inline-block',float:'left'}}>
+                <div>
                     <div>
-                    <br/>
-                    <br/>
-                    
-                    l
+                    <GraphLine />
                     </div>
                 
                 </div>
-                <br/>
-                <br/>
+                
 
             </div>
       );

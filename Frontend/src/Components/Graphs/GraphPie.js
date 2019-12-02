@@ -1,10 +1,8 @@
 import React,{Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import { Pie} from 'react-chartjs-2';
 import axios from 'axios';
-import { identifier } from '@babel/types';
-import { isDate } from 'util';
 
-class GraphBar extends Component{
+class GraphPie extends Component{
     // width={100}
     // height={50}
 
@@ -12,15 +10,15 @@ class GraphBar extends Component{
 
         super(props);
         this.state={
-            
-             chartData:{}
+             chartData:{ }
+
         }
     }
 
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchviews')
+    //     axios.get('http://'+rooturl+':3001/fetchretweets')
     //     .then(response => {
     //     console.log("Status Code : ",response.status);
     //     if(response.status === 200){
@@ -29,21 +27,31 @@ class GraphBar extends Component{
 
     //     }
     //     const result=response.data;
-    //     const views=[];
+    //     const retweets=[];
     //     const ids=[]
     //     for(let i=0;i<result.length;i++){
 
     //         ids[i]=result[i]._id;
-    //         views[i]=result[i].views;
+    //         retweets[i]=result[i].retweets;
     //     }
-    //     console.log("views:", views);
+    //     console.log("retweets:", retweets);
     //     console.log("ids:", ids);
+        
+    //     // console.log("this.state.labels",this.state.labels)
+    //     // console.log("this.state.data",this.state.data)
+    //     // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
+    //     //  this.state.chartData.datasets[0].data=[600, 560 ];
+    //     //  console.log("chart:", this.state.chartData);
+    //     // //console.log("labels:",this.state.chartData.labels);
+    //     // console.log("data:",this.state.chartData.datasets[0].data)
         
     //     const chartData1={
     //         labels:ids, //tweets
     //         datasets:[{
-    //             label:['hello'],
-    //             data:views
+    //             label:['retweets'],
+    //             data:
+    //                retweets  //retweets no.
+                
     //         ,
     //         backgroundColor:[
     //            'rgba(255, 99, 132, 0.6)',
@@ -56,8 +64,11 @@ class GraphBar extends Component{
     //            'rgba(205, 159, 68, 0.6)',
     //            'rgba(200, 200, 64, 0.6)',
     //            'rgba(250, 200,185, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'
-    //         ]
+    //            // 'rgba(255, 99, 132, 0.6)'  use lato for the font family
+    //         ],
+    //         borderWidth:4,
+    //         hoverBorderWidth:3,
+    //         hoverBorderColor:"#000000"
     //        }
     //    ]
     //     }
@@ -68,26 +79,27 @@ class GraphBar extends Component{
     // });
     // }
 
+
     static defaultProps={
         displayTitle:true,
         displayLegend:true,
         legendPosition:'bottom'
     }
     render(){
-
+        console.log('GraphPie')
         return(
-            <div classname="chart" style={{width:900}}>
-                <Bar
-                    height={800}
-                    width={2000}
+            <div classname="chart" style={{width:700}}>
+                <Pie
+                    height={700}
+                    width={900}
                     data={this.state.chartData}
                     options={{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH VIEWS",
+                            text:"TOP 10 TWEETS WITH RETWEETS",
                             fontSize:25,
-                            fontFamily:"Lato"
+                            fontFamily:'lato'
                         },
                         legend:{
                             display:this.props.displayLegend,
@@ -97,21 +109,11 @@ class GraphBar extends Component{
                             }
                         }, 
                         layout:{
-                            padding:{
+                            padding:{       //keep padding 50 directly for the smaller look
                                 left:50,
                                 right:0
                             }
                             
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
-                            xAxes: [{
-                                barPercentage: 0.5
-                            }]
                         }
                     }}
                     
@@ -123,4 +125,4 @@ class GraphBar extends Component{
 
 }
 
-export default GraphBar;
+export default GraphPie;

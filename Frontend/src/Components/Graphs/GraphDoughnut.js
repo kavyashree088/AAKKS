@@ -1,26 +1,21 @@
 import React,{Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
 import axios from 'axios';
-import { identifier } from '@babel/types';
-import { isDate } from 'util';
-
-class GraphBar extends Component{
-    // width={100}
-    // height={50}
+class GraphDoughnut extends Component{
 
     constructor(props){
 
         super(props);
         this.state={
-            
              chartData:{}
+
         }
     }
 
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchviews')
+    //     axios.get('http://'+rooturl+':3001/fetchlikes')
     //     .then(response => {
     //     console.log("Status Code : ",response.status);
     //     if(response.status === 200){
@@ -29,21 +24,21 @@ class GraphBar extends Component{
 
     //     }
     //     const result=response.data;
-    //     const views=[];
+    //     const likes=[];
     //     const ids=[]
     //     for(let i=0;i<result.length;i++){
 
     //         ids[i]=result[i]._id;
-    //         views[i]=result[i].views;
+    //         likes[i]=result[i].likes;
     //     }
-    //     console.log("views:", views);
+    //     console.log("likes:", likes);
     //     console.log("ids:", ids);
         
     //     const chartData1={
     //         labels:ids, //tweets
     //         datasets:[{
     //             label:['hello'],
-    //             data:views
+    //             data:likes
     //         ,
     //         backgroundColor:[
     //            'rgba(255, 99, 132, 0.6)',
@@ -60,6 +55,7 @@ class GraphBar extends Component{
     //         ]
     //        }
     //    ]
+         
     //     }
     //     this.setState({
     //         chartData:chartData1
@@ -76,18 +72,17 @@ class GraphBar extends Component{
     render(){
 
         return(
-            <div classname="chart" style={{width:900}}>
-                <Bar
+            <div classname="chart" style={{width:500}}>
+                <Doughnut
                     height={800}
-                    width={2000}
+                    width={900}
                     data={this.state.chartData}
                     options={{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH VIEWS",
-                            fontSize:25,
-                            fontFamily:"Lato"
+                            text:"TOP 10 TWEETS WITH LIKES",
+                            fontSize:25
                         },
                         legend:{
                             display:this.props.displayLegend,
@@ -102,16 +97,6 @@ class GraphBar extends Component{
                                 right:0
                             }
                             
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
-                            xAxes: [{
-                                barPercentage: 0.5
-                            }]
                         }
                     }}
                     
@@ -123,4 +108,4 @@ class GraphBar extends Component{
 
 }
 
-export default GraphBar;
+export default GraphDoughnut;
