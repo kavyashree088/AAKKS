@@ -7,6 +7,7 @@ import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
 import ListTweets from './ListTweets';
+const settings = require("../config/settings.js");
 
 const config = {
   headers: {
@@ -181,10 +182,16 @@ class ListSpecific extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
+          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          
+         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
+             profileImg= settings.s3bucket + listItem.profilePicture;
+          
           display.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                //src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                src={profileImg}
                 style={{
                   height: "48px",
                   width: "48px",
@@ -227,10 +234,16 @@ class ListSpecific extends Component {
 
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
+          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          
+         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
+             profileImg= settings.s3bucket + listItem.profilePicture;
+          
           display.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                //src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                src={profileImg}
                 style={{
                   height: "48px",
                   width: "48px",
@@ -328,7 +341,12 @@ class ListSpecific extends Component {
       { label: "Profile", link: "#home", className: "fas fa-user-circle" },
       { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
     ];
-
+    
+    let profileImg1=settings.s3bucket + "profileAlias.jpeg";
+          
+    if(this.props.location.state.list[0].creatorImage!="profileAlias.jpeg" && this.props.location.state.list[0].creatorImage!=null )
+        profileImg1= settings.s3bucket + this.props.location.state.list[0].creatorImage;
+      
     return (
       <div>
         <Row>
@@ -378,8 +396,9 @@ class ListSpecific extends Component {
                   <span>
                     {" "}
                     <Image
-                      src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
-                      style={{
+                     // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                     src={profileImg1}
+                     style={{
                         height: "30px",
                         width: "30px",
                         margin: "8px"

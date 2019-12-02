@@ -7,6 +7,7 @@ import LeftNav from "./LeftNav";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
+const settings = require("../config/settings.js");
 
 const config = {
   headers: {
@@ -302,10 +303,18 @@ class ListInfo extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
+          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          
+          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
+              profileImg= settings.s3bucket + listItem.profilePicture;
+           
+
+          
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+               src={profileImg}
+               // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                 style={{
                   height: "48px",
                   width: "48px",
@@ -364,10 +373,17 @@ class ListInfo extends Component {
               </button>
             );
           }
+         let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          
+         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
+             profileImg= settings.s3bucket + listItem.profilePicture;
+          
+          
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-                src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+               src={profileImg}
+               // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                 style={{
                   height: "48px",
                   width: "48px",
@@ -401,7 +417,7 @@ class ListInfo extends Component {
               <b> There isn't anyone in this list</b>
             </div>
             <p style={{ textAlign: "center" }}>
-              When people subscribe, they'll show up here.
+              When people are added, they'll show up here.
             </p>
           </div>
         );
@@ -414,6 +430,12 @@ class ListInfo extends Component {
       if (this.state.addMemberList != "") {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
+          let profileImg=settings.s3bucket + "profileAlias.jpg";
+          
+         if(listItem.profilePicture!="profileAlias.jpg" && listItem.profilePicture!=null )
+             profileImg= settings.s3bucket + listItem.profilePicture;
+          
+          
           memberDetails.push(
             <span>
               <button
@@ -422,7 +444,8 @@ class ListInfo extends Component {
                 onClick={this.removeMember.bind(this, listItem)}
               >
                 <Image
-                  src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                  src={profileImg}
+                  //src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                   style={{
                     height: "20px",
                     width: "20px",

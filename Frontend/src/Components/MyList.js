@@ -20,6 +20,7 @@ import { hostAddress, port } from "../Constants/index";
 import OwnedList from "./OwnedList";
 import SubscribedList from "./SusbscribedList";
 import MemberList from "./MemberList";
+const settings = require("../config/settings.js");
 
 const config = {
   headers: {
@@ -179,6 +180,8 @@ class List extends Component {
       listname: this.state.listname,
       // creatorID:localStorage.getItem('username'),
       // creatorName:localStorage.getItem('firstName'),
+      //creatorImage:localStorage.getItem('firstName')
+      creatorImage:"profileAlias.jpg",
       creatorID: "alaukika",
       creatorName: "Alaukika Diwanji",
       description: this.state.description,
@@ -268,6 +271,13 @@ class List extends Component {
       if (this.state.addMemberList != "") {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
+      
+          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          
+          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
+              profileImg= settings.s3bucket + listItem.profilePicture;
+           
+         
           memberDetails.push(
             <span>
               <button
@@ -276,7 +286,8 @@ class List extends Component {
                 onClick={this.removeMember.bind(this, listItem)}
               >
                 <Image
-                  src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                  src={profileImg}
+                  //src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                   style={{
                     height: "20px",
                     width: "20px",
