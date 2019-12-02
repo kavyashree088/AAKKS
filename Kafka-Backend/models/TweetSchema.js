@@ -7,37 +7,37 @@ TweetSchema = new Schema({
     type: String,
     default: ''
   },
-  userName : {
+  userName: {
     type: String,
-    default : ""
+    default: ""
   },
-  profilePic : {
-    type : String,
-    default :""
-  },
-  actualTweetId : {
+  profilePic: {
     type: String,
-    default :""
+    default: ""
   },
-  tweetText:{
+  actualTweetId: {
     type: String,
-    default :""
+    default: ""
   },
-  hashTags : [],
-  media:[],
-  replies:[],
-  likes:[],
-  retweets:[],
-  createdAt : {
-      type: String,
-      default :""
+  tweetText: {
+    type: String,
+    default: ""
   },
-  views : {
-      type :String,
-      default : 0
+  hashTags: [],
+  media: [],
+  replies: [],
+  likes: [],
+  retweets: [],
+  createdAt: {
+    type: String,
+    default: ""
   },
-  lists:[],
-  bookmarks:[]
+  views: {
+    type: String,
+    default: 0
+  },
+  lists: [],
+  bookmarks: []
 });
 
 module.exports = mongoose.model('tweets', TweetSchema);

@@ -1,19 +1,42 @@
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
+import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
+import config from './../Config/settings'
+import axios from 'axios';
 
 class Explore extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            searchText: ""
+            searchText: "",
+            allUsers: [],
+            searchList: []
         }
     }
 
+    componentWillMount() {
+        if (localStorage.getItem('username')) {
+            axios({
+                method: 'get',
+                url: 'http://' + config.hostname + ':3001/allUsers',
+            }).then(response => {
+                console.log(response)
+                this.setState({ allUsers: response.data.details.rows });
+            })
+        }
+    }
     handleChange = (event) => {
+        let list;
+        if (event.target.value === "") {
+            list = []
+        } else {
+            list = this.state.allUsers.filter(user =>
+                user.username.includes(event.target.value))
+        }
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            searchList: list
         })
     }
 
@@ -23,6 +46,18 @@ class Explore extends Component {
         }
     }
 
+    addDefaultSrc = (event) => {
+        console.log("error")
+        event.target.onError = null;
+        event.target.src = `https://${config.imageurl}/profileAlias.jpeg`
+    }
+
+    selectUser = (user) => (event) => {
+        this.props.history.push({
+            pathname: "/userDetailsPage/" + user.username,
+            state: { user: user }
+        });
+    }
     render() {
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home" },
@@ -31,9 +66,30 @@ class Explore extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
-            { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
+            { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
+            { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
+            { label: 'Logout', link: '/', className: "fa fa-sign-out" }
         ];
+
+        let serachDisplay = this.state.searchList.map(user => {
+            return (
+                <Dropdown.Item eventKey={user.username} onClick={this.selectUser(user)}>
+                    <div>
+                        <Image src={`https://${config.imageurl}/${user.profilePicture}`} style={{
+                            height: "40px",
+                            width: "40px",
+                            marginRight: "10px"
+                        }} roundedCircle alt="" onError={this.addDefaultSrc}></Image>
+                        <b>{user.firstName}</b>
+                    </div>
+                    <b className="padLeft lightFont" style={{
+                        paddingLeft: "10px"
+                    }}>@{user.username}</b>
+                    <hr />
+                </Dropdown.Item>
+            )
+        })
         return (
             <div>
                 <Row>
@@ -42,20 +98,46 @@ class Explore extends Component {
 
                     </Col>
                     <Col className="col-sm-6 pt-3">
-                        <InputGroup className="ip2">
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                                name="searchText"
-                                placeholder="Search Twitter"
-                                aria-label="Username"
-                                aria-describedby="basic-addon1"
-                                onChange={this.handleChange}
-                                onKeyDown={this.handleSearch}
+                        <Dropdown className="btn-block" style={{ maxHeight: "28px" }}>
+                            <Dropdown.Toggle as={InputGroup}>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                    name="searchText"
+                                    placeholder="Search Twitter"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    onChange={this.handleChange}
+                                    onKeyDown={this.handleSearch}
 
-                            />
-                        </InputGroup>
+                                />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+
+                                {(this.state.searchText.startsWith('#')) ? (
+                                    <div>
+                                        <Card.Body style={{
+                                            width: "400px"
+                                        }}>
+                                            Searching for #Tags
+                                    </Card.Body>
+                                    </div>
+                                ) : (<div>{this.state.searchList.length > 0 ? (
+                                    <Card.Body style={{
+                                        maxHeight: "400px",
+                                        width: "400px",
+                                        overflowY: "auto"
+                                    }}>
+                                        {serachDisplay}
+                                    </Card.Body>
+                                ) : (<Card.Body style={{ width: "400px" }}>{this.state.searchText.length > 0 ? (
+                                    <div>No users with search text</div>
+                                ) : (
+                                        <div>Try Searching for people and topics</div>
+                                    )}</Card.Body>)}</div>)}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
                     <Col className="col-sm-3">
                         <div className="navbar-side-right" id="navbarSide">

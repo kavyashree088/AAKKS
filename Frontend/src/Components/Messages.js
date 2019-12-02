@@ -18,7 +18,8 @@ class Messages extends Component {
             currentMessage: "",
             currentMessager: "",
             userImage: "",
-            otherUserImage: ""
+            otherUserImage: "",
+            userProfile: {}
         }
     }
 
@@ -30,6 +31,19 @@ class Messages extends Component {
             }).then(response => {
                 console.log(response)
                 this.setState({ userMessageList: response.data });
+            })
+            let data = {
+                username: localStorage.getItem("username")
+            }
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(response => {
+                console.log(response)
+                this.setState({ userProfile: response.data });
             })
         }
     }
@@ -130,8 +144,10 @@ class Messages extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope", active: true },
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '/profile', className: "fas fa-user-circle" },
-            { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
+            { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
+            { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
+            { label: 'Logout', link: '/', className: "fa fa-sign-out" }
         ];
         let listMessages = this.state.userMessageList.map(messages => {
             return (

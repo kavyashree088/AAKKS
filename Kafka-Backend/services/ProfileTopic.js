@@ -19,6 +19,15 @@ exports.profileTopicService = function profileTopicService(msg, callback) {
         case "updateProfile":
             updateProfile(msg, callback);
             break;
+        case "getAllUsers":
+            getAllUsers(msg, callback);
+            break;
+        case "follow":
+            follow(msg, callback);
+            break;
+        case "unfollow":
+            unfollow(msg, callback);
+            break;
     }
 };
 
@@ -47,7 +56,7 @@ async function updateProfile(msg, callback) {
     console.log(msg)
     console.log(msg.data.profileDetails.username)
     let con = await dbConnection();
-    
+
     try {
         Users.findOneAndUpdate({ 'username': msg.data.profileDetails.username }, {
             $set: {
@@ -57,7 +66,8 @@ async function updateProfile(msg, callback) {
                 "state": msg.data.profileDetails.state,
                 "city": msg.data.profileDetails.city,
                 "zipcode": msg.data.profileDetails.zipcode,
-            }},
+            }
+        },
             async function (err, results) {
                 console.log("results:")
                 console.log(results);
@@ -76,19 +86,19 @@ async function updateProfile(msg, callback) {
                             } else {
                                 callback(null, { status: 200, message: "user updated failed!!" });
                             }
-                    })
-                }
+                        })
+                    }
                     else {
                         console.log("No results found");
                         callback(null, { status: 205 });
                     }
                 }
-            
-        })
+
+            })
         await con.query("START TRANSACTION");
         let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.profileDetails.firstName, msg.data.profileDetails.lastName]);
         await con.query("COMMIT");
-        
+
         console.log(savedUser)
     } catch (ex) {
         console.log(ex);
@@ -101,4 +111,70 @@ async function updateProfile(msg, callback) {
         await con.destroy();
     }
 
+}
+
+async function getAllUsers(msg, callback) {
+    try {
+        Users.find({}, (err, rows) => {
+            if (err) {
+                console.log(err);
+                console.log("unable to read the database");
+                callback(err, "Database Error");
+            } else {
+                console.log(" got user ");
+                callback(null, { status: 200, rows });
+            }
+        })
+    } catch (error) {
+        callback(err, "Database Error");
+    }
+}
+
+async function follow(msg, callback) {
+    console.log(msg)
+    try {
+        Users.findOneAndUpdate({ "username": msg.data.following }, { $push: { "followers": msg.data.follower } }, async (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err, "Database Error");
+            } else {
+                console.log(result)
+                await Users.findOneAndUpdate({ "username": msg.data.follower }, { $push: { "following": msg.data.following } }, async (err, result) => {
+                    if (err) {
+                        console.log(err);
+                        callback(err, "Database Error");
+                    } else {
+                        console.log(" got user ");
+                        callback(null, { status: 200, result });
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        callback(err, "Database Error");
+    }
+}
+async function unfollow(msg, callback) {
+    console.log(msg)
+    try {
+        Users.findOneAndUpdate({ "username": msg.data.following }, { $pull: { "followers": msg.data.follower } }, async (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err, "Database Error");
+            } else {
+                console.log(result)
+                await Users.findOneAndUpdate({ "username": msg.data.follower }, { $pull: { "following": msg.data.following } }, async (err, result) => {
+                    if (err) {
+                        console.log(err);
+                        callback(err, "Database Error");
+                    } else {
+                        console.log(" got user ");
+                        callback(null, { status: 200, result });
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        callback(err, "Database Error");
+    }
 }
