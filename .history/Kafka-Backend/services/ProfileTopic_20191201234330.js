@@ -4,8 +4,6 @@ var app = express();
 app.set('view engine', 'ejs');
 
 var Users = require('../models/UserSchema');
-var Tweets = require('../models/TweetSchema');
-
 const dbConnection = require('./../database/dbConnectionPool');
 
 
@@ -23,9 +21,6 @@ exports.profileTopicService = function profileTopicService(msg, callback) {
             break;
         case "getLikes":
             getLikes(msg, callback);
-            break;
-        case "getTweets":
-            getTweets(msg, callback);
             break;
     }
 };
@@ -116,26 +111,7 @@ async function getLikes(msg, callback) {
 
     console.log("In user getLikes topic service. Msg: ", msg);
 
-    Tweets.find({ 'likes': {username:"anjali"} }, function (err, rows) {
-        console.log(rows)
-        if (err) {
-            console.log(err);
-            console.log("unable to read the database");
-            callback(err, "Database Error");
-        } else {
-            console.log(" got likes");
-            callback(null, { status: 200, rows });
-        }
-    });
-
-}
-
-async function getTweets(msg, callback) {
-
-    console.log("In user getTweets topic service. Msg: ", msg);
-
-    Tweets.find({ username: msg.data }, async function (err, rows) {
-        console.log(rows)
+    Users.findOne({ username: msg.data }, async function (err, rows) {
         if (err) {
             console.log(err);
             console.log("unable to read the database");
@@ -147,3 +123,4 @@ async function getTweets(msg, callback) {
     });
 
 }
+

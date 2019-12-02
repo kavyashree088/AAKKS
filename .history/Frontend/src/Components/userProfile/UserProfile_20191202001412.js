@@ -108,7 +108,7 @@ export class UserProfile extends Component {
             axios.defaults.withCredentials = true;
            console.log(token)
            console.log("data variable")    
-            let tweetData = {
+             data = {
                 currentUsername
             }
                     
@@ -116,7 +116,7 @@ export class UserProfile extends Component {
             axios({
                 method: 'get',
                     url: 'http://'+config.hostname+':3001/getTweets',
-                    tweetData,
+                    data,
                     config: { headers: { 'Content-Type': 'application/json' } },
                     headers: { "Authorization": `Bearer ${token}` }
                 })
@@ -136,33 +136,6 @@ export class UserProfile extends Component {
                 }).catch(error => {
                     console.log(error);
                 });
-
-
-                console.log(data)
-                axios({
-                    method: 'get',
-                        url: 'http://'+config.hostname+':3001/getLikes',
-                        data,
-                        config: { headers: { 'Content-Type': 'application/json' } },
-                        headers: { "Authorization": `Bearer ${token}` }
-                    })
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log('response from DB: ');
-                            console.log(response.data);
-                            
-                        } else {
-                            console.log("Status Code: ", response.status);
-                            console.log(response.data.responseMessage);
-                        }
-                        this.setState({
-                            likes: response.data.details.rows.likes,
-                           
-                        })
-                    }).catch(error => {
-                        console.log(error);
-                    });
-               
            
     
     }

@@ -87,7 +87,6 @@ router.post('/getProfileDetails', function (req, res) {
 
 
 router.post('/updateProfile',requireAuth, function (req, res) {
-  console.log(req)
   console.log("Inside updatePofile post request");
   console.log("Sending Request Body:");
 
@@ -121,8 +120,7 @@ router.post('/updateProfile',requireAuth, function (req, res) {
 
 
 router.get('/getLikes',requireAuth, function (req, res) {
-  console.log(req)
-  let username = req.body.currentUsername
+  let username = req.body.username
   let redisKey = "userProfile_" + username;
   redisClient.del(redisKey);
 
@@ -133,9 +131,9 @@ router.get('/getLikes',requireAuth, function (req, res) {
   console.log("Sending Request Body:");
 
   console.log(req.body)
-  //let username = req.body.currentUsername
+  let username = req.body.currentUsername
     try {
-    kafka.make_request('profileTopic', { "path": "getLikes", "data": "keerthi" }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "getLikes", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
 
@@ -157,17 +155,16 @@ router.get('/getLikes',requireAuth, function (req, res) {
 })
 
 router.get('/getTweets',requireAuth, function (req, res) {
- // console.log(req)
-  let username = req.body.currentUsername
+  let username = req.body.username
   let redisKey = "userProfile_" + username;
   redisClient.del(redisKey);
   console.log("Inside getTweets post request");
   console.log("Sending Request Body:");
 
   console.log(req.body)
- // let username = req.body.currentUsername
+  let username = req.body.currentUsername
     try {
-    kafka.make_request('profileTopic', { "path": "getTweets", "data": "keerthi" }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "getTweets", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
 

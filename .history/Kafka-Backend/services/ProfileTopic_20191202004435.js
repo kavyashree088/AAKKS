@@ -116,7 +116,7 @@ async function getLikes(msg, callback) {
 
     console.log("In user getLikes topic service. Msg: ", msg);
 
-    Tweets.find({ 'likes': {username:"anjali"} }, function (err, rows) {
+    Tweets.find({ likes: {username:"keerthi"} }, async function (err, rows) {
         console.log(rows)
         if (err) {
             console.log(err);
@@ -134,7 +134,7 @@ async function getTweets(msg, callback) {
 
     console.log("In user getTweets topic service. Msg: ", msg);
 
-    Tweets.find({ username: msg.data }, async function (err, rows) {
+    Tweets.findOne({ username: msg.data }, async function (err, rows) {
         console.log(rows)
         if (err) {
             console.log(err);

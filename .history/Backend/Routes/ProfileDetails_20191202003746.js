@@ -135,7 +135,7 @@ router.get('/getLikes',requireAuth, function (req, res) {
   console.log(req.body)
   //let username = req.body.currentUsername
     try {
-    kafka.make_request('profileTopic', { "path": "getLikes", "data": "keerthi" }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "getLikes", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
 

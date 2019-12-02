@@ -26,8 +26,6 @@ router.post('/getProfileDetails', function (req, res) {
 
   try {
     let redisKey = "userProfile_" + username;
-  //  let redisKey = "userProfile_" + username;
-  //redisClient.del(redisKey);
     console.log(redisKey)
     redisClient.get(redisKey, async function (err, details) {
       console.log(JSON.parse(details))
@@ -81,13 +79,11 @@ router.post('/getProfileDetails', function (req, res) {
     console.log(e);
     res.status(500).json({ message: 'Error at server side!!!' });
   }
- // redisClient.del(redisKey);
 })
 
 
 
 router.post('/updateProfile',requireAuth, function (req, res) {
-  console.log(req)
   console.log("Inside updatePofile post request");
   console.log("Sending Request Body:");
 
@@ -121,21 +117,13 @@ router.post('/updateProfile',requireAuth, function (req, res) {
 
 
 router.get('/getLikes',requireAuth, function (req, res) {
-  console.log(req)
-  let username = req.body.currentUsername
-  let redisKey = "userProfile_" + username;
-  redisClient.del(redisKey);
-
-
   console.log("Inside getLikes post request");
-  console.log(req.currentUsername)
-  console.log(req)
   console.log("Sending Request Body:");
 
   console.log(req.body)
-  //let username = req.body.currentUsername
+  let username = req.body.currentUsername
     try {
-    kafka.make_request('profileTopic', { "path": "getLikes", "data": "keerthi" }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "getLikes", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
 
@@ -157,17 +145,13 @@ router.get('/getLikes',requireAuth, function (req, res) {
 })
 
 router.get('/getTweets',requireAuth, function (req, res) {
- // console.log(req)
-  let username = req.body.currentUsername
-  let redisKey = "userProfile_" + username;
-  redisClient.del(redisKey);
   console.log("Inside getTweets post request");
   console.log("Sending Request Body:");
 
   console.log(req.body)
- // let username = req.body.currentUsername
+  let username = req.body.currentUsername
     try {
-    kafka.make_request('profileTopic', { "path": "getTweets", "data": "keerthi" }, function (err, result) {
+    kafka.make_request('profileTopic', { "path": "getTweets", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
 

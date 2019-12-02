@@ -103,68 +103,6 @@ export class UserProfile extends Component {
             }).catch(error => {
                 console.log(error);
             });
-
-
-            axios.defaults.withCredentials = true;
-           console.log(token)
-           console.log("data variable")    
-            let tweetData = {
-                currentUsername
-            }
-                    
-            console.log(data)
-            axios({
-                method: 'get',
-                    url: 'http://'+config.hostname+':3001/getTweets',
-                    tweetData,
-                    config: { headers: { 'Content-Type': 'application/json' } },
-                    headers: { "Authorization": `Bearer ${token}` }
-                })
-                .then(response => {
-                    if (response.status === 200) {
-                        console.log('response from DB: ');
-                        console.log(response.data);
-                        
-                    } else {
-                        console.log("Status Code: ", response.status);
-                        console.log(response.data.responseMessage);
-                    }
-                    this.setState({
-                        tweets: response.data.details.rows.tweets,
-                       
-                    })
-                }).catch(error => {
-                    console.log(error);
-                });
-
-
-                console.log(data)
-                axios({
-                    method: 'get',
-                        url: 'http://'+config.hostname+':3001/getLikes',
-                        data,
-                        config: { headers: { 'Content-Type': 'application/json' } },
-                        headers: { "Authorization": `Bearer ${token}` }
-                    })
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log('response from DB: ');
-                            console.log(response.data);
-                            
-                        } else {
-                            console.log("Status Code: ", response.status);
-                            console.log(response.data.responseMessage);
-                        }
-                        this.setState({
-                            likes: response.data.details.rows.likes,
-                           
-                        })
-                    }).catch(error => {
-                        console.log(error);
-                    });
-               
-           
-    
     }
 
     openEditProfileForm = () => {
@@ -276,45 +214,7 @@ export class UserProfile extends Component {
 
 
     getTweets = () =>{
-        let currentUsername = this.props.match.params.username;
-        console.log("getTweets")
-      
-        console.log("Getting details of user: ")
-        console.log(currentUsername);
-        axios.defaults.withCredentials = true;
-       let token = localStorage.getItem('token')
-       console.log(token)
-       console.log("data variable")    
-        let data = {
-            currentUsername
-        }
-                
-        console.log(data)
-        axios({
-            method: 'get',
-                url: 'http://'+config.hostname+':3001/getTweets',
-                data,
-                config: { headers: { 'Content-Type': 'application/json' } },
-                headers: { "Authorization": `Bearer ${token}` }
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('response from DB: ');
-                    console.log(response.data);
-                    
-                } else {
-                    console.log("Status Code: ", response.status);
-                    console.log(response.data.responseMessage);
-                }
-                this.setState({
-                    tweets: response.data.details.rows.tweets,
-                   
-                })
-            }).catch(error => {
-                console.log(error);
-            });
        
-
     }
 
     render() {
