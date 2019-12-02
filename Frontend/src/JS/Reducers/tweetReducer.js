@@ -1,8 +1,9 @@
-import {DASHBOARDTWEETS, CURRENTTWEET} from "../Types/types";
+import {DASHBOARDTWEETS, CURRENTTWEET, SETPAGENUM} from "../Types/types";
 
 const initialState = {
     dashboardTweets : [],
-    currentTweet : ""
+    currentTweet : "",
+    pageNum : 1
 }
 
 export const tweetReducer = function(state = initialState, action){
@@ -14,6 +15,10 @@ export const tweetReducer = function(state = initialState, action){
         case CURRENTTWEET :
             return Object.assign({}, state, {
                 currentTweet : action.payload
+            });
+        case SETPAGENUM :
+            return Object.assign({}, state, {
+                pageNum : action.payload
             });
         default :
             return state;

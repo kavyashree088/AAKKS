@@ -18,7 +18,7 @@ export const processTweetText = (tweetText) => {
         if(match){
             let http = /http:\/\//g;
             text = text.replace(http,"") + " ";
-            textArr[i] = <CardLink key={i} href={textArr[i]} target = "_blank">{text}</CardLink>
+            textArr[i] = <CardLink key={i} href={textArr[i]} target = "_blank" className= 'blue' onClick={(evt) => {evt.stopPropagation();}}>{text}</CardLink>
         } else {
             textArr[i] = textArr[i] + " ";
         }
@@ -28,9 +28,24 @@ export const processTweetText = (tweetText) => {
 export const getUserFullName = () => {
     //TODO : combine localstorage firstname + " "+ lastname
     return 'Anjali Bandaru';
+    //return 'Keerthi Akella';
 }
 export const getUserName =() => {
     //TODO : get from local storage
     return 'anjali';
+    //return 'keerthi';
+}
+export const getPageSize = () => {
+    return 10;
+}
+
+
+export const getMonthAndDate = (timeStamp) => {
+    const monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    timeStamp += "";
+    let postedDate = new Date(timeStamp);
+    let month = monthsArr[postedDate.getMonth()];
+    let date = postedDate.getDate();
+    return month + "  " + date;
 }
 export const TWEETCHARLIMIT = '280';

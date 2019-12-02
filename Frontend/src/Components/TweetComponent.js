@@ -20,7 +20,7 @@ import TweetModal from './TweetModal';
 import { TweetBody } from "./TweetBody.js";
 import $ from 'jquery';
 const settings = require("../config/settings.js");
-const {processTweetText, getUserName, getUserFullName} = require('./tweetApis.js');
+const {processTweetText, getUserName, getMonthAndDate, getUserFullName} = require('./tweetApis.js');
 
 class TweetComponentInner extends Component {
     state = {
@@ -152,18 +152,7 @@ class TweetComponentInner extends Component {
             let imgArr= [];
             for(let i=0; i<media.length; i++){
                 let imgUrl = settings.s3bucket + media[i];
-                imgArr.push(<img key={i} src={imgUrl} style={{width:'100%', height:'350px'}} />);
-                /*imgArr.push(<Image
-                    key={i}
-                    src={imgUrl}
-                    style={{
-                    height: "350px",
-                    width: "100%",
-                    margin: "8px"
-                    }}
-                    roundedCircle
-                    alt=""
-                    ></Image>);*/
+                imgArr.push(<img key={i} src={imgUrl} className= 'tweetImage' />);
             }
             return imgArr;
         } else {
@@ -179,7 +168,7 @@ class TweetComponentInner extends Component {
 
     render(){
         debugger;
-       let {userFullName, username, userId, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic} = this.props.tweet;
+       let {userFullName, username, userId, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic, createdAt} = this.props.tweet;
        //let userFullName = firstName + " " + lastName;
        let tweetId = this.props.tweet._id;
        let {likesNum, repliesNum, retweetNum } = this.state;
@@ -189,7 +178,7 @@ class TweetComponentInner extends Component {
        //let tweetUrl = 'http://' + settings.frontendHostName +':' +settings.port +'/tweet/'+tweetId;
        let tweetUrl = '/tweet/'+tweetId;
        let profileImg = settings.s3bucket + profilePic;
-       
+       let postedDateStr = getMonthAndDate(createdAt);
        // <Link to ={tweetUrl}>
        // <img src = {profileImg} style={{width:'100%'}}/>
         return(
@@ -213,7 +202,7 @@ class TweetComponentInner extends Component {
                 </Col>
                 <Col xs= {9}>
                     <a href = {userLinkUrl}>
-                        <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{username}</span></CardTitle>
+                        <CardTitle className = 'blue bolder' >{userFullName}<span className = 'grey normal'> @{username}</span> &nbsp; &nbsp; <span className = 'grey normal'>{postedDateStr}</span></CardTitle>
                     </a>
                     {processTweetText(tweetText)}
                     {this.displayImages(media)}

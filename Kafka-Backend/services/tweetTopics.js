@@ -207,7 +207,8 @@ let processTweets = async (tweets) => {
 }
 
 let getDashboardTweets =  async (message, callback) => {
-    let {username} = message;
+    let {username, pageNum, pageSize} = message;
+    let offset = (pageNum-1) * pageSize;
     let followingActive = [], following = [];
     await user.findOne({username}, async (err, result) => {
         if(err){
@@ -235,11 +236,11 @@ let getDashboardTweets =  async (message, callback) => {
               console.log("followingactive..");
               console.log(followingActive);
               if(followingActive && followingActive.length > 0){
-                await tweet.find({username : { $in : followingActive } }).lean().exec(async(err, result) => {
+                await tweet.find({username : { $in : followingActive } }).sort({ createdAt : -1}).skip(offset).limit(pageSize).lean().exec(async(err, result) => {
                     if(err) {
                         console.log("unable to insert into database", err);
                         callback(err, "Database Error");
-                    } else if(result){
+                    } else if(result && result.length > 0){
                         console.log("tweets returned!!");
                         console.log(result);
                         result = await processTweets(result);

@@ -93,3 +93,20 @@ body{
     padding:10px;
     padding-left:20px;
 }
+
+.blue {
+    color :rgba(29, 161, 242, 1);
+    
+}
+.bolder {
+    font-weight:bolder;
+}
+.normal{
+    font-weight:normal;
+}
+
+.tweetImage {
+    border-radius: 30px;
+    width:100%;
+    height:350px
+}
