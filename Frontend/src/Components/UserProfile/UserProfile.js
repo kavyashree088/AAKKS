@@ -177,8 +177,7 @@ export class UserProfile extends Component {
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            { label: 'Logout', link: '/delete', className: "fa fa-sign-out" },
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
 
         ];
 

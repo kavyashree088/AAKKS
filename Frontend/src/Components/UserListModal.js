@@ -12,7 +12,7 @@ import {
     CardSubtitle,
     CardLink
   } from "reactstrap";
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 export class UserListModal extends Component{
     render(){

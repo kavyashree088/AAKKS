@@ -18,15 +18,15 @@ export class DeleteAccount extends Component {
 
         this.state = {
             delete: false,
-            firstname:'',
-            username:'',
+            firstname: '',
+            username: '',
         }
-        
+
         this.deleteButton = this.deleteButton.bind(this)
 
     }
 
-    componentWillMount = () =>{
+    componentWillMount = () => {
         this.setState({
             firstname: localStorage.getItem('firstname'),
             username: localStorage.getItem('username'),
@@ -38,8 +38,8 @@ export class DeleteAccount extends Component {
 
         let username = localStorage.getItem('username')
         let token = localStorage.getItem('token')
-        
-        
+
+
         axios.defaults.withCredentials = true;
         let data = {
             username
@@ -47,17 +47,17 @@ export class DeleteAccount extends Component {
         console.log(data.username)
         axios({
             method: 'post',
-                url: 'http://'+config.hostname+':3001/deleteAccount',
-                data,
-                config: { headers: { 'Content-Type': 'application/json' } },
-                headers: { "Authorization": `Bearer ${token}` }
-            }).then(response => {
+            url: 'http://' + config.hostname + ':3001/deleteAccount',
+            data,
+            config: { headers: { 'Content-Type': 'application/json' } },
+            headers: { "Authorization": `Bearer ${token}` }
+        }).then(response => {
             if (response.status === 200) {
                 console.log('Account deleted');
                 this.setState({
                     delete: true
                 })
-               
+
             } else {
                 //alert('failed to Account deleted');
                 console.log('Failed to Account deleted');
@@ -67,10 +67,10 @@ export class DeleteAccount extends Component {
         })
     }
 
-    
+
     render() {
-       // var next;
-        if(this.state.delete){
+        // var next;
+        if (this.state.delete) {
             return <Redirect to="/" />
         }
         let links = [
@@ -81,10 +81,9 @@ export class DeleteAccount extends Component {
 
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
-            { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
+            { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            { label: 'Logout', link: '/',  className: "fa fa-sign-out" },
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
 
         ];
         return (
@@ -100,17 +99,17 @@ export class DeleteAccount extends Component {
 
                         <div>
                             <h3>
-                            This will delete your account
+                                This will delete your account
                             </h3>
                             <p>@{this.state.username}</p>
                             <br></br>
                             <p>
-                            You’re about to start the process of deleting your Twitter account. 
-                            Your display name, <b>@{this.state.username}</b>, and public profile will no longer be viewable on Twitter.com, 
-                            Twitter for iOS, or Twitter for Android.
+                                You’re about to start the process of deleting your Twitter account.
+                            Your display name, <b>@{this.state.username}</b>, and public profile will no longer be viewable on Twitter.com,
+                                Twitter for iOS, or Twitter for Android.
                             </p>
                             <center>
-                            <Button  onClick={this.deleteButton} variant="danger">Delete Account</Button>
+                                <Button onClick={this.deleteButton} variant="danger">Delete Account</Button>
                             </center>
                         </div>
 

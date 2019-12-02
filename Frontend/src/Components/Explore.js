@@ -24,6 +24,8 @@ class Explore extends Component {
                 console.log(response)
                 this.setState({ allUsers: response.data.details.rows });
             })
+        } else {
+            this.props.history.push("/");
         }
     }
     handleChange = (event) => {
@@ -53,10 +55,15 @@ class Explore extends Component {
     }
 
     selectUser = (user) => (event) => {
-        this.props.history.push({
-            pathname: "/userDetailsPage/" + user.username,
-            state: { user: user }
-        });
+        if (user.username === localStorage.getItem("username")) {
+            this.props.history.push('/profile/' + localStorage.getItem('username'));
+        } else {
+            this.props.history.push({
+                pathname: "/userDetailsPage/" + user.username,
+                state: { user: user }
+            });
+        }
+
     }
     render() {
         let links = [
@@ -68,8 +75,7 @@ class Explore extends Component {
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            { label: 'Logout', link: '/', className: "fa fa-sign-out" }
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
         ];
 
         let serachDisplay = this.state.searchList.map(user => {
@@ -94,7 +100,7 @@ class Explore extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
                     <Col className="col-sm-6 pt-3">

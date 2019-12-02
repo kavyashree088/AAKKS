@@ -5,63 +5,18 @@ import config from '../Config/settings'
 import axios from 'axios';
 
 
-export default class LeftNav extends Component {
+class LeftNav extends Component {
+    constructor(props) {
+        super(props)
+    }
 
-    //delete an account
-    //deactivate an account
-    //Logout
-
-    // constructor(props) {
-    //     super(props)
-    
-    //     this.state = {
-    //         redirectPageName : undefined, 
-    //         deleteAccountFlag: true,
-    //         deactivateAccountFlag : true
-    //     }
-    //     this.handleLogout = this.handleLogout.bind(this);
-    //     this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
-    //     this.handleDeactivateAccount = this.handleDeactivateAccount.bind(this);
-    // }
-
-
-    // handleLogout = () => {
-    //     localStorage.clear();
-    //     console.log("Local Storage cleared!");
-    //     window.location = "/";
-    // }
-
-    // handleDeactivateAccount = (e) =>{
-    //     let username = localStorage.getItem('username')
-    //     e.preventDefault();
-    //     axios.defaults.withCredentials = true;
-    //     axios.post('http://' + config.hostname + ':'+ config.port + '/deactivateAccount', username)
-    //         .then(response => {
-    //             console.log("Status Code : ", response.status);
-    //             console.log("Response from Sign Up " + response);
-    //             console.log(response);
-    //             if (response.data.deactivate === true) {
-                    
-    //                 this.setState({
-    //                     message: "Account successfully Deactivated",
-    //                     deactivateAccountFlag: true
-    //                 })
-    //             } else {
-    //                 this.setState({
-    //                     message: "Account Deactivation Failed",
-    //                     deactivateAccountFlag: false
-    //                 })
-    //             }
-    //         });
-    // }
-
-
-    
-
-
-
-
-
+    logout = () => {
+        localStorage.removeItem("username");
+        localStorage.removeItem("token");
+        localStorage.removeItem("firstname");
+        localStorage.removeItem("lastname");
+        this.props.history.push("/");
+    }
     render() {
         let linksMarkup = this.props.links.map((link, index) => {
             let linkMarkup = link.active ? (
@@ -89,7 +44,7 @@ export default class LeftNav extends Component {
                 <li className="navbar-side-item">
                     <a style={{
                         paddingLeft: "2rem"
-                    }} href="/">
+                    }} href="/home">
                         <span className="fab fa-twitter" style={{
                             marginRight: "10px",
                             fontSize: "2rem",
@@ -99,9 +54,16 @@ export default class LeftNav extends Component {
                 </li>
 
                 {linksMarkup}
-                
-                
+                <li className="navbar-side-item">
+                    <a className="side-link" onClick={this.logout.bind(this)}>
+                        <span className="fa fa-sign-out" style={{ marginRight: "10px" }} ></span>
+                        <span><b>Logout</b></span>
+                    </a>
+                </li>
+
             </div >
         )
     }
 }
+
+export default LeftNav;

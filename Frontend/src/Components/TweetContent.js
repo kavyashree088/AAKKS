@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import DashboardTweets from "./DashboardTweets.js";
 import '../CSS/tweetArea.css';
 
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 var faker = require('faker');
 const { getUserFullName, getUserName, TWEETCHARLIMIT } = require('./tweetApis.js');
 

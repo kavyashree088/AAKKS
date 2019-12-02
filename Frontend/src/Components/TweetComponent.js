@@ -18,7 +18,7 @@ import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import { TweetBody } from "./TweetBody.js";
 import $ from 'jquery';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 const {processTweetText, getUserName, getUserFullName} = require('./tweetApis.js');
 
 class TweetComponentInner extends Component {

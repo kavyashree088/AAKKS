@@ -80,6 +80,12 @@ class UserDetails extends Component {
             this.setState({ userProfile: response.data.result });
         })
     }
+
+    addDefaultSrc = (event) => {
+        console.log("error")
+        event.target.onError = null;
+        event.target.src = `https://${config.imageurl}/profileAlias.jpeg`
+    }
     render() {
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home" },
@@ -90,8 +96,7 @@ class UserDetails extends Component {
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            { label: 'Logout', link: '/', className: "fa fa-sign-out" }
+            { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
         ];
         return (
             <div>
@@ -121,7 +126,7 @@ class UserDetails extends Component {
                             <Row>
                                 <Col xs={6} md={4}>
                                     <Row>
-                                        <img className="img-thumbnail" src={coverImage} />
+                                        <img className="img-thumbnail" src={`https://${config.imageurl}/${this.state.user.profilePicture}`} onError={this.addDefaultSrc} />
                                     </Row>
                                 </Col>
                                 <Col xs={8} >
@@ -152,7 +157,7 @@ class UserDetails extends Component {
                                     }}><b>{this.state.user.followers.length || 0}</b><b className="lightFont"> Followers</b></p></Col>
 
                                     <Col>
-                                        <p><b>{this.state.user.following.length || 0}</b><b className="lightFont"> Followers</b></p>
+                                        <p><b>{this.state.user.following.length || 0}</b><b className="lightFont"> Following</b></p>
                                     </Col>
 
                                 </Row>
