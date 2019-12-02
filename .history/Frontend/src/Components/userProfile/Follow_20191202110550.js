@@ -270,7 +270,7 @@ class Follow extends Component {
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                                <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -295,12 +295,12 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowingUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowingUserName}></a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                               <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>

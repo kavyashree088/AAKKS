@@ -254,7 +254,7 @@ class Follow extends Component {
             let description = aFollower.description;
             let aFollowerUserName = aFollower.username;
             let Name = firstName + lastName;
-            let userLink = '/profile/'+aFollowerUserName
+            let userLink = '/profile'+aFollowerUserName
             followerCardsDOM.push(
                 <div>
                     <Card bg="light" style={{
@@ -265,12 +265,12 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowerUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink}+ >@{aFollowerUserName}</a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                                <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -284,7 +284,6 @@ class Follow extends Component {
             let description = aFollowing.description;
             let aFollowingUserName = aFollowing.username;
             let Name = firstName + lastName;
-            let userLink = '/profile/'+aFollowingUserName
             followingCardsDOM.push(
                 <div>
                     <Card bg="light" style={{
@@ -295,12 +294,12 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowingUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">@{aFollowingUserName}</Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                               <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>

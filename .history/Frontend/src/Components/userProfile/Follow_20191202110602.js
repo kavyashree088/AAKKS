@@ -270,7 +270,7 @@ class Follow extends Component {
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                                <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -300,7 +300,7 @@ class Follow extends Component {
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                               <p> {description}</p>
+                                {description}
                             </Card.Text>
                         </Card.Body>
                     </Card>
