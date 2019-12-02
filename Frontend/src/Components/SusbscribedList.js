@@ -38,8 +38,8 @@ this.setState({
 
   componentWillMount() {
     const data = {
-      //userID: localStorage.getItem("username")
-      userID: "alaukika"
+      userID: localStorage.getItem("username")
+      //userID: "alaukika"
     };
     console.log(data);
     //set the with credentials to true
@@ -77,7 +77,7 @@ this.setState({
     }
     let display = [];
     let details;
-    if (this.state.list != null) {
+    if (this.state.list.length != 0) {
       details = this.state.list.map(listItem => {
         let profileImg=settings.s3bucket + "profileAlias.jpeg";
           
@@ -124,10 +124,10 @@ this.setState({
     } else {
       display.push(
         <div>
-          <h3 style={{ textAlign: "center" }}>
-            You haven’t subscribed to any Lists yet
-          </h3>
-          <p>When you do, it’ll show up here.</p>
+          <h4 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
+            <b> You haven’t subscribed to any Lists yet</b>
+          </h4>
+          <h6 style={{ textAlign: "center",color:"#808080" }}>When you do, it’ll show up here.</h6>
         </div>
       );
     }

@@ -4,7 +4,7 @@ import "../CSS/List.css";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Image } from "react-bootstrap";
-import {Redirect} from 'react-router';
+import { Redirect } from "react-router";
 const settings = require("../config/settings.js");
 
 const config = {
@@ -19,28 +19,28 @@ class MemberList extends Component {
     super(props);
     this.state = {
       list: [],
-      showList:{},
-      redirectflag:false
+      showList: {},
+      redirectflag: false
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   handleButtonClick = value => {
-    var x=this.state.list.filter(item=>item._id==value);
-    console.log("Alaukika")
+    var x = this.state.list.filter(item => item._id == value);
+    console.log("Alaukika");
     console.log(x);
-    console.log("Alaukika")
+    console.log("Alaukika");
     //display=(<Redirect to={{pathname:'./ListSpecific', state:{listID:x}}}/>)
-this.setState({
-  showList:x,
-  redirectflag:true
-})
+    this.setState({
+      showList: x,
+      redirectflag: true
+    });
   };
 
   componentWillMount() {
     const data = {
-      //userID: localStorage.getItem("username")
-      userID: "alaukika"
+      userID: localStorage.getItem("username")
+      // userID: "alaukika"
     };
     console.log(data);
     //set the with credentials to true
@@ -48,11 +48,7 @@ this.setState({
     //make a post request with the user data
     axios
       .post(
-        "http://" +
-          hostAddress +
-          ":" +
-          port +
-          "/showMemberList/showMemberList",
+        "http://" + hostAddress + ":" + port + "/showMemberList/showMemberList",
         data,
         config
       )
@@ -65,34 +61,42 @@ this.setState({
   }
 
   render() {
-    let redirectNav=null;
-    if(this.state.redirectflag){
-      console.log("Hi i am here :",this.state.showList );
+    let redirectNav = null;
+    if (this.state.redirectflag) {
+      console.log("Hi i am here :", this.state.showList);
       //redirectNav=<Redirect to={{pathname:'/ListSpecific', state:{listID:this.state.showList}}}/>
-      redirectNav=<Redirect to={{
-        pathname: '/ListSpecific',
-        state: { list: this.state.showList }
-    }}
-/>
+      redirectNav = (
+        <Redirect
+          to={{
+            pathname: "/ListSpecific",
+            state: { list: this.state.showList }
+          }}
+        />
+      );
       // redirectNav=<ListSpecific key='listspec' id={this.state.showList}/>
     }
     let display = [];
     let details;
-    if (this.state.list != null) {
+    if (this.state.list.length != 0) {
       details = this.state.list.map(listItem => {
-        let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
-        if(listItem.creatorImage!="profileAlias.jpeg" && listItem.creatorImage!=null )
-            profileImg= settings.s3bucket + listItem.creatorImage;
-         
-       
+        let profileImg = settings.s3bucket + "profileAlias.jpeg";
+
+        if (
+          listItem.creatorImage != "profileAlias.jpeg" &&
+          listItem.creatorImage != null
+        )
+          profileImg = settings.s3bucket + listItem.creatorImage;
+
         display.push(
-          <button name={listItem._id} onClick={this.handleButtonClick.bind(this,listItem._id)}>
+          <button
+            name={listItem._id}
+            onClick={this.handleButtonClick.bind(this, listItem._id)}
+          >
             <div class="listButtonv4">
               <Image
-               // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
-               src={profileImg} 
-               style={{
+                // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                src={profileImg}
+                style={{
                   height: "30px",
                   width: "30px",
                   margin: "8px"
@@ -111,11 +115,17 @@ this.setState({
               >
                 <b>
                   {" "}
-                  <span style={{margin:"0 0 0 0"}}> {listItem.memberID.length} </span> 
-                  <span style={{margin:"0 0 0 5px"}}>Members</span>
-                  <span style={{margin:"0 0 0 5px"}}>&#183;</span>
-                  <span style={{margin:"0 0 0 5px"}}> {listItem.subscriberID.length}</span>
-                <span style={{margin:"0 0 0 5px"}}> Subscribers</span>
+                  <span style={{ margin: "0 0 0 0" }}>
+                    {" "}
+                    {listItem.memberID.length}{" "}
+                  </span>
+                  <span style={{ margin: "0 0 0 5px" }}>Members</span>
+                  <span style={{ margin: "0 0 0 5px" }}>&#183;</span>
+                  <span style={{ margin: "0 0 0 5px" }}>
+                    {" "}
+                    {listItem.subscriberID.length}
+                  </span>
+                  <span style={{ margin: "0 0 0 5px" }}> Subscribers</span>
                 </b>
               </div>
             </div>
@@ -125,16 +135,24 @@ this.setState({
     } else {
       display.push(
         <div>
-          <h3 style={{ textAlign: "center" }}>
-            You aren't member of to any Lists yet
-          </h3>
-          <p>When you are, it’ll show up here.</p>
+          <h4
+            style={{
+              textAlign: "center",
+              marginTop: "70px",
+              marginBottom: "2px"
+            }}
+          >
+            <b> You aren't member of to any Lists yet</b>
+          </h4>
+          <h6 style={{ textAlign: "center", color: "#808080" }}>
+            When you are, it’ll show up here.
+          </h6>
         </div>
       );
     }
     return (
       <div>
-         {redirectNav}
+        {redirectNav}
         {details}
         {display}
       </div>

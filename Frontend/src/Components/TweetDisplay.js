@@ -19,8 +19,8 @@ class TweetDisplay extends Component {
             { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '#home', className: "fas fa-envelope" },
-            { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
+            { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
+            { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
             { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];

@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import "../CSS/navbar.css"
+import Dropdown from 'react-bootstrap/Dropdown'
+import config from '../config/settings'
+import axios from 'axios';
 
-export default class LeftNav extends Component {
+
+class LeftNav extends Component {
+    constructor(props) {
+        super(props)
+    }
+
+    logout = () => {
+        localStorage.removeItem("username");
+        localStorage.removeItem("token");
+        localStorage.removeItem("firstname");
+        localStorage.removeItem("lastname");
+        this.props.history.push("/");
+    }
     render() {
         let linksMarkup = this.props.links.map((link, index) => {
             let linkMarkup = link.active ? (
@@ -29,7 +44,7 @@ export default class LeftNav extends Component {
                 <li className="navbar-side-item">
                     <a style={{
                         paddingLeft: "2rem"
-                    }} href="/">
+                    }} href="/home">
                         <span className="fab fa-twitter" style={{
                             marginRight: "10px",
                             fontSize: "2rem",
@@ -39,7 +54,16 @@ export default class LeftNav extends Component {
                 </li>
 
                 {linksMarkup}
+                <li className="navbar-side-item">
+                    <a className="side-link" onClick={this.logout.bind(this)}>
+                        <span className="fa fa-sign-out" style={{ marginRight: "10px" }} ></span>
+                        <span><b>Logout</b></span>
+                    </a>
+                </li>
+
             </div >
         )
     }
 }
+
+export default LeftNav;

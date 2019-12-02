@@ -8,9 +8,16 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 var morgan = require('morgan');
 var config = require('./config/settings');
-var config = require('./config/settings');
 var kafka = require("./kafka/client");
+var passport = require('passport');
 
+
+
+console.log("Initializing passport");
+app.use(passport.initialize());
+
+// Bring in defined Passport Strategy
+require('./config/passport').passport;
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -60,6 +67,10 @@ const subscribeListRouter = require('./Routes/subscribeList');
 const unsubscribeListRouter = require('./Routes/unsubscribeList');
 const updateListRouter = require('./Routes/updateList');
 
+const loginSignupRoutes = require('./Routes/LoginSignup')
+const messageRoutes = require('./Routes/messageRoutes')
+const profileDetailsRoutes = require('./Routes/ProfileDetails')
+
 const tweetRoutes = require('./Routes/tweetRoutes');
 
 //const bookmarkTweetRouter = require('./Routes/bookmarkTweet');
@@ -81,23 +92,31 @@ app.use('/unsubscribeList',unsubscribeListRouter);
 app.use('/updateList',updateListRouter);
 
 app.use('/getBookmarks',getBookmarksRouter);
+
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
+app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
+app.use('/messages', messageRoutes);
+app.use(bodyParser.json());
+
+app.use('/', loginSignupRoutes);
+app.use('/', tweetRoutes);
+app.use('/', profileDetailsRoutes);
+
 //app.use('/bookmarkTweet',bookmarkTweetRouter);
 
-// const userActions = require("./routes/userActions");
-// const ownerAction = require("./routes/ownerActions");
-// const orderAction = require("./routes/orderActions");
-// const messageAction = require("./routes/messageActions");
-// app.use("/user", userActions);
-// app.use("/owner", ownerAction);
-// app.use(orderAction);
-// app.use("/message", messageAction);
-// app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // app.get('/getTweetDetails', (req, res) => {
 //   console.log("in gettweetdetails..");
 //   console.log(req.body);
 // });
-// //app.use('/', tweetRoutes);
+// app.use('/', tweetRoutes);
 // app.use('/', tweetRoutes);
 
 

@@ -35,7 +35,12 @@ export class ListTweets extends Component {
            tweetsMarkup.push(<TweetModal key={i+2}/>)
            return tweetsMarkup;
        } else {
-           return <div></div>;
+           return (<div>
+            <h3 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
+              <b> There aren’t any Tweets in this List</b>
+            </h3>
+            <h5 style={{ textAlign: "center",color:"#808080" }}>When anyone in this List Tweets, they’ll show up here.</h5>
+          </div>);
        }
    }
 }

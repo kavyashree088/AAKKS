@@ -77,8 +77,8 @@ class ListSpecific extends Component {
   subscribeList = e => {
     const data = {
       listID: this.props.location.state.list[0]._id,
-      // userID:localStorage.getItem('username')
-      userID: "alaukika"
+      userID:localStorage.getItem('username')
+      //userID: "alaukika"
     };
     console.log(data);
     console.log(this.props.location.state.list);
@@ -104,8 +104,8 @@ class ListSpecific extends Component {
   unsubscribeList = e => {
     const data = {
       listID: this.props.location.state.list[0]._id,
-      // userID:localStorage.getItem('username')
-      userID: "alaukika"
+      userID:localStorage.getItem('username')
+      //userID: "alaukika"
     };
     console.log(data);
     console.log(this.props.location.state.list);
@@ -285,8 +285,8 @@ class ListSpecific extends Component {
 
     let buttonShow = null;
 
-    // if(this.props.location.state.list[0].creatorID==localStorage.getItem('username')){
-    if (this.props.location.state.list[0].creatorID == "alaukika") {
+    if(this.props.location.state.list[0].creatorID==localStorage.getItem('username')){
+   // if (this.props.location.state.list[0].creatorID == "alaukika") {
       buttonShow = (
         <button
           class="listSpecificButton"
@@ -297,7 +297,7 @@ class ListSpecific extends Component {
       );
     } else {
       var t = this.props.location.state.list[0].subscriberID.filter(
-        id => id == "alaukika"
+        id => id == localStorage.getItem('username')
       );
       console.log("Alaukika says:", t);
       // if(this.props.location.state.list[0].subscriberID.filter(id=>id==localStorage.getItem('username'))==null){
@@ -332,15 +332,17 @@ class ListSpecific extends Component {
     }
 
     let links = [
-      { label: "Home", link: "/", className: "fas fa-home", active: true },
-      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
-      { label: "Notifications", link: "#home", className: "fas fa-bell" },
-      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
-      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
-      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
-      { label: "Profile", link: "#home", className: "fas fa-user-circle" },
-      { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
-    ];
+      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
+      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
+      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
+      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
+      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
+      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
+      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
+      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
+
+  ];
     
     let profileImg1=settings.s3bucket + "profileAlias.jpeg";
           

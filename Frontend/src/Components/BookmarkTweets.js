@@ -8,7 +8,7 @@ import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import TweetComponent from './TweetComponent.js';
 const settings = require("../config/settings.js");
-const getUserName="anjali";
+const getUserName=localStorage.getItem("username");
 
 export class BookmarkTweets extends Component {
     componentDidMount() {
@@ -35,7 +35,12 @@ export class BookmarkTweets extends Component {
            tweetsMarkup.push(<TweetModal key={i+2}/>)
            return tweetsMarkup;
        } else {
-           return <div></div>;
+           return (<div>
+            <h4 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
+              <b> You haven’t added any Tweets to your Bookmarks yet</b>
+            </h4>
+            <h6 style={{ textAlign: "center",color:"#808080" }}>When you do, it’ll show up here.</h6>
+          </div>);
        }
    }
 }

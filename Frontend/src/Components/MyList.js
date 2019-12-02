@@ -87,6 +87,14 @@ class List extends Component {
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
     pageRefresh = false;
   }
+
+
+  componentWillMount(){
+    if (!localStorage.getItem('username')) {
+      this.props.history.push("/");
+  }
+  }
+
   inputChangeHandler = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -178,12 +186,12 @@ class List extends Component {
     e.preventDefault();
     const data = {
       listname: this.state.listname,
-      // creatorID:localStorage.getItem('username'),
-      // creatorName:localStorage.getItem('firstName'),
-      //creatorImage:localStorage.getItem('firstName')
+      creatorID:localStorage.getItem('username'),
+      creatorName:localStorage.getItem('firstname')+" "+localStorage.getItem('lastname') ,
+     // creatorImage:localStorage.getItem('firstName'),
       creatorImage:"profileAlias.jpg",
-      creatorID: "alaukika",
-      creatorName: "Alaukika Diwanji",
+      // creatorID: "alaukika",
+      // creatorName: "Alaukika Diwanji",
       description: this.state.description,
       members: t1
     };
@@ -212,15 +220,17 @@ class List extends Component {
     }
     const { tags, suggestions } = this.state;
     let links = [
-      { label: "Home", link: "/", className: "fas fa-home", active: true },
-      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
-      { label: "Notifications", link: "#home", className: "fas fa-bell" },
-      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
-      { label: "Bookmarks", link: "#home", className: "fas fa-bookmark" },
-      { label: "Lists", link: "#home", className: "fas fa-list-alt" },
-      { label: "Profile", link: "#home", className: "fas fa-user-circle" },
-      { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
-    ];
+      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
+      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
+      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
+      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
+      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
+      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
+      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
+      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
+
+  ];
 
     let modalContent = null;
     if (!this.state.buttonflag) {

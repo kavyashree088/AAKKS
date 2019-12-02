@@ -358,8 +358,8 @@ class ListInfo extends Component {
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
           let removeButtonShow = null;
-          // if(this.props.location.state.list.creatorID==localStorage.getItem('username')){
-          if (this.props.location.state.list.creatorID == "alaukika") {
+          if(this.props.location.state.list.creatorID==localStorage.getItem('username')){
+         // if (this.props.location.state.list.creatorID == "alaukika") {
             console.log("I am here");
             removeButtonShow = (
               <button
@@ -598,15 +598,17 @@ class ListInfo extends Component {
 
     // const { tags, suggestions } = this.state;
     let links = [
-      { label: "Home", link: "/", className: "fas fa-home", active: true },
-      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
-      { label: "Notifications", link: "#home", className: "fas fa-bell" },
-      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
-      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
-      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
-      { label: "Profile", link: "#home", className: "fas fa-user-circle" },
-      { label: "More", link: "#home", className: "fas fas fa-ellipsis-h" }
-    ];
+      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
+      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
+      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
+      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
+      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
+      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
+      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
+      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
+
+  ];
 
     return (
       <div>
