@@ -45,7 +45,7 @@ class Messages extends Component {
             { label: 'Bookmarks', link: '#home', className: "fas fa-bookmark" },
             { label: 'Lists', link: '#home', className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
-            { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
+            { label: 'Analytics', link: '/Analytics', className: "fas fa-poll" }  
         ];
         return (
             <div>
@@ -115,3 +115,5 @@ class Messages extends Component {
 }
 
 export default Messages;
+
+
