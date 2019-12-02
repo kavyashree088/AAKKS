@@ -10,14 +10,15 @@ module.exports = {
     'database_name': 'grubhub',
     'backend_port': '3001',
     'useUnifiedTopology': true,
-
     'connection_string': 'mongodb+srv://root:root@clusterkc-cr6mm.mongodb.net/Twitter?retryWrites=true&w=majority',
     'client': 'localhost',
     'redis_host': 'localhost',
+
+    'kafka_host': 'localhost',
+    'kafka_port': '2181',
+
     //'redis_host' : 'cmpetwitter-0001-001.qwkoiy.0001.use1.cache.amazonaws.com',
     //'redis_host' : 'redistest-001.qwkoiy.0001.use1.cache.amazonaws.com',
     //'redis_host' : 'redistest.qwkoiy.ng.0001.use1.cache.amazonaws.com',
     'redis_port': 6379,
-    'kafka_host': 'localhost',
-    'kafka_port': '2181',
 };

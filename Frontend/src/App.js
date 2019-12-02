@@ -11,6 +11,8 @@ import Deactivate from './Components/DeactivateAccount';
 import Delete from './Components/DeleteAccount'
 import UserDetails from './Components/UserDetails';
 
+import TweetDisplay from './Components/TweetDisplay';
+
 class App extends Component {
   render() {
     return (
@@ -25,7 +27,7 @@ class App extends Component {
           <Route exact path="/deactivate" component={Deactivate}></Route>
           <Route exact path="/delete" component={Delete}></Route>
           <Route exact path="/userDetailsPage/:username" component={UserDetails}></Route>
-
+          <Route path='/tweet/:tweetId' component={TweetDisplay}></Route>
         </Switch>
       </Router>
 
