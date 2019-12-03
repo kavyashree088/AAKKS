@@ -3,11 +3,6 @@ var kafka = require('kafka-node');
 var config = require('../Config/settings');
 const kafkaConn = config.kafka_host + ":" + config.kafka_port;
 
-
-var config = require('../Config/settings');
-const kafkaConn = config.kafka_host + ":" + config.kafka_port;
-
-
 function ConnectionProvider() {
     this.getConsumer = function(topic_name) {
         if (!this.kafkaConsumerConnection) {

@@ -132,6 +132,6 @@ app.use('/', loginSignupRoutes);
 app.use('/', tweetRoutes);
 app.use('/', profileDetailsRoutes);
 
-app.listen(3001);
+//app.listen(3001);
 console.log("Server Listening on port 3001");
 

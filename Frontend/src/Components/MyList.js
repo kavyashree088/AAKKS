@@ -39,6 +39,7 @@ const ListTabs = props => {
         onChange={tabId => {
           console.log(tabId);
         }}
+        style={{margin:"0px"}}
       >
         <TabList>
           <Tab style={{ width: "33%" }} tabFor="one">
@@ -391,7 +392,7 @@ class List extends Component {
             <div style={{ fontSize: "18px", paddingTop: "2%" }}>
               <b>Lists</b>
               <i
-                style={{ colour: "blue" }}
+                style={{ colour: "blue",marginRight:"14px" }}
                 className="far fa-edit float-right fa-list-alt"
                 onClick={this.handleNewList}
               ></i>
