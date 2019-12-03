@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TweetComponent from './TweetComponent';
 import { connect } from 'react-redux';
 import {getTweetDetails} from '../JS/Actions/tweetAction.js';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 import {
     Card,
     CardImg,
@@ -53,6 +53,7 @@ export class UserListModal extends Component{
 }
 
 class UserComponent extends Component{
+    //<img src = {profileImg} style={{width:'100%'}}/>
     render(){
         if(!this.props.user){
             return <div></div>;
@@ -64,10 +65,18 @@ class UserComponent extends Component{
                 <Card>
                 <CardBody>
                     <Row>
-                    <Col xs={3}>
-                        <img src = {profileImg} style={{width:'100%'}}/>
+                    <Col xs={2}>
+                        <Image  src={profileImg}
+                            style={{
+                            height: "100px",
+                            width: "100px",
+                            margin: "8px"
+                            }}
+                            roundedCircle
+                            alt=""
+                         ></Image>
                     </Col>
-                    <Col xs= {9}>
+                    <Col xs= {10}>
                         <a href = {userLinkUrl}>
                             <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{username}</span></CardTitle>
                         </a>

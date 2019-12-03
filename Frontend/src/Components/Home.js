@@ -27,8 +27,8 @@ class Home extends Component {
                     <Col className="col-sm-3">
                         <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
-                    <Col className="col-sm-6">
-                        <h5 style={{ fontWeight: "bolder" }}>Home</h5>
+                    <Col className="col-sm-6 homeComponent">
+                        <h5 className='homeHeading' style={{ fontWeight: "bolder" }}>Home</h5>
                         <TweetContent />
                     </Col>
                     <Col className="col-sm-3">

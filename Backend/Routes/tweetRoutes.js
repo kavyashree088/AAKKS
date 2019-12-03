@@ -257,9 +257,9 @@ router.post('/replyATweet', function (req, res) {
 
 
 router.post('/getDashboardTweets', function (req, res) {
-  let { username } = req.body;
+  let { username, pageNum, pageSize } = req.body;
   //get followers list  from local storage
-  kafka.make_request('tweetTopics', { 'path': 'getDashboardTweets', username }, function (err, result) {
+  kafka.make_request('tweetTopics', { 'path': 'getDashboardTweets', username, pageNum, pageSize }, function (err, result) {
     var responseObj = {
       status: false,
       message: ""

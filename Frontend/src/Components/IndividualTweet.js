@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import TweetComponent from './TweetComponent';
 import { connect } from 'react-redux';
-import { getTweetDetails } from '../JS/Actions/tweetAction.js';
-import { Row, Col } from 'react-bootstrap';
+import {getTweetDetails} from '../JS/Actions/tweetAction.js';
+import { Row, Col, Image } from 'react-bootstrap';
 import {
     Card,
     CardImg,
@@ -47,13 +47,15 @@ class IndividualTweetInner extends Component {
                 <div>
                     <TweetComponent tweet={this.props.currentTweet} />
                     <Card>
-                        <Row>
-                            <Col className='offset-md-1' xs={2}>
-                                <CardLink href='#' data-toggle='modal' data-target='#likesModal'>{likesNum} &nbsp; Likes</CardLink>
-                            </Col>
-                            <Col xs={2}>
-                                <CardLink href='#' data-toggle='modal' data-target='#retweetsModal'>{retweetsNum} &nbsp; Retweets</CardLink>
-                            </Col>
+                        <Row className='likeRetweetCount'>
+                            &nbsp;  &nbsp; 
+                            <div className = 'col-xs-2'> 
+                                <CardLink href='#' data-toggle='modal' data-target='#likesModal'><span> {likesNum} </span> Likes</CardLink> 
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                            <div className = 'col-xs-2'> 
+                                <CardLink href='#' data-toggle='modal' data-target='#retweetsModal'> <span> {retweetsNum} </span>Retweets</CardLink> 
+                            </div>
                         </Row>
                     </Card>
                     <ReplyList replies={replies} />
@@ -83,30 +85,38 @@ class ReplyList extends Component {
 
 }
 
-
-class ReplyComponent extends Component {
-
-    render() {
-        let { profilePic, userFullName, username, replyText } = this.props.reply;
+class ReplyComponent extends Component{
+// <img src = {profileImg} style={{width:'100%'}}/>
+    render(){
+        let {profilePic, userFullName, username, replyText} = this.props.reply;
         let profileImg = settings.s3bucket + profilePic;
         let userLinkUrl = '/profile/' + username;
         return (
             <Card>
-                <CardBody>
-                    <Row>
-                        <Col xs={3}>
-                            <img src={profileImg} style={{ width: '100%' }} />
-                        </Col>
-                        <Col xs={9}>
-                            <a href={userLinkUrl}>
-                                <CardTitle style={{ fontWeight: "bolder" }}>{userFullName}<span style={{ color: "grey", fontWeight: "normal" }}> @{username}</span></CardTitle>
-                            </a>
-                            {replyText}
-                            <br /><br />
-
-                        </Col>
-                    </Row>
-                </CardBody>
+            <CardBody>
+                <Row>
+                <Col xs={2}>
+                    <Image  src={profileImg}
+                        style={{
+                        height: "100px",
+                        width: "100px",
+                        margin: "8px"
+                        }}
+                        roundedCircle
+                        alt=""
+                        ></Image>
+                    
+                </Col>
+                <Col xs= {10}>
+                    <a href = {userLinkUrl}>
+                        <CardTitle style={{fontWeight:"bolder"}}>{userFullName}<span style={{color:"grey",fontWeight:"normal"}}> @{username}</span></CardTitle>
+                    </a>
+                    {replyText}
+                    <br/><br/>
+                    
+                </Col>
+                </Row>
+            </CardBody>
 
             </Card>
         );

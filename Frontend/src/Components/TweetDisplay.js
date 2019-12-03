@@ -31,8 +31,8 @@ class TweetDisplay extends Component {
                         <LeftNav links={links} ></LeftNav>
 
                     </Col>
-                    <Col className="col-sm-6">
-                    <h5 style={{fontWeight:"bolder"}}>Tweet</h5>
+                    <Col className="col-sm-6 tweetComponent">
+                    <h5 style={{fontWeight:"bolder"}} className = "tweetHeading ">Tweet</h5>
                         <IndividualTweet tweetId = {this.state.tweetId}/>
                     </Col>
                     <Col className="col-sm-3">

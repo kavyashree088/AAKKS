@@ -23,14 +23,15 @@ TweetSchema = new Schema({
     type: String,
     default: ""
   },
+
   hashTags: [],
   media: [],
   replies: [],
   likes: [],
   retweets: [],
   createdAt: {
-    type: String,
-    default: ""
+    type: Date,
+    default: Date.now
   },
   views: {
     type: Number,

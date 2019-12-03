@@ -164,11 +164,13 @@ export class TweetContent extends Component {
         return (
             <div>
 
+
                 <div className="space">
                     <div>
-                        <form onSubmit={this.writeATweet}>
-                            <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{ borderColor: "white", fontSize: "21px" }} placeholder="What's happening?" autoFocus value={this.state.tweetText} maxLength={TWEETCHARLIMIT}></textarea>
-
+                        <form className='tweetWrite' onSubmit={this.writeATweet}>
+                            <Row>
+                                <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{ borderColor: "white", fontSize: "21px" }} placeholder="What's happening?" autoFocus value={this.state.tweetText} maxLength={TWEETCHARLIMIT}></textarea>
+                            </Row>
                             <Row>
                                 <Col xs={1}>
                                     <div className="image-upload">
@@ -179,16 +181,14 @@ export class TweetContent extends Component {
                                     </div>
                                 </Col >
 
-                                <Col className='offset-md-9' xs={2} >
+                                <Col className='offset-md-10' xs={1} >
                                     <button className="btn btn-primary btn-circle" type="submit" style={{ position: 'absolute', right: '60px', fontWeight: "bold" }}>Tweet</button>
                                 </Col>
                             </Row>
-                            <br /><br /><br />
-
-
-
-
                         </form>
+                        <div style={{ backgroundColor: '#8080801c' }}>
+                            <br />
+                        </div>
                         <DashboardTweets />
                     </div>
                 </div>

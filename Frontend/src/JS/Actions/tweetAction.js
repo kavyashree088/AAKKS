@@ -1,4 +1,4 @@
-import {DASHBOARDTWEETS, CURRENTTWEET} from "../Types/types.js";
+import {DASHBOARDTWEETS, CURRENTTWEET, SETPAGENUM} from "../Types/types.js";
 import axios from "axios";
 import swal from 'sweetalert';
 
@@ -6,6 +6,7 @@ export const getDashboardTweets = (dataObj) => dispatch => {
     let url = dataObj.url;
     let data = dataObj.data;
     axios.defaults.withCredentials = true;
+    let currPageNum = data.pageNum;
     axios({
         method: 'post',
         url,        
@@ -24,6 +25,10 @@ export const getDashboardTweets = (dataObj) => dispatch => {
                 dispatch({
                     type: DASHBOARDTWEETS,
                     payload : responseData.message
+                });
+                dispatch({
+                    type: SETPAGENUM,
+                    payload : (currPageNum+1)
                 });
             }
         }).catch(function (err) {
@@ -52,7 +57,6 @@ export const getTweetDetails = (dataObj) => dispatch => {
         .then((responseData) => {
             //swal(responseData.message);
             //TODO Add like in local likes
-            debugger;
             if(responseData.status){
                 dispatch({
                     type: CURRENTTWEET,
@@ -162,13 +166,18 @@ export const unbookmarkATweet = (dataObj) => dispatch => {
 }
 
 export const setCurrentTweet = (currentTweet) => dispatch => {
-    debugger;
    dispatch({
         type: CURRENTTWEET,
         payload : currentTweet
    });
 }
 
+export const setCurrentPageNum = (pageNum) => dispatch => {
+    dispatch({
+        type: SETPAGENUM,
+        payload : pageNum
+   });
+}
 export const replyATweet = (dataObj) => dispatch => {
     let url = dataObj.url;
     let data = dataObj.data;
