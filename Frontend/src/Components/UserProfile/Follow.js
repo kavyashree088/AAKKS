@@ -70,7 +70,9 @@ class Follow extends Component {
                             firstName: response.data.details.rows.firstName,
                             lastName: response.data.details.rows.lastName,
                             description: response.data.details.rows.description,
-                            profilePicture: undefined,
+                            followers: response.data.details.rows.followers,
+                            following: response.data.details.rows.following,
+                            profilePicture: response.data.details.rows.profilePicture,
                         })
 
                     } else {
@@ -108,7 +110,9 @@ class Follow extends Component {
                             firstName: response.data.details.rows.firstName,
                             lastName: response.data.details.rows.lastName,
                             description: response.data.details.rows.description,
-                            profilePicture: undefined,
+                            followers: response.data.details.rows.followers,
+                            following: response.data.details.rows.following,
+                            profilePicture: response.data.details.rows.profilePicture,
                         })
                     } else {
                         console.log("Status Code: ", response.status);
@@ -137,6 +141,14 @@ class Follow extends Component {
         }
     }
 
+    detailsPage = (user) => (event) => {
+        console.log(user);
+        this.props.history.push({
+            pathname: "/userDetailsPage/" + user.username,
+            state: { user: user }
+        });
+    }
+
     render() {
         console.log(this.state);
         let links = [
@@ -150,7 +162,7 @@ class Follow extends Component {
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            
+
 
             // { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];
@@ -175,7 +187,7 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href={userLink} >@{aFollowerUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a onClick={this.detailsPage(aFollower)} >@{aFollowerUserName}</a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
@@ -208,7 +220,7 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href={userLink} >@{aFollowingUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a onClick={this.detailsPage(aFollowing)}>@{aFollowingUserName}</a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",

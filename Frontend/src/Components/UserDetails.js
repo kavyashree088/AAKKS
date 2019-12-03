@@ -8,13 +8,14 @@
 /* eslint-disable indent */
 /* eslint-disable spaced-comment */
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown, Button, ButtonGroup } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import config from './../Config/settings'
 import axios from 'axios';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
+import { Link } from "react-router-dom";
 import coverImage from "../Components/UserProfile/CoverPhoto.jpg"
 //eslint-disable-next-line
 class UserDetails extends Component {
@@ -28,8 +29,11 @@ class UserDetails extends Component {
 
     componentWillMount() {
         if (localStorage.getItem('username')) {
-            console.log(this.props.location.state.user)
+            console.log(this.props.location.state)
             this.setState({ user: this.props.location.state.user })
+            if (this.props.location.state.user.username === localStorage.getItem("username")) {
+                this.props.history.push("/profile/" + localStorage.getItem("username"))
+            }
             let data = {
                 username: localStorage.getItem("username")
             }
@@ -122,7 +126,7 @@ class UserDetails extends Component {
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
@@ -190,15 +194,47 @@ class UserDetails extends Component {
                                     margin: "2px"
                                 }}><b>Location: </b>{this.state.user.city}</p>
                                 <Row>
-                                    <Col><p style={{
+                                    {/* <Col><p style={{
                                         marginRight: "5px",
                                         marginLeft: "5px"
                                     }}><b>{this.state.user.followers.length || 0}</b><b className="lightFont"> Followers</b></p></Col>
 
                                     <Col>
                                         <p><b>{this.state.user.following.length || 0}</b><b className="lightFont"> Following</b></p>
+                                    </Col> */}
+                                    <Col className="col-sm-2">
+                                        <Link
+                                            style={{
+                                                marginRight: "10px"
+                                            }}
+                                            to={{
+                                                pathname: "/follow",
+                                                state: {
+                                                    following: this.state.user.following,
+                                                    followers: this.state.user.followers,
+                                                    showFollowers: true,
+                                                    currentUsername: this.state.user.username
+                                                }
+                                            }}
+                                        >
+                                            {this.state.user.followers.length} Followers
+                                    </Link>
                                     </Col>
-
+                                    <Col className="col-sm-3">
+                                        <Link
+                                            to={{
+                                                pathname: "/follow",
+                                                state: {
+                                                    following: this.state.user.following,
+                                                    followers: this.state.user.followers,
+                                                    showFollowers: true,
+                                                    currentUsername: this.state.user.username
+                                                }
+                                            }}
+                                        >
+                                            {this.state.user.following.length} Following
+                                    </Link>
+                                    </Col>
                                 </Row>
                             </div>
                             <div>

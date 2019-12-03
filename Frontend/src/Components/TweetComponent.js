@@ -190,7 +190,7 @@ class TweetComponentInner extends Component {
                     <Card >
                         <CardBody>
                             <Row>
-                                <Col xs={2}>
+                                <Col xs={4}>
                                     <Image src={profileImg}
                                         style={{
                                             height: "100px",
@@ -202,10 +202,13 @@ class TweetComponentInner extends Component {
                                     ></Image>
 
                                 </Col>
-                                <Col xs={9}>
-                                    <a href={userLinkUrl}>
-                                        <CardTitle className='blue bolder' >{userFullName}<span className='grey normal'> @{username}</span> &nbsp; &nbsp; <span className='grey normal'>{postedDateStr}</span></CardTitle>
-                                    </a>
+                                <Col xs={8}>
+                                    <Row>
+                                        <a href={userLinkUrl}>
+                                            <CardTitle className='blue bolder' >{userFullName}<span className='grey normal'> @{username}</span> &nbsp; &nbsp; <span className='grey normal'>{postedDateStr}</span></CardTitle>
+                                        </a>
+                                    </Row>
+
                                     {processTweetText(tweetText)}
                                     {this.displayImages(media)}
                                     {this.renderInnerTweet(isRetweet, actualTweetDetails)}
