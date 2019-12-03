@@ -322,10 +322,15 @@ a:active {
 
 .removeButton {
   background-color: rgb(204, 62, 62);
-  border-color: rgb(204, 62, 62);
-  color: white;
-  float: right;
-  border-radius: 12px;
-  padding: 5px;
-  margin: 10px;
+  border-color:rgb(204, 62, 62);
+  color:white;
+  float:right;
+  border-radius:12px;
+padding:5px;
+margin:10px;
+}
+
+.profiletag{
+  margin: 10px 8px 10px 8px;
+  color: #808080 ;
 }

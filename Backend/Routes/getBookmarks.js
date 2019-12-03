@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var kafka = require('../kafka/client');
+var kafka = require('../Kafka/client');
 
 router.post('/getBookmarks',  function (req, res) {
     console.log("Inside get Bookmarks");

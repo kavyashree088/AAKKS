@@ -34,7 +34,9 @@ export const getListTweets = (dataObj) => dispatch => {
         });
 }
 
-export const usertweets = (dataObj) => dispatch => {
+export const getUserTweets = (dataObj) => dispatch => {
+    debugger;
+    console.log("in getUserTweets....");
     let url = dataObj.url;
     let data = dataObj.data;
     axios.defaults.withCredentials = true;
@@ -46,6 +48,7 @@ export const usertweets = (dataObj) => dispatch => {
         headers: {"Authorization" : `Bearer ${token}`}
     })
         .then((response) => {
+            debugger;
             if (response.status >= 500) {
                 throw new Error("Bad response from server");
             }
@@ -53,10 +56,10 @@ export const usertweets = (dataObj) => dispatch => {
         })
         .then((responseData) => {
             console.log( responseData)
-            if(responseData.status){
+            if(responseData.responseMessage  && responseData.responseMessage.status){
                 dispatch({
                     type: USERTWEETS,
-                    payload : responseData.message
+                    payload : responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {
@@ -113,10 +116,10 @@ export const getLikesTweets = (dataObj) => dispatch => {
         })
         .then((responseData) => {
             console.log( responseData)
-            if(responseData.status){
+            if(responseData.responseMessage  && responseData.responseMessage.status){
                 dispatch({
                     type: LIKESTWEETS,
-                    payload : responseData.message
+                    payload : responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {
@@ -143,10 +146,10 @@ export const getRepliesTweets = (dataObj) => dispatch => {
         })
         .then((responseData) => {
             console.log( responseData)
-            if(responseData.status){
+            if(responseData.responseMessage  && responseData.responseMessage.status){
                 dispatch({
                     type: REPLIESTWEETS,
-                    payload : responseData.message
+                    payload : responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {

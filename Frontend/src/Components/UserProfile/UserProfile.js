@@ -5,12 +5,13 @@ import LeftNav from "../LeftNav";
 import coverImage from "./CoverPhoto.jpg";
 import "./../../CSS/ProfilePage.css";
 import "./../../CSS/Signup.css";
+import "../../CSS/List.css";
 import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import EditProfileForm from "./EditProfileForm";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
+// import Tabs from "react-bootstrap/Tabs";
+// import Tab from "react-bootstrap/Tab";
 import { Link } from "react-router-dom";
 import RepliesTweets from './RepliesTweets';
 import LikesTweets from './LikesTweets';
@@ -18,6 +19,7 @@ import MyUserTweets from './MyUserTweets';
 import axios from "axios";
 import { Redirect } from "react-router";
 import config from "../../Config/settings.js";
+import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
 const settings = require("../../Config/settings");
 
 export class UserProfile extends Component {
@@ -115,52 +117,52 @@ export class UserProfile extends Component {
     };
 
     console.log(data);
-    axios({
-      method: "get",
-      url: "http://" + config.hostname + ":3001/getTweets",
-      tweetData,
-      config: { headers: { "Content-Type": "application/json" } },
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        if (response.status === 200) {
-          console.log("response from DB: ");
-          console.log(response.data);
-        } else {
-          console.log("Status Code: ", response.status);
-          console.log(response.data.responseMessage);
-        }
-        this.setState({
-          tweets: response.data.details.rows.tweets
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // axios({
+    //   method: "get",
+    //   url: "http://" + config.hostname + ":3001/getTweets",
+    //   tweetData,
+    //   config: { headers: { "Content-Type": "application/json" } },
+    //   headers: { Authorization: `Bearer ${token}` }
+    // })
+    //   .then(response => {
+    //     if (response.status === 200) {
+    //       console.log("response from DB: ");
+    //       console.log(response.data);
+    //     } else {
+    //       console.log("Status Code: ", response.status);
+    //       console.log(response.data.responseMessage);
+    //     }
+    //     this.setState({
+    //       tweets: response.data.details.rows.tweets
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
-    console.log(data);
-    axios({
-      method: "get",
-      url: "http://" + config.hostname + ":3001/getLikes",
-      data,
-      config: { headers: { "Content-Type": "application/json" } },
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        if (response.status === 200) {
-          console.log("response from DB: ");
-          console.log(response.data);
-        } else {
-          console.log("Status Code: ", response.status);
-          console.log(response.data.responseMessage);
-        }
-        this.setState({
-          likes: response.data.details.rows.likes
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // console.log(data);
+    // axios({
+    //   method: "get",
+    //   url: "http://" + config.hostname + ":3001/getLikes",
+    //   data,
+    //   config: { headers: { "Content-Type": "application/json" } },
+    //   headers: { Authorization: `Bearer ${token}` }
+    // })
+    //   .then(response => {
+    //     if (response.status === 200) {
+    //       console.log("response from DB: ");
+    //       console.log(response.data);
+    //     } else {
+    //       console.log("Status Code: ", response.status);
+    //       console.log(response.data.responseMessage);
+    //     }
+    //     this.setState({
+    //       likes: response.data.details.rows.likes
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   followersClickHandler = e => {
@@ -450,9 +452,7 @@ export class UserProfile extends Component {
                 </p>
                 <Row>
                   <Link
-                    style={{
-                      marginRight: "10px"
-                    }}
+                    class="profiletag"
                     to={{
                       pathname: "/follow",
                       state: {
@@ -463,9 +463,10 @@ export class UserProfile extends Component {
                       }
                     }}
                   >
-                    {this.state.followers.length} Followers
+                    <b>{this.state.followers.length} Followers</b>
                   </Link>
                   <Link
+                  class="profiletag"
                     to={{
                       pathname: "/follow",
                       state: {
@@ -476,27 +477,28 @@ export class UserProfile extends Component {
                       }
                     }}
                   >
-                    {this.state.following.length} Following
+                    <b>{this.state.following.length} Following</b>
                   </Link>
                 </Row>
               </div>
               <div>
-                <Tabs defaultActiveKey="profile" id="profileTweets">
+                {/* <Tabs  defaultActiveKey="profile" id="profileTweets">
                   <Tab
                     className="profileTab"
                     onSelect={this.getTweets}
                     eventKey="tweets"
                     title="Tweets"
+                    
                   >
-                      {/* <MyUserTweets/> */}
-                    {/* {this.state.tweets} */}
+                      <MyUserTweets user={this.props.match.params.username}/>
+                   
                   </Tab>
                   <Tab
                     eventKey="replies"
-                    title="Retweets"
+                    title="Retweets & replies"
                     className="profileTab"
                   >
-                       {/* <LikesTweets/> */}
+                      <RepliesTweets user={this.props.match.params.username}/>
                   </Tab>
                   <Tab
                     eventKey="likes"
@@ -504,9 +506,44 @@ export class UserProfile extends Component {
                     onSelect={this.getLikes}
                     className="profileTab"
                   >
-                       {/* <RepliesTweets/> */}
+                       <LikesTweets user={this.props.match.params.username}/>
+                       
                   </Tab>
-                </Tabs>
+                </Tabs> */}
+                <Tabs
+            defaultTab="one"
+            class="removePadding"
+            onChange={tabId => {
+              console.log(tabId);
+            }}
+            style={{ margin: "0px", padding:"0px" }}
+          >
+            <TabList>
+              <Tab style={{ width: "33%" }} tabFor="one">
+              Tweets
+              </Tab>
+    
+              <Tab style={{ width: "33%" }} tabFor="two">
+              Retweets & replies
+              </Tab>
+    
+              <Tab style={{ width: "33%" }} tabFor="three">
+              Likes
+              </Tab>
+            </TabList>
+    
+            <TabPanel tabId="one">
+            <MyUserTweets user={this.props.match.params.username}/>
+            </TabPanel>
+    
+            <TabPanel tabId="two">
+            <RepliesTweets user={this.props.match.params.username}/>
+            </TabPanel>
+    
+            <TabPanel tabId="three">
+            <LikesTweets user={this.props.match.params.username}/>
+            </TabPanel>
+          </Tabs>
               </div>
             </div>
 
