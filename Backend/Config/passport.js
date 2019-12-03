@@ -1,8 +1,8 @@
 'use strict';
-var passport = require('passport');
-var JwtStrategy = require('passport-jwt').Strategy;
-var ExtractJwt = require('passport-jwt').ExtractJwt;
-var Users = require('./../database/UserSchema');
+var passport = require('../node_modules/passport');
+var JwtStrategy = require('../node_modules/passport-jwt').Strategy;
+var ExtractJwt = require('../node_modules/passport-jwt').ExtractJwt;
+var Users = require('../database/UserSchema');
 
 var config = require('./settings');
 
