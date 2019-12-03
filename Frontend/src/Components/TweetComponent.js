@@ -169,7 +169,7 @@ class TweetComponentInner extends Component {
     }
 
     render() {
-        debugger;
+        //debugger;
         let { userFullName, username, userId, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic, createdAt } = this.props.tweet;
         //let userFullName = firstName + " " + lastName;
         let tweetId = this.props.tweet._id;

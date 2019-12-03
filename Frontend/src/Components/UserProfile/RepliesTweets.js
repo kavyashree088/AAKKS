@@ -3,23 +3,23 @@ import { Row, Col } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
-import {getRepliesTweets} from '../JS/Actions/tweetAction';
-import ReplyModal from './ReplyModal';
-import TweetModal from './TweetModal';
-import TweetComponent from './TweetComponent.js';
-const settings = require("../Config/settings.js");
+import {getRepliesTweets} from '../../JS/Actions/tweetAction';
+import ReplyModal from '../ReplyModal';
+import TweetModal from '../TweetModal';
+import TweetComponent from '../TweetComponent.js';
+const settings = require("../../Config/settings.js");
 const getUserName=localStorage.getItem("username");
 
-export class LikesTweets extends Component {
+export class RepliesTweets extends Component {
     componentDidMount() {
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/getBookmarks/getBookmarks";
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getTweets";
         //TODO :get userId from local storage
         //TODO :or get followers list from local storage and send it
         let username = getUserName;
         let data = {username};
         let dataObj = {data,  url : postURL};
         axios.defaults.withCredentials = true;
-        this.props.getRepliesTweets(dataObj);
+     //   this.props.getRepliesTweets(dataObj);
     }
 
    render(){
@@ -56,4 +56,4 @@ const mapDispatchToProps = function(dispatch){
         getRepliesTweets : (dataObj) => dispatch(getRepliesTweets(dataObj))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LikesTweets);
+export default connect(mapStateToProps, mapDispatchToProps)(RepliesTweets);

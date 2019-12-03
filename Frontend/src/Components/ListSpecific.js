@@ -188,7 +188,7 @@ class ListSpecific extends Component {
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
           // let profileImg = settings.s3bucket + "profileAlias.jpeg";
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&
           //   listItem.profilePicture != null
@@ -249,7 +249,7 @@ class ListSpecific extends Component {
           // let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let profileImg = settings.s3bucket + listItem.profilePicture;
 
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&
           //   listItem.profilePicture != null

@@ -312,7 +312,7 @@ class ListInfo extends Component {
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
          // let profileImg = settings.s3bucket + "profileAlias.jpeg";
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&
           //   listItem.profilePicture != null
@@ -387,7 +387,7 @@ class ListInfo extends Component {
             );
           }
          // let profileImg = settings.s3bucket + "profileAlias.jpeg";
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           let profileImg = settings.s3bucket + listItem.profilePicture;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&

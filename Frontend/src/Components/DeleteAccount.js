@@ -90,7 +90,7 @@ export class DeleteAccount extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
                     <Col className="col-sm-6">
                         <div>

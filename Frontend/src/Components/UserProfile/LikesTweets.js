@@ -3,16 +3,16 @@ import { Row, Col } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
-import {getLikesTweets} from '../JS/Actions/tweetAction';
-import ReplyModal from './ReplyModal';
-import TweetModal from './TweetModal';
-import TweetComponent from './TweetComponent.js';
-const settings = require("../Config/settings.js");
+import {getLikesTweets} from '../../JS/Actions/tweetAction';
+import ReplyModal from '../ReplyModal';
+import TweetModal from '../TweetModal';
+import TweetComponent from '../TweetComponent.js';
+const settings = require("../../Config/settings.js");
 const getUserName=localStorage.getItem("username");
 
 export class LikesTweets extends Component {
     componentDidMount() {
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/getBookmarks/getBookmarks";
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getTweets";
         //TODO :get userId from local storage
         //TODO :or get followers list from local storage and send it
         let username = getUserName;
