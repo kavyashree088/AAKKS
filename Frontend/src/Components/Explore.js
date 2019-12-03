@@ -4,6 +4,7 @@ import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import config from './../Config/settings'
 import axios from 'axios';
+import RightNav from "./RighNav";
 
 class Explore extends Component {
     constructor(props) {
@@ -103,7 +104,7 @@ class Explore extends Component {
                         <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
-                    <Col className="col-sm-6 pt-3">
+                    <Col className="col-sm-5 pt-3">
                         <Dropdown className="btn-block" style={{ maxHeight: "28px" }}>
                             <Dropdown.Toggle as={InputGroup}>
                                 <InputGroup.Prepend>
@@ -145,9 +146,12 @@ class Explore extends Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-3" style={{
+                        borderLeft: "2px solid rgb(180, 177, 177)",
+                        height: "100vh"
+                    }}>
+                        <div className="" id="navbarSide">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>

@@ -102,7 +102,7 @@ a:active {
 }
 
 .lightFont {
-  color: rgb(204, 197, 197);
+  color: rgb(182, 179, 179);
 }
 
 .messageActive {
@@ -123,4 +123,21 @@ a:active {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   padding-left: 8rem;
+}
+.searchPeople {
+  cursor: pointer;
+}
+
+.searchPeople:hover {
+  background-color: beige;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+
+.rightNav {
+  background-color: rgb(245, 248, 250);
+  padding: 20px;
+  margin-left: 20px;
+  border-radius: 25px;
 }

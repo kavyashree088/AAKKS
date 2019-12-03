@@ -115,7 +115,7 @@ async function updateProfile(msg, callback) {
 
 async function getAllUsers(msg, callback) {
     try {
-        Users.find({}, (err, rows) => {
+        Users.find({ active: true }, (err, rows) => {
             if (err) {
                 console.log(err);
                 console.log("unable to read the database");

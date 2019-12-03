@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl, Image, Form, Modal, Button, FormLabel } from 'react-bootstrap'
+import { Row, Col, InputGroup, FormControl, Image, Form, Modal, Button, FormLabel, Dropdown, Card, Accordion } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import profile from "../Images/kavya.jpg"
@@ -19,7 +19,10 @@ class Messages extends Component {
             currentMessager: "",
             userImage: "",
             otherUserImage: "",
-            userProfile: {}
+            userProfile: {},
+            message: "",
+            allUsers: [],
+            searchList: []
         }
     }
 
@@ -43,7 +46,7 @@ class Messages extends Component {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             }).then(response => {
                 console.log(response)
-                this.setState({ userProfile: response.data });
+                this.setState({ userProfile: response.data.details.rows });
             })
         }
     }
@@ -51,6 +54,21 @@ class Messages extends Component {
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
+        })
+    }
+
+    handleChangePeople = (event) => {
+        let list;
+        console.log(event.target.value)
+        if (event.target.value === "") {
+            list = []
+        } else {
+            list = this.state.allUsers.filter(user =>
+                user.username.includes(event.target.value))
+        }
+        this.setState({
+            [event.target.name]: event.target.value,
+            searchList: list
         })
     }
 
@@ -64,14 +82,23 @@ class Messages extends Component {
         this.setState({
             newMessageFlag: true
         })
+        axios({
+            method: 'get',
+            url: 'http://' + config.hostname + ':3001/allUsers',
+        }).then(response => {
+            console.log(response)
+            this.setState({ allUsers: response.data.details.rows.filter(user => user.username !== localStorage.getItem("username")) });
+        })
     }
     handleClose = () => {
         this.setState({
-            newMessageFlag: false
+            newMessageFlag: false,
+            searchText: "",
+            searchList: []
         })
     }
 
-    selectMessage = (messages) => (event) => {
+    setCurrentMessager = (messages) => {
         if (messages.user1.username === localStorage.getItem("username")) {
             this.setState({
                 messageSelected: true,
@@ -89,15 +116,51 @@ class Messages extends Component {
                 otherUserImage: messages.user1.image
             })
         }
+    }
 
+    selectMessage = (messages) => (event) => {
+        this.setCurrentMessager(messages)
     }
     addDefaultSrc = (event) => {
         console.log("error")
         event.target.onError = null;
         event.target.src = `https://${config.imageurl}/profileAlias.jpeg`
     }
+
+    sendMessage = () => {
+        if (this.state.message.trim().length > 0) {
+            let data = {
+                message: this.state.message,
+                sent: this.state.userProfile.username,
+                senderId: this.state.userProfile.username,
+                recieverId: this.state.currentMessager
+            }
+            console.log(data)
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/messages/postMessages',
+                data: data
+            }).then(response => {
+                console.log(response)
+                axios({
+                    method: 'get',
+                    url: 'http://' + config.hostname + ':3001/messages/getMessages/' + localStorage.getItem("username"),
+                }).then(response2 => {
+                    console.log(response2)
+                    console.log(response2.data.filter(message =>
+                        (message.user1.username === this.state.currentMessager || message.user2.username === this.state.currentMessager)))
+                    this.setState({ userMessageList: response2.data });
+                    this.setState({
+                        currentMessage: response2.data.filter(message =>
+                            message.user1.username === this.state.currentMessager || message.user2.username === this.state.currentMessager)[0],
+                        message: ""
+                    })
+                })
+            })
+
+        }
+    }
     renderMessage = (message) => {
-        console.log(message)
         if (message.sent === localStorage.getItem("username")) {
             return (
                 <li key={message.time} className="pt-3" style={{
@@ -135,6 +198,44 @@ class Messages extends Component {
             )
         }
 
+    }
+    selectUser = (user) => (event) => {
+        console.log(user)
+        let messageChain = this.state.userMessageList.filter(users =>
+            users.user1.username === user.username || users.user2.username === user.username)[0]
+        if (messageChain) {
+            console.log("exists");
+            this.handleClose();
+            this.setCurrentMessager(messageChain);
+        } else {
+            console.log("not exists")
+            let newMessageChain = {
+                messages: [],
+                user1: {
+                    username: this.state.userProfile.username,
+                    firstName: this.state.userProfile.firstName,
+                    lastName: this.state.userProfile.lastName,
+                    image: this.state.userProfile.profilePicture,
+                    _id: this.state.userProfile._id
+                },
+                user2: {
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    image: user.profilePicture,
+                    _id: user._id
+                },
+                _id: "1234"
+            }
+            let list = this.state.userMessageList;
+            list.push(newMessageChain);
+            console.log(list);
+            this.setState({
+                userMessageList: list
+            })
+            this.handleClose();
+            this.setCurrentMessager(newMessageChain);
+        }
     }
     render() {
         let links = [
@@ -211,20 +312,15 @@ class Messages extends Component {
                             <hr></hr>
                             <ul style={{
                                 listStyle: "none",
-                                verticalAlign: "bottom"
+                                verticalAlign: "bottom",
+                                overflowY: "auto",
+                                maxHeight: "600px"
                             }}>
                                 {this.state.currentMessage.messages.map(message => {
                                     return this.renderMessage(message)
                                 })}
 
                             </ul>
-                            <InputGroup className="messageText">
-                                <FormControl></FormControl>
-
-                                <InputGroup.Append>
-                                    <InputGroup.Text id="basic-addon1"><i className="fas fa-greater-than"></i></InputGroup.Text>
-                                </InputGroup.Append>
-                            </InputGroup>
                         </div>)
                 } else {
                     return (<div className="pt-3 padLeft">
@@ -235,14 +331,42 @@ class Messages extends Component {
                 }
             }
         }
-        let currentMessageDisplay = (<MessageDisplay />)
+        let currentMessageDisplay = (<div>
+            <MessageDisplay />
+            <InputGroup className="messageText">
+                <FormControl name="message" onChange={this.handleChange} value={this.state.message}></FormControl>
+
+                <InputGroup.Append>
+                    <InputGroup.Text id="basic-addon1" onClick={this.sendMessage}><i className="fas fa-greater-than"></i></InputGroup.Text>
+                </InputGroup.Append>
+            </InputGroup>
+        </div>)
+
+        let serachDisplay = this.state.searchList.map(user => {
+            return (
+                <div className="searchPeople" onClick={this.selectUser(user)}>
+                    <div>
+                        <Image src={`https://${config.imageurl}/${user.profilePicture}`} style={{
+                            height: "40px",
+                            width: "40px",
+                            marginRight: "10px"
+                        }} roundedCircle alt="" onError={this.addDefaultSrc}></Image>
+                        <b>{user.firstName}</b>
+                    </div>
+                    <b className="padLeft lightFont" style={{
+                        paddingLeft: "10px"
+                    }}>@{user.username}</b>
+                    <hr />
+                </div>
+            )
+        })
         return (
             <div>
                 <Row style={{
                     overflowX: "hidden"
                 }}>
                     <Col className="col-sm-3 fixed">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links}  history={this.props.history} ></LeftNav>
 
                     </Col>
                     <Col className="col-sm-3 pt-3 fixed" >
@@ -275,23 +399,46 @@ class Messages extends Component {
 
                     </Col>
                 </Row>
-                <Modal show={this.state.newMessageFlag} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>New Message</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <InputGroup className="ip2">
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                                name="searchText"
-                                placeholder="Search people"
-                            />
-                        </InputGroup>
-                    </Modal.Body>
-                </Modal>
-            </div>
+                <Accordion className="btn-block" style={{ maxHeight: "28px" }}>
+                    <Modal show={this.state.newMessageFlag} onHide={this.handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>New Message</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{}}>
+
+                            <Accordion.Toggle as={InputGroup}>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="basic-addon1"><i className="fas fa-search"></i></InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                    name="searchText"
+                                    placeholder="Search Twitter"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    onChange={this.handleChangePeople}
+                                    value={this.state.searchText}
+                                />
+                            </Accordion.Toggle>
+                            <Accordion.Collapse>
+
+                                <div>{this.state.searchList.length > 0 ? (
+                                    <div style={{
+                                        maxHeight: "400px",
+                                        overflowY: "auto"
+                                    }}>
+                                        {serachDisplay}
+                                    </div>
+                                ) : (<div style={{ width: "400px" }}>{this.state.searchText.length > 0 ? (
+                                    <div>No users with search text</div>
+                                ) : (
+                                        <div>Try Searching for people and topics</div>
+                                    )}</div>)}</div>
+                            </Accordion.Collapse>
+
+                        </Modal.Body>
+                    </Modal>
+                </Accordion>
+            </div >
         )
     }
 }
