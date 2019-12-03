@@ -13,8 +13,12 @@ import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import config from './../Config/settings'
 import axios from 'axios';
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import RepliesTweets from './UserProfile/RepliesTweets';
+import LikesTweets from './UserProfile/LikesTweets';
+import MyUserTweets from './UserProfile/MyUserTweets';
+import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
+//import Tabs from 'react-bootstrap/Tabs'
+//mport Tab from 'react-bootstrap/Tab'
 import { Link } from "react-router-dom";
 import coverImage from "../Components/UserProfile/CoverPhoto.jpg"
 //eslint-disable-next-line
@@ -202,8 +206,8 @@ class UserDetails extends Component {
                                     <Col>
                                         <p><b>{this.state.user.following.length || 0}</b><b className="lightFont"> Following</b></p>
                                     </Col> */}
-                                    <Col className="col-sm-2">
-                                        <Link
+                                    <Col className="col-sm-3">
+                                        <Link class="profiletag"
                                             style={{
                                                 marginRight: "10px"
                                             }}
@@ -221,7 +225,7 @@ class UserDetails extends Component {
                                     </Link>
                                     </Col>
                                     <Col className="col-sm-3">
-                                        <Link
+                                        <Link class="profiletag"
                                             to={{
                                                 pathname: "/follow",
                                                 state: {
@@ -238,17 +242,39 @@ class UserDetails extends Component {
                                 </Row>
                             </div>
                             <div>
-                                <Tabs defaultActiveKey="profile" id="profileTweets">
+                                <Tabs
+                                    defaultTab="one"
+                                    class="removePadding"
+                                    onChange={tabId => {
+                                        console.log(tabId);
+                                    }}
+                                    style={{ margin: "0px", padding: "0px" }}
+                                >
+                                    <TabList>
+                                        <Tab style={{ width: "33%" }} tabFor="one">
+                                            Tweets
+                                        </Tab>
 
-                                    <Tab className="profileTab" eventKey="tweets" title="Tweets">
+                                        <Tab style={{ width: "33%" }} tabFor="two">
+                                            Retweets & replies
+                                        </Tab>
 
-                                    </Tab>
-                                    <Tab eventKey="replies" title="Retweets" className="profileTab">
+                                        <Tab style={{ width: "33%" }} tabFor="three">
+                                            Likes
+                                        </Tab>
+                                    </TabList>
 
-                                    </Tab>
-                                    <Tab eventKey="likes" title="Likes" className="profileTab">
+                                    <TabPanel tabId="one">
+                                        <MyUserTweets user={this.state.user.username} />
+                                    </TabPanel>
 
-                                    </Tab>
+                                    <TabPanel tabId="two">
+                                        <RepliesTweets user={this.state.user.username} />
+                                    </TabPanel>
+
+                                    <TabPanel tabId="three">
+                                        <LikesTweets user={this.state.user.username} />
+                                    </TabPanel>
                                 </Tabs>
                             </div>
                         </div>

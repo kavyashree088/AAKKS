@@ -265,53 +265,21 @@ router.put("/unfollow", (req, res) => {
 })
 
 
-router.post('/getLikes',requireAuth, function (req, res) {
- //console.log(req)
- let username = req.body.username
- let redisKey = "userProfile_" + username;
- redisClient.del(redisKey);
- console.log("Inside getLikes post request");
- console.log("Sending Request Body:");
-
- console.log(req.body)
-// let username = req.body.currentUsername
-   try {
-   kafka.make_request('profileTopic', { "path": "getLikes", "data": username }, function (err, result) {
-     console.log("result")
-     console.log(result)
-
-     if (err) {
-       console.log(err);
-       res.status(500).json({ responseMessage: 'Database not responding' });
-     }
-     else if (result.status === 200) {
-       res.status(200).json({ responseMessage: result });
-       console.log(result)
-     }
-   })
- }
-
- catch (e) {
-   console.log(e);
-   res.status(500).json({ message: 'Error at server side!!!' });
- }
-})
-
-router.post('/getReplies',requireAuth, function (req, res) {
- // console.log(req)
+router.post('/getLikes', requireAuth, function (req, res) {
+  //console.log(req)
   let username = req.body.username
   let redisKey = "userProfile_" + username;
   redisClient.del(redisKey);
-  console.log("Inside getReplies post request");
+  console.log("Inside getLikes post request");
   console.log("Sending Request Body:");
- 
+
   console.log(req.body)
- // let username = req.body.currentUsername
-    try {
-    kafka.make_request('profileTopic', { "path": "getReplies", "data": username }, function (err, result) {
+  // let username = req.body.currentUsername
+  try {
+    kafka.make_request('profileTopic', { "path": "getLikes", "data": username }, function (err, result) {
       console.log("result")
       console.log(result)
- 
+
       if (err) {
         console.log(err);
         res.status(500).json({ responseMessage: 'Database not responding' });
@@ -322,16 +290,48 @@ router.post('/getReplies',requireAuth, function (req, res) {
       }
     })
   }
- 
+
   catch (e) {
     console.log(e);
     res.status(500).json({ message: 'Error at server side!!!' });
   }
- })
+})
+
+router.post('/getReplies', requireAuth, function (req, res) {
+  // console.log(req)
+  let username = req.body.username
+  let redisKey = "userProfile_" + username;
+  redisClient.del(redisKey);
+  console.log("Inside getReplies post request");
+  console.log("Sending Request Body:");
+
+  console.log(req.body)
+  // let username = req.body.currentUsername
+  try {
+    kafka.make_request('profileTopic', { "path": "getReplies", "data": username }, function (err, result) {
+      console.log("result")
+      console.log(result)
+
+      if (err) {
+        console.log(err);
+        res.status(500).json({ responseMessage: 'Database not responding' });
+      }
+      else if (result.status === 200) {
+        res.status(200).json({ responseMessage: result });
+        console.log(result)
+      }
+    })
+  }
+
+  catch (e) {
+    console.log(e);
+    res.status(500).json({ message: 'Error at server side!!!' });
+  }
+})
 
 
-router.post('/getTweets',requireAuth, function (req, res) {
- // console.log(req)
+router.post('/getTweets', requireAuth, function (req, res) {
+  // console.log(req)
   let username = req.body.username
   let redisKey = "userProfile_" + username;
   redisClient.del(redisKey);
@@ -340,11 +340,11 @@ router.post('/getTweets',requireAuth, function (req, res) {
 
   console.log(req.body)
   //console.log(req)
- // let username = req.body.currentUsername
-    try {
+  // let username = req.body.currentUsername
+  try {
     kafka.make_request('profileTopic', { "path": "getTweets", "data": username }, function (err, result) {
       console.log("result")
-     // console.log(result)
+      // console.log(result)
 
       if (err) {
         console.log(err);
