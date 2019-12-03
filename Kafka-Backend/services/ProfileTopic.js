@@ -182,14 +182,14 @@ async function getAllUsers(msg, callback) {
 async function follow(msg, callback) {
     console.log(msg)
     try {
-        Users.findOneAndUpdate({ "username": msg.data.following }, { $push: { "followers": msg.data.follower } }, async (err, result) => {
+        Users.update({ "username": msg.data.following }, { $addToSet: { "followers": msg.data.follower } }, async (err, result) => {
             if (err) {
                 console.log(err);
                 callback(err, "Database Error");
             } else {
                 console.log(msg.data.follower)
                 console.log(result)
-                await Users.findOneAndUpdate({ "username": msg.data.follower }, { $push: { "following": msg.data.following } }, async (err, result) => {
+                await Users.update({ "username": msg.data.follower }, { $addToSet: { "following": msg.data.following } }, async (err, result) => {
                     if (err) {
                         console.log(err);
                         callback(err, "Database Error");

@@ -42,7 +42,7 @@ async function signup(msg, callback) {
     //console.log(msg)
     let con = await dbConnection();
 
-    Users.findOne({ email: msg.formatEmail }, { username: msg.data.username }, async function (err, rows) {
+    Users.findOne({$or:[{ email: msg.formatEmail }, { username: msg.data.username }]}, async function (err, rows) {
         if (err) {
             console.log(err);
             console.log("unable to read the database");
@@ -59,6 +59,7 @@ async function signup(msg, callback) {
                     "username": msg.data.username,
                     "email": msg.formatEmail,
                     "state": msg.data.state,
+                    "profilePicture":"profileAlias.jpeg",
                     "city": msg.data.city,
                     "zipcode": msg.data.zipcode,
                     "active": true
@@ -108,7 +109,7 @@ async function login(msg, callback) {
 
         let result = await con.query('SELECT * FROM userMysql WHERE username = ?', [msg.username]);
         await con.query("COMMIT");
-        if (!result) {
+        if (!result && result.length==0) {
             console.log("Unable to find user");
             callback(null, { status: 205 })
         } else {

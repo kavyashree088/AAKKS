@@ -188,7 +188,7 @@ class ListSpecific extends Component {
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
           // let profileImg = settings.s3bucket + "profileAlias.jpeg";
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&
           //   listItem.profilePicture != null
@@ -249,7 +249,7 @@ class ListSpecific extends Component {
           // let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let profileImg = settings.s3bucket + listItem.profilePicture;
 
-          let userLink = "/profile/" + listItem.username;
+          let userLink = "/userDetailsPage/" + listItem.username;
           // if (
           //   listItem.profilePicture != "profileAlias.jpeg" &&
           //   listItem.profilePicture != null
@@ -340,7 +340,8 @@ class ListSpecific extends Component {
 
     let redirec = null;
     if (this.state.goBackFlag) {
-      redirec = <Redirect to="/List" />;
+      var temp="/List/"+localStorage.getItem('username')+""
+      redirec = <Redirect to={temp} />;
     }
     if (this.state.goToListInfo) {
       redirec = (
@@ -359,7 +360,7 @@ class ListSpecific extends Component {
       { label: "Notifications", link: "#home", className: "fas fa-bell" },
       { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
       { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
-      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
+      { label: "Lists", link: "/List/"+localStorage.getItem('username'), className: "fas fa-list-alt" },
       {
         label: "Profile",
         link: "/profile/" + localStorage.getItem("username"),

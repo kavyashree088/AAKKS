@@ -36,7 +36,7 @@ class App extends Component {
 
           <Route exact path="/userDetailsPage/:username" component={UserDetails}></Route>
           <Route path='/tweet/:tweetId' component={TweetDisplay}></Route>
-          <Route path="/List" component={List}></Route>
+          <Route exact path="/List/:username" component={List}></Route>
           <Route path="/ListSpecific" component={ListSpecific}></Route>
           <Route path="/ListInfo" component={ListInfo}></Route>
           <Route path="/Messages" component={Messages}></Route>

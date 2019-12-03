@@ -34,7 +34,7 @@ router.post('/signup', function (req, res) {
       "username": req.body.username,
       "email": formatEmail,
       "password": enPassword,
-
+      
       "firstName": req.body.firstName,
       "lastName": req.body.lastName
     }

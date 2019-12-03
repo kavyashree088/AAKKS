@@ -23,6 +23,8 @@ import SubscribedList from "./SusbscribedList";
 import MemberList from "./MemberList";
 import RightNav from "./RighNav";
 const settings = require("../Config/settings.js");
+//const currentUser=localStorage.getItem('username');
+//const currentUser="kavya1"
 
 const config = {
   headers: {
@@ -33,46 +35,7 @@ const config = {
 
 let pageRefresh = false;
 
-const ListTabs = props => {
-  return (
-    <div>
-      <Tabs
-        defaultTab="one"
-        class="removePadding"
-        onChange={tabId => {
-          console.log(tabId);
-        }}
-        style={{ margin: "0px" }}
-      >
-        <TabList>
-          <Tab style={{ width: "33%" }} tabFor="one">
-            Owned
-          </Tab>
 
-          <Tab style={{ width: "33%" }} tabFor="two">
-            Subscribed
-          </Tab>
-
-          <Tab style={{ width: "33%" }} tabFor="three">
-            Member
-          </Tab>
-        </TabList>
-
-        <TabPanel tabId="one">
-          <OwnedList />
-        </TabPanel>
-
-        <TabPanel tabId="two">
-          <SubscribedList />
-        </TabPanel>
-
-        <TabPanel tabId="three">
-          <MemberList />
-        </TabPanel>
-      </Tabs>
-    </div>
-  );
-};
 
 let showFlag = false;
 
@@ -86,7 +49,8 @@ class List extends Component {
       buttonflag: false,
       members: [],
       memberSearch: "",
-      addMemberList: []
+      addMemberList: [],
+      currentUser : this.props.match.params.username
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
     pageRefresh = false;
@@ -96,6 +60,7 @@ class List extends Component {
     if (!localStorage.getItem("username")) {
       this.props.history.push("/");
     }
+
   }
 
   inputChangeHandler = e => {
@@ -216,6 +181,50 @@ class List extends Component {
   };
 
   render() {
+    const ListTabs = props => {
+      return (
+        <div>
+          <Tabs
+            defaultTab="one"
+            class="removePadding"
+            onChange={tabId => {
+              console.log(tabId);
+            }}
+            style={{ margin: "0px" }}
+          >
+            <TabList>
+              <Tab style={{ width: "33%" }} tabFor="one">
+                Owned
+              </Tab>
+    
+              <Tab style={{ width: "33%" }} tabFor="two">
+                Subscribed
+              </Tab>
+    
+              <Tab style={{ width: "33%" }} tabFor="three">
+                Member
+              </Tab>
+            </TabList>
+    
+            <TabPanel tabId="one">
+              <OwnedList user={this.state.currentUser}/>
+            </TabPanel>
+    
+            <TabPanel tabId="two">
+              <SubscribedList user={this.state.currentUser}/>
+            </TabPanel>
+    
+            <TabPanel tabId="three">
+              <MemberList user={this.state.currentUser} />
+            </TabPanel>
+          </Tabs>
+        </div>
+      );
+    };
+
+
+
+
     let redi = null;
     if (pageRefresh) {
       redi = window.location.reload();
@@ -227,7 +236,7 @@ class List extends Component {
       { label: "Notifications", link: "#home", className: "fas fa-bell" },
       { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
       { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
-      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
+      { label: "Lists", link: "/List/"+ localStorage.getItem("username"), className: "fas fa-list-alt" },
       {
         label: "Profile",
         link: "/profile/" + localStorage.getItem("username"),
@@ -387,6 +396,17 @@ class List extends Component {
         </div>
       );
     }
+
+    let createShow=null;
+    if(localStorage.getItem('username')==this.state.currentUser){
+      createShow=(
+        <i
+                style={{ colour: "blue", marginRight: "14px" }}
+                className="far fa-edit float-right fa-list-alt"
+                onClick={this.handleNewList}
+              ></i>
+      )
+    }
     return (
       <div>
         <Row>
@@ -397,11 +417,7 @@ class List extends Component {
             {redi}
             <div style={{ fontSize: "18px", paddingTop: "2%" }}>
               <b>Lists</b>
-              <i
-                style={{ colour: "blue", marginRight: "14px" }}
-                className="far fa-edit float-right fa-list-alt"
-                onClick={this.handleNewList}
-              ></i>
+              {createShow}
             </div>
             <div
               style={{
@@ -410,7 +426,7 @@ class List extends Component {
                 color: "rgb(124, 124, 124)"
               }}
             >
-              <b>{localStorage.getItem('username')}</b>
+              <b>@{this.state.currentUser}</b>
             </div>
 
             {console.log("blehhh")}

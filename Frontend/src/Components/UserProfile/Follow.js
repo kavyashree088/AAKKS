@@ -39,192 +39,102 @@ class Follow extends Component {
         // array containing JSON details of each following
         let followingDetails = [];
         if (showFollowers) {
-            let index = 0;
-            for (index = 0; index < followersArr.length; index++) {
-                let username = followersArr[index];
-                axios.defaults.withCredentials = true;
-                let data = {
-                    username: username,
-                }
-                console.log("Getting details of " + username);
-                axios({
-                    method: 'post',
-                    url: 'http://' + config.hostname + ':3001/getProfileDetails',
-                    data,
-                })
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log('response from DB: ');
-                            console.log(response.data);
-                            followerDetails.push({
-                                username: response.data.details.rows.username,
-                                firstName: response.data.details.rows.firstName,
-                                lastName: response.data.details.rows.lastName,
-                                description: response.data.details.rows.description,
-                                profilePicture: undefined,
-                            })
-
-                        } else {
-                            console.log("Status Code: ", response.status);
-                            console.log(response.data.responseMessage);
-                        }
-                        this.setState({
-                            followerDetails: followerDetails,
-                            activeKey: 'Followers',
-                        })
-                    }).catch(error => {
-                        console.log(error);
-                    });
-            }
+            this.setState({
+                activeKey: "Followers",
+            })
         } else {
-            let index = 0;
-            for (index = 0; index < followingArr.length; index++) {
-                let username = followingArr[index];
-                axios.defaults.withCredentials = true;
-                let data = {
-                    username: username,
-                }
-                console.log("Following: Getting details of " + username);
-                axios({
-                    method: 'post',
-                    url: 'http://' + config.hostname + ':3001/getProfileDetails',
-                    data,
-                })
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log('response from DB: ');
-                            console.log(response.data);
-                            followingDetails.push({
-                                username: response.data.details.rows.username,
-                                firstName: response.data.details.rows.firstName,
-                                lastName: response.data.details.rows.lastName,
-                                description: response.data.details.rows.description,
-                                profilePicture: undefined,
-                            })
-                        } else {
-                            console.log("Status Code: ", response.status);
-                            console.log(response.data.responseMessage);
-                        }
-                        this.setState({
-                            followingDetails: followingDetails,
-                            activeKey: "Following",
-                        })
-                    }).catch(error => {
-                        console.log(error);
-                    });
+            this.setState({
+                activeKey: "Following",
+            })
+        }
+        // Get all followers details
+        let index = 0;
+        for (index = 0; index < followersArr.length; index++) {
+            let username = followersArr[index];
+            axios.defaults.withCredentials = true;
+            let data = {
+                username: username,
             }
+            console.log("Getting details of " + username);
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('response from DB: ');
+                        console.log(response.data);
+                        followerDetails.push({
+                            username: response.data.details.rows.username,
+                            firstName: response.data.details.rows.firstName,
+                            lastName: response.data.details.rows.lastName,
+                            description: response.data.details.rows.description,
+                            profilePicture: undefined,
+                        })
+
+                    } else {
+                        console.log("Status Code: ", response.status);
+                        console.log(response.data.responseMessage);
+                    }
+                    this.setState({
+                        followerDetails: followerDetails,
+                        activeKey: 'Followers',
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
+        }
+        // get all following details
+        index = 0;
+        for (index = 0; index < followingArr.length; index++) {
+            let username = followingArr[index];
+            axios.defaults.withCredentials = true;
+            let data = {
+                username: username,
+            }
+            console.log("Following: Getting details of " + username);
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('response from DB: ');
+                        console.log(response.data);
+                        followingDetails.push({
+                            username: response.data.details.rows.username,
+                            firstName: response.data.details.rows.firstName,
+                            lastName: response.data.details.rows.lastName,
+                            description: response.data.details.rows.description,
+                            profilePicture: undefined,
+                        })
+                    } else {
+                        console.log("Status Code: ", response.status);
+                        console.log(response.data.responseMessage);
+                    }
+                    this.setState({
+                        followingDetails: followingDetails,
+                        activeKey: "Following",
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
         }
     }
 
     changeActiveTabKey = (e) => {
         console.log(e);
-        axios.defaults.withCredentials = true;
-        let data = {
-            username: this.state.currentUserName,
+        if (e === "Followers") {
+            this.setState({
+                activeKey: "Followers",
+            })
+        } else {
+            this.setState({
+                activeKey: "Following",
+            })
         }
-        let followersArr = [];
-        let followingArr = [];
-        console.log("Getting details of " + this.state.currentUserName);
-        axios({
-            method: 'post',
-            url: 'http://' + config.hostname + ':3001/getProfileDetails',
-            data,
-        }).then(response => {
-            if (response.status === 200) {
-                console.log('response from DB: ');
-                console.log(response.data);
-                followersArr.push(response.data.details.rows.followers);
-                followingArr.push(response.data.details.rows.following);
-                // if e == "Followers", get all data of Followers
-                // array containing JSON details of each follower
-                let followerDetails = [];
-                // array containing JSON details of each following
-                let followingDetails = [];
-                if (e === "Followers") {
-                    let index = 0;
-                    for (index = 0; index < followersArr.length; index++) {
-                        let username = followersArr[index];
-                        axios.defaults.withCredentials = true;
-                        let data = {
-                            username: username,
-                        }
-                        console.log("Getting details of " + username);
-                        axios({
-                            method: 'post',
-                            url: 'http://' + config.hostname + ':3001/getProfileDetails',
-                            data,
-                        })
-                            .then(response => {
-                                if (response.status === 200) {
-                                    console.log('response from DB: ');
-                                    console.log(response.data);
-                                    followerDetails.push({
-                                        username: response.data.details.rows.username,
-                                        firstName: response.data.details.rows.firstName,
-                                        lastName: response.data.details.rows.lastName,
-                                        description: response.data.details.rows.description,
-                                        profilePicture: undefined,
-                                    })
-
-                                } else {
-                                    console.log("Status Code: ", response.status);
-                                    console.log(response.data.responseMessage);
-                                }
-                                this.setState({
-                                    followerDetails: followerDetails,
-                                    activeKey: "Followers",
-                                })
-                            }).catch(error => {
-                                console.log(error);
-                            });
-                    }
-                } else {
-                    let index = 0;
-                    for (index = 0; index < followingArr.length; index++) {
-                        let username = followingArr[index];
-                        axios.defaults.withCredentials = true;
-                        let data = {
-                            username: username,
-                        }
-                        console.log("Following: Getting details of " + username);
-                        axios({
-                            method: 'post',
-                            url: 'http://' + config.hostname + ':3001/getProfileDetails',
-                            data,
-                        })
-                            .then(response => {
-                                if (response.status === 200) {
-                                    console.log('response from DB: ');
-                                    console.log(response.data);
-                                    followingDetails.push({
-                                        username: response.data.details.rows.username,
-                                        firstName: response.data.details.rows.firstName,
-                                        lastName: response.data.details.rows.lastName,
-                                        description: response.data.details.rows.description,
-                                        profilePicture: undefined,
-                                    })
-                                } else {
-                                    console.log("Status Code: ", response.status);
-                                    console.log(response.data.responseMessage);
-                                }
-                                this.setState({
-                                    followingDetails: followingDetails,
-                                    activeKey: "Following",
-                                })
-                            }).catch(error => {
-                                console.log(error);
-                            });
-                    }
-                }
-            } else {
-                console.log("Status Code: ", response.status);
-                console.log(response.data.responseMessage);
-            }
-        }).catch(error => {
-            console.log(error);
-        });
-
-
     }
 
     render() {
@@ -240,7 +150,7 @@ class Follow extends Component {
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" },
-            { label: 'Logout', link: '/', className: "fa fa-sign-out" },
+            
 
             // { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];
@@ -253,8 +163,8 @@ class Follow extends Component {
             let lastName = aFollower.lastName;
             let description = aFollower.description;
             let aFollowerUserName = aFollower.username;
-            let Name = firstName +' '+ lastName;
-            let userLink = '/profile/'+aFollowerUserName
+            let Name = firstName + ' ' + lastName;
+            let userLink = '/userDetailsPage/' + aFollowerUserName
             followerCardsDOM.push(
                 <div>
                     <Card bg="light" style={{
@@ -265,12 +175,12 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowerUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a href={userLink} >@{aFollowerUserName}</a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                               
+
                             </Card.Text>
                             <p> {description}</p>
                         </Card.Body>
@@ -279,15 +189,15 @@ class Follow extends Component {
         }
         index = 0;
         console.log(" this.state.followingDetails.length")
-        console.log( this.state.followingDetails.length)
+        console.log(this.state.followingDetails.length)
         for (index = 0; index < this.state.followingDetails.length; index++) {
             let aFollowing = this.state.followingDetails[index];
             let firstName = aFollowing.firstName;
             let lastName = aFollowing.lastName;
             let description = aFollowing.description;
             let aFollowingUserName = aFollowing.username;
-            let Name = firstName +' '+ lastName;
-            let userLink = '/profile/'+aFollowingUserName
+            let Name = firstName + ' ' + lastName;
+            let userLink = '/userDetailsPage/' + aFollowingUserName
             followingCardsDOM.push(
                 <div>
                     <Card bg="light" style={{
@@ -298,12 +208,12 @@ class Follow extends Component {
                     }}>
                         <Card.Body>
                             <Card.Title>{Name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"><a href = {userLink} >@{aFollowingUserName}</a></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted"><a href={userLink} >@{aFollowingUserName}</a></Card.Subtitle>
                             <Card.Text style={{
                                 textAlign: "end",
                                 fontWeight: "900",
                             }}>
-                               
+
                             </Card.Text>
                             <p> {description}</p>
                         </Card.Body>
@@ -315,7 +225,7 @@ class Follow extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
                     <Col className="col-sm-6">
                         <Tabs id="controlled-tab-example" activeKey={this.state.activeKey} onSelect={this.changeActiveTabKey}>
@@ -343,3 +253,126 @@ class Follow extends Component {
 }
 
 export default Follow;
+
+/**
+ * axios.defaults.withCredentials = true;
+        let data = {
+            username: this.state.currentUserName,
+        }
+        let followersArr = [];
+        let followingArr = [];
+        console.log("Getting details of " + this.state.currentUserName);
+        axios({
+            method: 'post',
+            url: 'http://' + config.hostname + ':3001/getProfileDetails',
+            data,
+        }).then(response => {
+            if (response.status === 200) {
+                console.log('response from DB: ');
+                console.log(response.data);
+                followersArr.push(...response.data.details.rows.followers);
+                followingArr.push(...response.data.details.rows.following);
+                // if e == "Followers", get all data of Followers
+                // array containing JSON details of each follower
+                let followerDetails = [];
+                // array containing JSON details of each following
+                let followingDetails = [];
+                if (e === "Followers") {
+                    let index = 0;
+                    for (index = 0; index < followersArr.length; index++) {
+                        let username = followersArr[index];
+                        axios.defaults.withCredentials = true;
+                        let data = {
+                            username: username,
+                        }
+                        console.log("Getting details of " + username);
+                        axios({
+                            method: 'post',
+                            url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                            data,
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    console.log('response from DB: ');
+                                    console.log(response.data);
+                                    if (response.data !== null && response.data.details != null && response.data.details.rows !== null) {
+                                        followerDetails.push({
+                                            username: response.data.details.rows.username,
+                                            firstName: response.data.details.rows.firstName,
+                                            lastName: response.data.details.rows.lastName,
+                                            description: response.data.details.rows.description,
+                                            profilePicture: undefined,
+                                        })
+                                    }
+                                } else {
+                                    console.log("Status Code: ", response.status);
+                                    console.log(response.data.responseMessage);
+                                }
+                                this.setState({
+                                    followerDetails: followerDetails,
+                                    activeKey: "Followers",
+                                })
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                    }
+                    if (followersArr.length === 0) {
+                        this.setState({
+                            activeKey: "Followers",
+                            followerDetails: followerDetails,
+                        })
+                    }
+                } else {
+                    let index = 0;
+                    for (index = 0; index < followingArr.length; index++) {
+                        let username = followingArr[index];
+                        axios.defaults.withCredentials = true;
+                        let data = {
+                            username: username,
+                        }
+                        console.log("Following: Getting details of " + username);
+                        axios({
+                            method: 'post',
+                            url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                            data,
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    console.log('response from DB: ');
+                                    console.log(response.data);
+                                    if (response.data !== null && response.data.details !== null && response.data.details.rows !== null) {
+                                        followingDetails.push({
+                                            username: response.data.details.rows.username,
+                                            firstName: response.data.details.rows.firstName,
+                                            lastName: response.data.details.rows.lastName,
+                                            description: response.data.details.rows.description,
+                                            profilePicture: undefined,
+                                        })
+                                    }
+                                } else {
+                                    console.log("Status Code: ", response.status);
+                                    console.log(response.data.responseMessage);
+                                }
+                                this.setState({
+                                    followingDetails: followingDetails,
+                                    activeKey: "Following",
+                                })
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                    }
+                    if (followingArr.length === 0) {
+                        this.setState({
+                            followingDetails: followerDetails,
+                            activeKey: "Following",
+                        })
+                    }
+                }
+            } else {
+                console.log("Status Code: ", response.status);
+                console.log(response.data.responseMessage);
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+ */

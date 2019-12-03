@@ -217,9 +217,9 @@ class Signup extends Component {
         console.log("data is..")
         console.log(data);
 
-        this.setState({
-            message: "Username already exists"
-        })
+        // this.setState({
+        //     message: "Username already exists"
+        // })
 
         axios.defaults.withCredentials = true;
 

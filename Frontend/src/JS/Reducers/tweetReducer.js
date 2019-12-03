@@ -5,7 +5,8 @@ import {
   LISTTWEETS,
   SETPAGENUM,
   LIKESTWEETS,
-  REPLIESTWEETS
+  REPLIESTWEETS,
+  USERTWEETS
 } from "../Types/types";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   bookmarkedTweets: [],
   pageNum: 1,
   likestweets: [],
-  repliestweets: []
+  repliestweets: [],
+  usertweets:[]
 };
 
 export const tweetReducer = function(state = initialState, action) {
@@ -47,6 +49,10 @@ export const tweetReducer = function(state = initialState, action) {
     case SETPAGENUM:
       return Object.assign({}, state, {
         pageNum: action.payload
+      });
+    case USERTWEETS:
+      return Object.assign({}, state, {
+        usertweets: action.payload
       });
     default:
       return state;

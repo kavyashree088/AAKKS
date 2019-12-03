@@ -20,7 +20,7 @@ class TweetDisplay extends Component {
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '#home', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '#home', className: "fas fa-user-circle" },
             { label: 'More', link: '#home', className: "fas fas fa-ellipsis-h" }
         ];
@@ -28,7 +28,7 @@ class TweetDisplay extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
                     <Col className="col-sm-6 tweetComponent">

@@ -80,7 +80,7 @@ export class DeactivateAccount extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
 
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/', className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
@@ -90,7 +90,7 @@ export class DeactivateAccount extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
                     <Col className="col-sm-6">
                         <div>
