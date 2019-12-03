@@ -4,6 +4,9 @@ var app = express();
 app.set('view engine', 'ejs');
 
 var Users = require('../models/UserSchema');
+var Tweets = require('../models/TweetSchema');
+var Lists = require('../models/Lists')
+
 const dbConnection = require('./../database/dbConnectionPool');
 
 
@@ -19,6 +22,7 @@ exports.profileTopicService = function profileTopicService(msg, callback) {
         case "updateProfile":
             updateProfile(msg, callback);
             break;
+
         case "getAllUsers":
             getAllUsers(msg, callback);
             break;
@@ -28,6 +32,14 @@ exports.profileTopicService = function profileTopicService(msg, callback) {
         case "unfollow":
             unfollow(msg, callback);
             break;
+
+        case "getLikes":
+            getLikes(msg, callback);
+            break;
+        case "getTweets":
+            getTweets(msg, callback);
+            break;
+
     }
 };
 
@@ -36,12 +48,17 @@ async function getProfileDetails(msg, callback) {
 
     console.log("In user getProfileDetails topic service. Msg: ", msg);
 
-    Users.findOne({ username: msg.data }, async function (err, rows) {
+    Users.findOneAndUpdate({  $and:[{username: msg.data }, {active:true}]}, {
+        $inc: {
+            viewCount: 1
+        }
+    }, async function (err, rows) {
         if (err) {
             console.log(err);
             console.log("unable to read the database");
             callback(err, "Database Error");
         } else {
+
             console.log(" got user ");
             callback(null, { status: 200, rows });
         }
@@ -54,20 +71,30 @@ async function updateProfile(msg, callback) {
 
     console.log("In user updateProfile topic service. Msg: ", msg);
     console.log(msg)
-    console.log(msg.data.profileDetails.username)
+    console.log(msg.data.username)
     let con = await dbConnection();
 
+    var fullname=msg.data.firstName+' '+msg.data.lastName;
+    let userDetailsObj = {
+        "firstName": msg.data.firstName,
+        "lastName": msg.data.lastName,
+        "description": msg.data.description,
+        "state": msg.data.state,
+        "city": msg.data.city,
+        "zipcode": msg.data.zipcode
+    }
+    console.log("msg picture...");
+    console.log(msg.picture);
+    if(msg.picture){
+        userDetailsObj['profilePicture'] = msg.picture;
+    }
+
     try {
-        Users.findOneAndUpdate({ 'username': msg.data.profileDetails.username }, {
-            $set: {
-                "firstName": msg.data.profileDetails.firstName,
-                "lastName": msg.data.profileDetails.lastName,
-                "description": msg.data.profileDetails.description,
-                "state": msg.data.profileDetails.state,
-                "city": msg.data.profileDetails.city,
-                "zipcode": msg.data.profileDetails.zipcode,
-            }
+
+        Users.findOneAndUpdate({ 'username': msg.data.username }, {
+            $set: userDetailsObj
         },
+
             async function (err, results) {
                 console.log("results:")
                 console.log(results);
@@ -96,11 +123,33 @@ async function updateProfile(msg, callback) {
 
             })
         await con.query("START TRANSACTION");
-        let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.profileDetails.firstName, msg.data.profileDetails.lastName]);
+       
+        let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.firstName, msg.data.lastName]);
         await con.query("COMMIT");
 
         console.log(savedUser)
-    } catch (ex) {
+        
+        
+            //creatorImage: msg.profilePicture
+        // Lists.update({creatorID: msg.data.profileDetails.username},{
+        //     $set:
+        //      {creatorName: fullname}}, function(err, result){
+        //     if (err) {
+        //         console.log(err);
+        //         console.log("unable to read the database");
+        //         callback(err, "Database Error");
+        //     } else {
+        //         console.log(" updated in links");
+        //        // callback(null, { status: 200, rows });
+        //     }
+        
+        // })
+    
+    
+    } 
+    
+    
+    catch (ex) {
         console.log(ex);
         await con.query("ROLLBACK");
         console.log(ex);
@@ -177,4 +226,41 @@ async function unfollow(msg, callback) {
     } catch (error) {
         callback(err, "Database Error");
     }
+}
+
+
+async function getLikes(msg, callback) {
+
+    console.log("In user getLikes topic service. Msg: ", msg);
+
+    Tweets.find({ 'likes': { username: "anjali" } }, function (err, rows) {
+        console.log(rows)
+        if (err) {
+            console.log(err);
+            console.log("unable to read the database");
+            callback(err, "Database Error");
+        } else {
+            console.log(" got likes");
+            callback(null, { status: 200, rows });
+        }
+    });
+
+}
+
+async function getTweets(msg, callback) {
+
+    console.log("In user getTweets topic service. Msg: ", msg);
+
+    Tweets.find({ username: msg.data }, async function (err, rows) {
+        console.log(rows)
+        if (err) {
+            console.log(err);
+            console.log("unable to read the database");
+            callback(err, "Database Error");
+        } else {
+            console.log(" got user ");
+            callback(null, { status: 200, rows });
+        }
+    });
+
 }

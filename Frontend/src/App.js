@@ -9,12 +9,16 @@ import Messages from './Components/Messages';
 import UserProfile from './Components/UserProfile/UserProfile'
 import Deactivate from './Components/DeactivateAccount';
 import Delete from './Components/DeleteAccount'
+
 import UserDetails from './Components/UserDetails';
 import List from './Components/MyList';
 import ListSpecific from './Components/ListSpecific';
 import ListInfo from './Components/ListInfo';
 import Bookmarks from './Components/BookmarkMain';
 import TweetDisplay from './Components/TweetDisplay';
+
+import Follow from './Components/UserProfile/Follow'
+
 
 class App extends Component {
   render() {
@@ -25,10 +29,11 @@ class App extends Component {
           <Route exact path="/home" component={Home}></Route>
           <Route exact path="/Signup" component={Signup}></Route>
           <Route exact path="/Explore" component={Explore}></Route>
-          <Route exact path="/Messages" component={Messages}></Route>
+
           <Route exact path="/profile/:username" component={UserProfile}></Route>
           <Route exact path="/deactivate" component={Deactivate}></Route>
           <Route exact path="/delete" component={Delete}></Route>
+
           <Route exact path="/userDetailsPage/:username" component={UserDetails}></Route>
           <Route path='/tweet/:tweetId' component={TweetDisplay}></Route>
           <Route path="/List" component={List}></Route>
@@ -36,6 +41,10 @@ class App extends Component {
           <Route path="/ListInfo" component={ListInfo}></Route>
           <Route path="/Messages" component={Messages}></Route>
           <Route path="/Bookmarks" component={Bookmarks}></Route>
+
+          <Route exact path="/follow" component={Follow}></Route>
+          
+
         </Switch>
       </Router>
 

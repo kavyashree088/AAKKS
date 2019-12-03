@@ -53,6 +53,10 @@ UserSchema = new Schema({
       type: Boolean,
       default: true
   },
+  viewCount:{
+    type:Number,
+    default: 0
+  },
 
   followers:[],
   following:[],

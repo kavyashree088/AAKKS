@@ -104,7 +104,7 @@ router.post('/login', function (req, res) {
   })
 })
 
-router.post('/deleteAccount', function (req, res) {
+router.post('/deleteAccount',requireAuth, function (req, res) {
   console.log("Inside deleteAccount post request");
   console.log("Request req.query:");
   console.log(req.body);
@@ -123,7 +123,7 @@ router.post('/deleteAccount', function (req, res) {
   })
 })
 
-router.post('/deactivateAccount', function (req, res) {
+router.post('/deactivateAccount',requireAuth, function (req, res) {
   console.log("Inside deactivateAccount post request");
   console.log("Request req.body:");
   console.log(req.body.username)
