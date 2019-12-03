@@ -5,7 +5,8 @@ import {
   FormControl,
   Modal,
   InputGroup,
-  Form,Image
+  Form,
+  Image
 } from "react-bootstrap";
 import { Input } from "reactstrap";
 import "../CSS/navbar.css";
@@ -20,6 +21,7 @@ import { hostAddress, port } from "../Constants/index";
 import OwnedList from "./OwnedList";
 import SubscribedList from "./SusbscribedList";
 import MemberList from "./MemberList";
+import RightNav from "./RighNav";
 const settings = require("../Config/settings.js");
 
 const config = {
@@ -35,11 +37,12 @@ const ListTabs = props => {
   return (
     <div>
       <Tabs
-        defaultTab="one" class="removePadding"
+        defaultTab="one"
+        class="removePadding"
         onChange={tabId => {
           console.log(tabId);
         }}
-        style={{margin:"0px"}}
+        style={{ margin: "0px" }}
       >
         <TabList>
           <Tab style={{ width: "33%" }} tabFor="one">
@@ -89,11 +92,10 @@ class List extends Component {
     pageRefresh = false;
   }
 
-
-  componentWillMount(){
-    if (!localStorage.getItem('username')) {
+  componentWillMount() {
+    if (!localStorage.getItem("username")) {
       this.props.history.push("/");
-  }
+    }
   }
 
   inputChangeHandler = e => {
@@ -167,9 +169,6 @@ class List extends Component {
     }
   };
 
-
-
-
   gotoNext = () => {
     console.log("I am here in next button handler");
     this.setState({
@@ -182,16 +181,16 @@ class List extends Component {
     this.state.addMemberList.map(item => {
       t2.add(item.username);
     });
-    
-    var t1=[...t2];
+
+    var t1 = [...t2];
     console.log(t1);
     console.log("Hi there I am in create list");
     e.preventDefault();
     const data = {
       listname: this.state.listname,
-      creatorID:localStorage.getItem('username'),
-     // creatorName:localStorage.getItem('firstname')+" "+localStorage.getItem('lastname') ,
-     // creatorImage:localStorage.getItem('firstName'),
+      creatorID: localStorage.getItem("username"),
+      // creatorName:localStorage.getItem('firstname')+" "+localStorage.getItem('lastname') ,
+      // creatorImage:localStorage.getItem('firstName'),
       //creatorImage:"profileAlias.jpg",
       // creatorID: "alaukika",
       // creatorName: "Alaukika Diwanji",
@@ -223,17 +222,20 @@ class List extends Component {
     }
     const { tags, suggestions } = this.state;
     let links = [
-      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
-      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
-      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
-      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
-      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
-      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
-      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
-
-  ];
+      { label: "Home", link: "/home", className: "fas fa-home", active: true },
+      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
+      { label: "Notifications", link: "#home", className: "fas fa-bell" },
+      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
+      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
+      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
+      {
+        label: "Profile",
+        link: "/profile/" + localStorage.getItem("username"),
+        className: "fas fa-user-circle"
+      },
+      { label: "Deactivate", link: "/deactivate", className: "fa fa-ban" },
+      { label: "Delete", link: "/delete", className: "fa fa-trash-o" }
+    ];
 
     let modalContent = null;
     if (!this.state.buttonflag) {
@@ -284,13 +286,15 @@ class List extends Component {
       if (this.state.addMemberList != "") {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
-      
-          let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
-          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
-              profileImg= settings.s3bucket + listItem.profilePicture;
-           
-         
+
+          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+
+          if (
+            listItem.profilePicture != "profileAlias.jpeg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
+
           memberDetails.push(
             <span>
               <button
@@ -332,7 +336,7 @@ class List extends Component {
         });
       }
 
-      modalContent=(
+      modalContent = (
         <div>
           <Form>
             <Form.Row>
@@ -366,7 +370,8 @@ class List extends Component {
             <br></br>
             <br></br>
           </div>
-          <button onClick={this.createList}
+          <button
+            onClick={this.createList}
             style={{
               backgroundColor: "rgba(29, 161, 242, 1)",
               float: "right",
@@ -374,25 +379,25 @@ class List extends Component {
               display: { showFlag },
               borderRadius: "12px",
               color: "white"
-            }}>
+            }}
+          >
             <b> Create</b>
           </button>
         </div>
       );
- 
     }
     return (
       <div>
         <Row>
           <Col className="col-sm-3 removePadding">
-          <LeftNav links={links}  history={this.props.history}></LeftNav>
+            <LeftNav links={links} history={this.props.history}></LeftNav>
           </Col>
           <Col className="col-sm-6 removePadding">
             {redi}
             <div style={{ fontSize: "18px", paddingTop: "2%" }}>
               <b>Lists</b>
               <i
-                style={{ colour: "blue",marginRight:"14px" }}
+                style={{ colour: "blue", marginRight: "14px" }}
                 className="far fa-edit float-right fa-list-alt"
                 onClick={this.handleNewList}
               ></i>
@@ -421,9 +426,15 @@ class List extends Component {
               <Modal.Body>{modalContent}</Modal.Body>
             </Modal>
           </Col>
-          <Col className="col-sm-3">
-            <div class="navbar-side-right" id="navbarSide">
-              here
+          <Col
+            className="col-sm-3"
+            style={{
+              borderLeft: "2px solid rgb(180, 177, 177)",
+              height: "100vh"
+            }}
+          >
+            <div className="" id="navbarSide">
+              <RightNav></RightNav>
             </div>
           </Col>
         </Row>

@@ -4,6 +4,7 @@ import { Input } from "reactstrap";
 import "../CSS/navbar.css";
 import "../CSS/List.css";
 import LeftNav from "./LeftNav";
+import RightNav from "./RighNav";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
@@ -215,8 +216,8 @@ class ListInfo extends Component {
     this.state.addMemberList.map(item => {
       t2.add(item.username);
     });
-    
-    var t1=[...t2];
+
+    var t1 = [...t2];
     console.log(t1);
     const data = {
       members: t1,
@@ -636,15 +637,21 @@ class ListInfo extends Component {
       <div>
         <Row>
           <Col className="col-sm-3">
-          <LeftNav links={links}  history={this.props.history}></LeftNav>
+            <LeftNav links={links} history={this.props.history}></LeftNav>
           </Col>
           <Col className="col-sm-6">
             {display}
             {redirec}
           </Col>
-          <Col className="col-sm-3">
-            <div class="navbar-side-right" id="navbarSide">
-              here
+          <Col
+            className="col-sm-3"
+            style={{
+              borderLeft: "2px solid rgb(180, 177, 177)",
+              height: "100vh"
+            }}
+          >
+            <div className="" id="navbarSide">
+              <RightNav></RightNav>
             </div>
           </Col>
         </Row>

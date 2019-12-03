@@ -3,10 +3,11 @@ import { Row, Col, Modal, Image } from "react-bootstrap";
 import "../CSS/navbar.css";
 import "../CSS/List.css";
 import LeftNav from "./LeftNav";
+import RightNav from "./RighNav";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
-import ListTweets from './ListTweets';
+import ListTweets from "./ListTweets";
 const settings = require("../Config/settings.js");
 
 const config = {
@@ -27,16 +28,15 @@ class ListSpecific extends Component {
       isModalOpen: false,
       isMember: false,
       goToListInfo: false,
-      subscriberCount:this.props.location.state.list[0].subscriberID.length
+      subscriberCount: this.props.location.state.list[0].subscriberID.length
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
-  
   }
 
-  componentDidMount(){
-    console.log("Alaukika12")
+  componentDidMount() {
+    console.log("Alaukika12");
     console.log(this.state.subscriberCount);
-    console.log("Alaukika12")
+    console.log("Alaukika12");
   }
   handleEditClick = e => {
     this.setState({
@@ -77,7 +77,7 @@ class ListSpecific extends Component {
   subscribeList = e => {
     const data = {
       listID: this.props.location.state.list[0]._id,
-      userID:localStorage.getItem('username')
+      userID: localStorage.getItem("username")
       //userID: "alaukika"
     };
     console.log(data);
@@ -104,7 +104,7 @@ class ListSpecific extends Component {
   unsubscribeList = e => {
     const data = {
       listID: this.props.location.state.list[0]._id,
-      userID:localStorage.getItem('username')
+      userID: localStorage.getItem("username")
       //userID: "alaukika"
     };
     console.log(data);
@@ -136,7 +136,6 @@ class ListSpecific extends Component {
     event.target.onError = null;
     event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
   };
-
 
   handleShowSubscriber = () => {
     const data = {
@@ -188,11 +187,14 @@ class ListSpecific extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
-          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let userLink = "/profile/" + listItem.username;
-         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
-             profileImg= settings.s3bucket + listItem.profilePicture;
-          
+          if (
+            listItem.profilePicture != "profileAlias.jpeg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
+
           display.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
@@ -207,17 +209,17 @@ class ListSpecific extends Component {
                 roundedCircle
                 alt=""
               ></Image>
-<a href={userLink}>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.firstName}
-                </b>
-              </span>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.lastName}
-                </b>
-              </span>
+              <a href={userLink}>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.firstName}
+                  </b>
+                </span>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.lastName}
+                  </b>
+                </span>
               </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
@@ -242,11 +244,14 @@ class ListSpecific extends Component {
 
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
-          let profileImg=settings.s3bucket + "profileAlias.jpeg";
+          let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let userLink = "/profile/" + listItem.username;
-         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
-             profileImg= settings.s3bucket + listItem.profilePicture;
-          
+          if (
+            listItem.profilePicture != "profileAlias.jpeg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
+
           display.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
@@ -261,17 +266,17 @@ class ListSpecific extends Component {
                 roundedCircle
                 alt=""
               ></Image>
-<a href={userLink}>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.firstName}
-                </b>
-              </span>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.lastName}
-                </b>
-              </span>
+              <a href={userLink}>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.firstName}
+                  </b>
+                </span>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.lastName}
+                  </b>
+                </span>
               </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
@@ -295,8 +300,11 @@ class ListSpecific extends Component {
 
     let buttonShow = null;
 
-    if(this.props.location.state.list[0].creatorID==localStorage.getItem('username')){
-   // if (this.props.location.state.list[0].creatorID == "alaukika") {
+    if (
+      this.props.location.state.list[0].creatorID ==
+      localStorage.getItem("username")
+    ) {
+      // if (this.props.location.state.list[0].creatorID == "alaukika") {
       buttonShow = (
         <button
           class="listSpecificButton"
@@ -307,7 +315,7 @@ class ListSpecific extends Component {
       );
     } else {
       var t = this.props.location.state.list[0].subscriberID.filter(
-        id => id == localStorage.getItem('username')
+        id => id == localStorage.getItem("username")
       );
       console.log("Alaukika says:", t);
       // if(this.props.location.state.list[0].subscriberID.filter(id=>id==localStorage.getItem('username'))==null){
@@ -342,28 +350,35 @@ class ListSpecific extends Component {
     }
 
     let links = [
-      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
-      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
-      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
-      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
-      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
-      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
-      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
+      { label: "Home", link: "/home", className: "fas fa-home", active: true },
+      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
+      { label: "Notifications", link: "#home", className: "fas fa-bell" },
+      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
+      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
+      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
+      {
+        label: "Profile",
+        link: "/profile/" + localStorage.getItem("username"),
+        className: "fas fa-user-circle"
+      },
+      { label: "Deactivate", link: "/deactivate", className: "fa fa-ban" },
+      { label: "Delete", link: "/delete", className: "fa fa-trash-o" }
+    ];
 
-  ];
-    
-    let profileImg1=settings.s3bucket + "profileAlias.jpeg";
-          
-    if(this.props.location.state.list[0].creatorImage!="profileAlias.jpeg" && this.props.location.state.list[0].creatorImage!=null )
-        profileImg1= settings.s3bucket + this.props.location.state.list[0].creatorImage;
-      
+    let profileImg1 = settings.s3bucket + "profileAlias.jpeg";
+
+    if (
+      this.props.location.state.list[0].creatorImage != "profileAlias.jpeg" &&
+      this.props.location.state.list[0].creatorImage != null
+    )
+      profileImg1 =
+        settings.s3bucket + this.props.location.state.list[0].creatorImage;
+
     return (
       <div>
         <Row>
           <Col className="col-sm-3">
-          <LeftNav links={links}  history={this.props.history}></LeftNav>
+            <LeftNav links={links} history={this.props.history}></LeftNav>
           </Col>
 
           <Col className="col-sm-6">
@@ -408,9 +423,9 @@ class ListSpecific extends Component {
                   <span>
                     {" "}
                     <Image
-                     // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
-                     src={profileImg1}
-                     style={{
+                      // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                      src={profileImg1}
+                      style={{
                         height: "30px",
                         width: "30px",
                         margin: "8px"
@@ -453,13 +468,19 @@ class ListSpecific extends Component {
                 </div>
                 {buttonShow}
                 <hr></hr>
-                <ListTweets listID={this.props.location.state.list[0]._id}/>
+                <ListTweets listID={this.props.location.state.list[0]._id} />
               </div>
             </div>
           </Col>
-          <Col className="col-sm-3">
-            <div class="navbar-side-right" id="navbarSide">
-              here
+          <Col
+            className="col-sm-3"
+            style={{
+              borderLeft: "2px solid rgb(180, 177, 177)",
+              height: "100vh"
+            }}
+          >
+            <div className="" id="navbarSide">
+              <RightNav></RightNav>
             </div>
           </Col>
         </Row>

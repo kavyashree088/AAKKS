@@ -3,27 +3,28 @@ import { Row, Col } from 'react-bootstrap'
 import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
-import {getListTweets} from '../JS/Actions/tweetAction';
+import {getLikesTweets} from '../JS/Actions/tweetAction';
 import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import TweetComponent from './TweetComponent.js';
 const settings = require("../Config/settings.js");
+const getUserName=localStorage.getItem("username");
 
-export class ListTweets extends Component {
+export class LikesTweets extends Component {
     componentDidMount() {
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/showListTweet/showListTweet";
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getBookmarks/getBookmarks";
         //TODO :get userId from local storage
         //TODO :or get followers list from local storage and send it
-        let listID = this.props.listID;
-        let data = {listID};
+        let username = getUserName;
+        let data = {username};
         let dataObj = {data,  url : postURL};
         axios.defaults.withCredentials = true;
-        this.props.getListTweets(dataObj);
+        this.props.getLikesTweets(dataObj);
     }
 
    render(){
        //debugger;
-       let allTweets = this.props.listTweets;
+       let allTweets = this.props.likestweets;
        let tweetsMarkup = [];
        if(allTweets && allTweets.length > 0){
            let i=0;
@@ -35,10 +36,10 @@ export class ListTweets extends Component {
            return tweetsMarkup;
        } else {
            return (<div>
-            <h3 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
-              <b> There aren’t any Tweets in this List</b>
-            </h3>
-            <h5 style={{ textAlign: "center",color:"#808080" }}>When anyone in this List Tweets, they’ll show up here.</h5>
+            <h4 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
+              <b> You don’t have any likes yet</b>
+            </h4>
+            <h6 style={{ textAlign: "center",color:"#808080" }}>Tap the heart on any Tweet to show it some love. When you do, it’ll show up here.</h6>
           </div>);
        }
    }
@@ -46,13 +47,13 @@ export class ListTweets extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return{
-        listTweets : state.tweetReducer.listTweets
+        likestweets : state.tweetReducer.likestweets
     }
 }
 
 const mapDispatchToProps = function(dispatch){
     return {
-        getListTweets : (dataObj) => dispatch(getListTweets(dataObj))
+        getLikesTweets : (dataObj) => dispatch(getLikesTweets(dataObj))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ListTweets);
+export default connect(mapStateToProps, mapDispatchToProps)(LikesTweets);

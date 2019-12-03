@@ -2,14 +2,20 @@ import {
   DASHBOARDTWEETS,
   CURRENTTWEET,
   BOOKMARKEDTWEETS,
-  LISTTWEETS,SETPAGENUM
+  LISTTWEETS,
+  SETPAGENUM,
+  LIKESTWEETS,
+  REPLIESTWEETS
 } from "../Types/types";
 
 const initialState = {
   dashboardTweets: [],
   currentTweet: "",
   listTweets: [],
-  bookmarkedTweets: [], pageNum : 1
+  bookmarkedTweets: [],
+  pageNum: 1,
+  likestweets: [],
+  repliestweets: []
 };
 
 export const tweetReducer = function(state = initialState, action) {
@@ -23,7 +29,6 @@ export const tweetReducer = function(state = initialState, action) {
         currentTweet: action.payload
       });
     case LISTTWEETS:
-      debugger;
       return Object.assign({}, state, {
         listTweets: action.payload
       });
@@ -31,10 +36,18 @@ export const tweetReducer = function(state = initialState, action) {
       return Object.assign({}, state, {
         bookmarkedTweets: action.payload
       });
-      case SETPAGENUM :
-        return Object.assign({}, state, {
-            pageNum : action.payload
-        });
+    case LIKESTWEETS:
+      return Object.assign({}, state, {
+        likestweets: action.payload
+      });
+    case REPLIESTWEETS:
+      return Object.assign({}, state, {
+        repliestweets: action.payload
+      });
+    case SETPAGENUM:
+      return Object.assign({}, state, {
+        pageNum: action.payload
+      });
     default:
       return state;
   }
