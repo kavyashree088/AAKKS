@@ -8,18 +8,19 @@ import ReplyModal from '../ReplyModal';
 import TweetModal from '../TweetModal';
 import TweetComponent from '../TweetComponent.js';
 const settings = require("../../Config/settings.js");
-const getUserName=localStorage.getItem("username");
+let getUserName="";
 
 export class RepliesTweets extends Component {
     componentDidMount() {
-        let postURL = "http://"+settings.hostname+":"+settings.port+"/getTweets";
+        getUserName=this.props.user;
+        let postURL = "http://"+settings.hostname+":"+settings.port+"/getReplies";
         //TODO :get userId from local storage
         //TODO :or get followers list from local storage and send it
         let username = getUserName;
         let data = {username};
         let dataObj = {data,  url : postURL};
         axios.defaults.withCredentials = true;
-     //   this.props.getRepliesTweets(dataObj);
+       this.props.getRepliesTweets(dataObj);
     }
 
    render(){
