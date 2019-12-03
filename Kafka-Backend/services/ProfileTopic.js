@@ -51,7 +51,7 @@ async function getProfileDetails(msg, callback) {
 
     console.log("In user getProfileDetails topic service. Msg: ", msg);
 
-    Users.findOneAndUpdate({  $and:[{username: msg.data }, {active:true}]}, {
+    Users.findOneAndUpdate({ $and: [{ username: msg.data }, { active: true }] }, {
         $inc: {
             viewCount: 1
         }
@@ -77,7 +77,7 @@ async function updateProfile(msg, callback) {
     console.log(msg.data.username)
     let con = await dbConnection();
 
-    var fullname=msg.data.firstName+' '+msg.data.lastName;
+    var fullname = msg.data.firstName + ' ' + msg.data.lastName;
     let userDetailsObj = {
         "firstName": msg.data.firstName,
         "lastName": msg.data.lastName,
@@ -88,7 +88,7 @@ async function updateProfile(msg, callback) {
     }
     console.log("msg picture...");
     console.log(msg.picture);
-    if(msg.picture){
+    if (msg.picture) {
         userDetailsObj['profilePicture'] = msg.picture;
     }
 
@@ -126,14 +126,14 @@ async function updateProfile(msg, callback) {
 
             })
         await con.query("START TRANSACTION");
-       
+
         let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.firstName, msg.data.lastName]);
         await con.query("COMMIT");
 
         console.log(savedUser)
-        
-        
-            //creatorImage: msg.profilePicture
+
+
+        //creatorImage: msg.profilePicture
         // Lists.update({creatorID: msg.data.profileDetails.username},{
         //     $set:
         //      {creatorName: fullname}}, function(err, result){
@@ -145,13 +145,13 @@ async function updateProfile(msg, callback) {
         //         console.log(" updated in links");
         //        // callback(null, { status: 200, rows });
         //     }
-        
+
         // })
-    
-    
-    } 
-    
-    
+
+
+    }
+
+
     catch (ex) {
         console.log(ex);
         await con.query("ROLLBACK");
@@ -190,6 +190,7 @@ async function follow(msg, callback) {
                 console.log(err);
                 callback(err, "Database Error");
             } else {
+                console.log(msg.data.follower)
                 console.log(result)
                 await Users.update({ "username": msg.data.follower }, { $addToSet: { "following": msg.data.following } }, async (err, result) => {
                     if (err) {
