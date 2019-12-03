@@ -106,7 +106,7 @@ router.get('/fetchLikes',function(req,res){
     
     
     console.log("infetch fetchLikes backend")
-    console.log(req.body);
+  
   
     kafka.make_request("analytics", { "path": "fetchLikes" }, function(
       err,
@@ -129,6 +129,35 @@ router.get('/fetchLikes',function(req,res){
       }
     });
        
+});
+
+router.get('/fetchRetweets',function(req,res){
+    
+    
+  console.log("infetch fetchRetweets backend")
+  
+
+  kafka.make_request("analytics", { "path": "fetchRetweets" }, function(
+    err,
+    results
+  ) {
+    console.log("results:",results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else");
+      res.json({
+        graphData: results
+      });
+
+      res.end();
+    }
+  });
+     
 });
 
 module.exports=router;

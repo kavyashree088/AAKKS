@@ -38,6 +38,9 @@ exports.analyticsService = function analyticsService(msg, callback) {
         case 'fetchLikes':
                 fetchLikes(msg, callback);
                 break;
+        case 'fetchRetweets':
+            fetchRetweets(msg, callback);
+            break;
         // case 'getFollowersTweets':
         //     getFollowersTweets(msg, callback);
         //     break;
@@ -185,4 +188,34 @@ let fetchLikes = function(message, callback){
     //     console.log("Result:",result);
     //     callback(null,result);
     //  })
+};
+
+let fetchRetweets = function(message, callback){
+
+    console.log("Inside fetch retweets request");
+  
+    
+    Tweets.aggregate([
+       {
+
+        "$project":{
+            "username":1,
+            "retweets":1,
+            "length":{"$size":"$retweets"}
+        }
+       },
+       {
+           "$sort":{"length":-1}
+       },
+       {
+           "$limit":10
+       }
+    ]).then(
+        result=>{
+            console.log("retweets:",result);
+            callback(null,result);
+        }
+        
+    )
+
 };
