@@ -10,7 +10,10 @@ import UserProfile from './Components/UserProfile/UserProfile'
 import Deactivate from './Components/DeactivateAccount';
 import Delete from './Components/DeleteAccount'
 import UserDetails from './Components/UserDetails';
-
+import List from './Components/MyList';
+import ListSpecific from './Components/ListSpecific';
+import ListInfo from './Components/ListInfo';
+import Bookmarks from './Components/BookmarkMain';
 import TweetDisplay from './Components/TweetDisplay';
 
 class App extends Component {
@@ -18,7 +21,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={LandingPage}></Route>
+        <Route exact path="/" component={LandingPage}></Route>
           <Route exact path="/home" component={Home}></Route>
           <Route exact path="/Signup" component={Signup}></Route>
           <Route exact path="/Explore" component={Explore}></Route>
@@ -28,6 +31,11 @@ class App extends Component {
           <Route exact path="/delete" component={Delete}></Route>
           <Route exact path="/userDetailsPage/:username" component={UserDetails}></Route>
           <Route path='/tweet/:tweetId' component={TweetDisplay}></Route>
+          <Route path="/List" component={List}></Route>
+          <Route path="/ListSpecific" component={ListSpecific}></Route>
+          <Route path="/ListInfo" component={ListInfo}></Route>
+          <Route path="/Messages" component={Messages}></Route>
+          <Route path="/Bookmarks" component={Bookmarks}></Route>
         </Switch>
       </Router>
 

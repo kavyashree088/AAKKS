@@ -1,13 +1,13 @@
 {
-  "name": "backend",
+  "name": "kafka-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "alaukika",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -33,3 +33,6 @@
     "sha1": "^1.1.1"
   }
 }
+
+
+

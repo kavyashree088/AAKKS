@@ -13,6 +13,7 @@ var tweetTopics = require('./services/tweetTopics.js');
 var messageTopics = require('./services/messageTopics.js')
 var profileTopic = require('./services/ProfileTopic.js')
 var SignupSignin = require('./services/LoginSignup')
+var listTopics = require("./services/listTopics");
 
 // Set up Database connection
 var config = require('./config/settings');
@@ -51,6 +52,12 @@ function handleTopicRequest(topic_name, fname) {
     console.log(JSON.stringify(message.value));
     var data = JSON.parse(message.value);
     switch (topic_name) {
+      case "listTopics":
+        listTopics.listTopicService(data.data, function(err, res) {
+          response(data, res, producer);
+          return;
+        });
+        break;
       case "tweetTopics":
         tweetTopics.tweetTopicService(data.data, function (err, res) {
           console.log(res)
@@ -102,8 +109,8 @@ function response(data, res, producer) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-//handleTopicRequest("loginSignuptopic", SignupSignin);
+handleTopicRequest("tweetTopics", tweetTopics);
+handleTopicRequest("listTopics", listTopics);
 handleTopicRequest("loginSignuptopic", SignupSignin);
 handleTopicRequest("messageTopics", messageTopics);
-handleTopicRequest("tweetTopics", tweetTopics);
 handleTopicRequest("profileTopic", profileTopic);

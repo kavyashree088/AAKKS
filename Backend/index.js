@@ -19,6 +19,10 @@ var morgan = require('morgan');
 var config = require('./Config/settings');
 var passport = require('passport');
 
+var kafka = require("./kafka/client");
+
+
+
 console.log("Initializing passport");
 app.use(passport.initialize());
 
@@ -66,6 +70,10 @@ app.use(session({
   duration: 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
   activeDuration: 5 * 60 * 1000
 }));
+//use cors to allow cross origin resource sharing
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(bodyParser.json());
+app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -80,12 +88,41 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Log requests to console
-app.use(morgan('dev'));
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+const createListRouter = require('./Routes/ListRoutes/createList');
+const addMemberRouter = require('./Routes/ListRoutes/addMember');
+const removeMemberRouter = require('./Routes/ListRoutes/removeMember');
+const findMemberRouter = require('./Routes/ListRoutes/findMember');
+const deleteListRouter = require('./Routes/ListRoutes/deleteList');
+const showListTweetRouter = require('./Routes/ListRoutes/showListTweet');
+const showMemberRouter = require('./Routes/ListRoutes/showMember');
+const showMemberListRouter = require('./Routes/ListRoutes/showMemberList');
+const showMyListRouter = require('./Routes/ListRoutes/showMyList');
+const showSubscribedListRouter = require('./Routes/ListRoutes/showSubscribedList');
+const showSubscriberRouter = require('./Routes/ListRoutes/showSubscriber');
+const subscribeListRouter = require('./Routes/ListRoutes/subscribeList');
+const unsubscribeListRouter = require('./Routes/ListRoutes/unsubscribeList');
+const updateListRouter = require('./Routes/ListRoutes/updateList');
+
+const getBookmarksRouter = require('./Routes/getBookmarks');
+
+app.use('/createList',createListRouter);
+app.use('/addMember',addMemberRouter);
+app.use('/findMember',findMemberRouter);
+app.use('/removeMember',removeMemberRouter);
+app.use('/deleteList',deleteListRouter);
+app.use('/showListTweet',showListTweetRouter);
+app.use('/showMember',showMemberRouter);
+app.use('/showMemberList',showMemberListRouter);
+app.use('/showMyList',showMyListRouter);
+app.use('/showSubscribedList',showSubscribedListRouter);
+app.use('/showSubscriber',showSubscriberRouter);
+app.use('/subscribeList',subscribeListRouter);
+app.use('/unsubscribeList',unsubscribeListRouter);
+app.use('/updateList',updateListRouter);
+
+app.use('/getBookmarks',getBookmarksRouter);
+
 
 app.use(bodyParser.json());
 app.use('/messages', messageRoutes);
@@ -94,4 +131,7 @@ app.use(bodyParser.json());
 app.use('/', loginSignupRoutes);
 app.use('/', tweetRoutes);
 app.use('/', profileDetailsRoutes);
+
+app.listen(3001);
+console.log("Server Listening on port 3001");
 

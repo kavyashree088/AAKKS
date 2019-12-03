@@ -19,7 +19,6 @@ export class TweetContent extends Component {
         super(props);
     }
 
-
     /*generateFakeData = () => {
         let postURL = "http://"+settings.hostname+":"+settings.port+"/writeATweet"; 
         for(let i=0; i< 1000; i++){

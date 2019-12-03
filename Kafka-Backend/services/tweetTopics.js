@@ -43,6 +43,9 @@ exports.tweetTopicService = function tweetTopicService(msg, callback) {
         case 'getTweetesWithHashTags':
             getTweetesWithHashTags(msg, callback);
             break;
+        case "getBookmarks":
+      getBookmarks(msg, callback);
+      break;
     }
     console.log("exit of tweet Topic")
 };
@@ -376,3 +379,15 @@ let retweetWithoutComment = async (message, callback) => {
     });
 
 }
+
+let getBookmarks = function(msg, callback) {
+  console.log(msg.tweetDetails);
+  tweet.find({ bookmarks: msg.tweetDetails.username }, function(
+    err,
+    result,
+    fields
+  ) {
+    callback(null, { status: 200, message:result});
+    console.log("after callback");
+  });
+};

@@ -1,6 +1,69 @@
-import {DASHBOARDTWEETS, CURRENTTWEET, SETPAGENUM} from "../Types/types.js";
+import {DASHBOARDTWEETS, CURRENTTWEET,BOOKMARKEDTWEETS,LISTTWEETS,SETPAGENUM} from "../Types/types.js";
 import axios from "axios";
 import swal from 'sweetalert';
+const token= localStorage.getItem("token");
+
+export const getListTweets = (dataObj) => dispatch => {
+    let url = dataObj.url;
+    let data = dataObj.data;
+    axios.defaults.withCredentials = true;
+    axios({
+        method: 'post',
+        url,        
+        data,
+        config: { headers: { 'Content-Type': 'multipart/form-data' } },
+        headers: {"Authorization" : `Bearer ${token}`}
+    })
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Bad response from server");
+            }
+            return response.data;
+        })
+        .then((responseData) => {
+            console.log( responseData)
+            if(responseData.status){
+                debugger;
+                dispatch({
+                    type: LISTTWEETS,
+                    payload : responseData.message
+                });
+            }
+        }).catch(function (err) {
+            console.log(err)
+        });
+}
+export const getBookmarkTweets = (dataObj) => dispatch => {
+    let url = dataObj.url;
+    let data = dataObj.data;
+    axios.defaults.withCredentials = true;
+    axios({
+        method: 'post',
+        url,        
+        data,
+        config: { headers: { 'Content-Type': 'multipart/form-data' } },
+        headers: {"Authorization" : `Bearer ${token}`}
+    })
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Bad response from server");
+            }
+            return response.data;
+        })
+        .then((responseData) => {
+            console.log( responseData)
+            if(responseData.status){
+                dispatch({
+                    type: BOOKMARKEDTWEETS,
+                    payload : responseData.message
+                });
+            }
+        }).catch(function (err) {
+            console.log(err)
+        });
+}
+
+
 
 export const getDashboardTweets = (dataObj) => dispatch => {
     let url = dataObj.url;

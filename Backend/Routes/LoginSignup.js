@@ -144,8 +144,4 @@ router.post('/deactivateAccount', function (req, res) {
 })
 
 
-
-
-
-
 module.exports = router
