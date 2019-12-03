@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-var kafka = require('../kafka/client');
+var kafka = require('../../kafka/client');
 
 
-router.post('/createList',  function (req, res) {
-    console.log("Inside create a list");
+router.post('/removeMember',  function (req, res) {
+    console.log("Inside remove Member");
     console.log("Req is :");
     console.log(req.body);
     
     // let {userId, tweetText}  = req.body;
     // let tweetDetails =  {userId, tweetText} ;
   
-    kafka.make_request('listTopics',{"path":"createList", "listDetails" : req.body}, function(err,result){
+    kafka.make_request('listTopics',{"path":"removeMember", "listDetails" : req.body}, function(err,result){
       var responseObj = {
         status : false,
         message :""

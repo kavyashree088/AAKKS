@@ -63,6 +63,13 @@ this.setState({
       });
   }
 
+  addDefaultSrc = event => {
+    console.log("error");
+    event.target.onError = null;
+    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+  };
+
+
   render() {
     let redirectNav=null;
     if(this.state.redirectflag){
@@ -96,6 +103,7 @@ this.setState({
                   width: "30px",
                   margin: "8px"
                 }}
+                onError={this.addDefaultSrc}
                 roundedCircle
                 alt=""
               ></Image>

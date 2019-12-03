@@ -52,20 +52,20 @@ mongoose.connect(connStr, { useNewUrlParser: true, poolSize: 10, }, function(err
   }
 });
 
-const createListRouter = require('./Routes/createList');
-const addMemberRouter = require('./Routes/addMember');
-const removeMemberRouter = require('./Routes/removeMember');
-const findMemberRouter = require('./Routes/findMember');
-const deleteListRouter = require('./Routes/deleteList');
-const showListTweetRouter = require('./Routes/showListTweet');
-const showMemberRouter = require('./Routes/showMember');
-const showMemberListRouter = require('./Routes/showMemberList');
-const showMyListRouter = require('./Routes/showMyList');
-const showSubscribedListRouter = require('./Routes/showSubscribedList');
-const showSubscriberRouter = require('./Routes/showSubscriber');
-const subscribeListRouter = require('./Routes/subscribeList');
-const unsubscribeListRouter = require('./Routes/unsubscribeList');
-const updateListRouter = require('./Routes/updateList');
+const createListRouter = require('./Routes/ListRoutes/createList');
+const addMemberRouter = require('./Routes/ListRoutes/addMember');
+const removeMemberRouter = require('./Routes/ListRoutes/removeMember');
+const findMemberRouter = require('./Routes/ListRoutes/findMember');
+const deleteListRouter = require('./Routes/ListRoutes/deleteList');
+const showListTweetRouter = require('./Routes/ListRoutes/showListTweet');
+const showMemberRouter = require('./Routes/ListRoutes/showMember');
+const showMemberListRouter = require('./Routes/ListRoutes/showMemberList');
+const showMyListRouter = require('./Routes/ListRoutes/showMyList');
+const showSubscribedListRouter = require('./Routes/ListRoutes/showSubscribedList');
+const showSubscriberRouter = require('./Routes/ListRoutes/showSubscriber');
+const subscribeListRouter = require('./Routes/ListRoutes/subscribeList');
+const unsubscribeListRouter = require('./Routes/ListRoutes/unsubscribeList');
+const updateListRouter = require('./Routes/ListRoutes/updateList');
 
 const loginSignupRoutes = require('./Routes/LoginSignup')
 const messageRoutes = require('./Routes/messageRoutes')

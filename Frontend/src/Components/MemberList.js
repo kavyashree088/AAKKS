@@ -25,6 +25,13 @@ class MemberList extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
+  addDefaultSrc = event => {
+    console.log("error");
+    event.target.onError = null;
+    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+  };
+
+
   handleButtonClick = value => {
     var x = this.state.list.filter(item => item._id == value);
     console.log("Alaukika");
@@ -101,6 +108,7 @@ class MemberList extends Component {
                   width: "30px",
                   margin: "8px"
                 }}
+                onError={this.addDefaultSrc}
                 roundedCircle
                 alt=""
               ></Image>

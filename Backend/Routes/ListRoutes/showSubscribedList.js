@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var kafka = require('../kafka/client');
+var kafka = require('../../kafka/client');
 
 
 router.post('/showSubscribedList',  function (req, res) {

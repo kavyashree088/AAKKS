@@ -131,6 +131,12 @@ class ListSpecific extends Component {
         //alert("Yoo!")
       });
   };
+  addDefaultSrc = event => {
+    console.log("error");
+    event.target.onError = null;
+    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+  };
+
 
   handleShowSubscriber = () => {
     const data = {
@@ -183,7 +189,7 @@ class ListSpecific extends Component {
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
           let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
+          let userLink = "/profile/" + listItem.username;
          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
              profileImg= settings.s3bucket + listItem.profilePicture;
           
@@ -197,10 +203,11 @@ class ListSpecific extends Component {
                   width: "48px",
                   margin: "8px"
                 }}
+                onError={this.addDefaultSrc}
                 roundedCircle
                 alt=""
               ></Image>
-
+<a href={userLink}>
               <span>
                 <b style={{ fontSize: "16px", marginRight: "8px" }}>
                   {listItem.firstName}
@@ -211,6 +218,7 @@ class ListSpecific extends Component {
                   {listItem.lastName}
                 </b>
               </span>
+              </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
               </span>
@@ -235,7 +243,7 @@ class ListSpecific extends Component {
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
           let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
+          let userLink = "/profile/" + listItem.username;
          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
              profileImg= settings.s3bucket + listItem.profilePicture;
           
@@ -249,10 +257,11 @@ class ListSpecific extends Component {
                   width: "48px",
                   margin: "8px"
                 }}
+                onError={this.addDefaultSrc}
                 roundedCircle
                 alt=""
               ></Image>
-
+<a href={userLink}>
               <span>
                 <b style={{ fontSize: "16px", marginRight: "8px" }}>
                   {listItem.firstName}
@@ -263,6 +272,7 @@ class ListSpecific extends Component {
                   {listItem.lastName}
                 </b>
               </span>
+              </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
               </span>
@@ -353,7 +363,7 @@ class ListSpecific extends Component {
       <div>
         <Row>
           <Col className="col-sm-3">
-            <LeftNav links={links}></LeftNav>
+          <LeftNav links={links}  history={this.props.history}></LeftNav>
           </Col>
 
           <Col className="col-sm-6">
@@ -405,6 +415,7 @@ class ListSpecific extends Component {
                         width: "30px",
                         margin: "8px"
                       }}
+                      onError={this.addDefaultSrc}
                       roundedCircle
                       alt=""
                     ></Image>

@@ -187,9 +187,9 @@ class List extends Component {
     const data = {
       listname: this.state.listname,
       creatorID:localStorage.getItem('username'),
-      creatorName:localStorage.getItem('firstname')+" "+localStorage.getItem('lastname') ,
+     // creatorName:localStorage.getItem('firstname')+" "+localStorage.getItem('lastname') ,
      // creatorImage:localStorage.getItem('firstName'),
-      creatorImage:"profileAlias.jpg",
+      //creatorImage:"profileAlias.jpg",
       // creatorID: "alaukika",
       // creatorName: "Alaukika Diwanji",
       description: this.state.description,
@@ -382,7 +382,7 @@ class List extends Component {
       <div>
         <Row>
           <Col className="col-sm-3 removePadding">
-            <LeftNav links={links}></LeftNav>
+          <LeftNav links={links}  history={this.props.history}></LeftNav>
           </Col>
           <Col className="col-sm-6 removePadding">
             {redi}

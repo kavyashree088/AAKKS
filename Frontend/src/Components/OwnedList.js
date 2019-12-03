@@ -64,6 +64,13 @@ this.setState({
       });
   }
 
+  addDefaultSrc = event => {
+    console.log("error");
+    event.target.onError = null;
+    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+  };
+
+
   render() {
 
 let redirectNav=null;
@@ -102,6 +109,7 @@ let redirectNav=null;
                 }}
                 roundedCircle
                 alt=""
+                onError={this.addDefaultSrc}
               ></Image>
               <b style={{ marginRight: "8px" }}>{listItem.creatorName}</b>@
               {listItem.creatorID}

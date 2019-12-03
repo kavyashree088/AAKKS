@@ -276,6 +276,11 @@ class ListInfo extends Component {
         });
     }
   };
+  addDefaultSrc = event => {
+    console.log("error");
+    event.target.onError = null;
+    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+  };
 
   render() {
     let showbutton = null;
@@ -303,18 +308,19 @@ class ListInfo extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
-          let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
-          if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
-              profileImg= settings.s3bucket + listItem.profilePicture;
-           
+          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          let userLink = "/profile/" + listItem.username;
+          if (
+            listItem.profilePicture != "profileAlias.jpeg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
 
-          
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-               src={profileImg}
-               // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                src={profileImg}
+                // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                 style={{
                   height: "48px",
                   width: "48px",
@@ -323,17 +329,18 @@ class ListInfo extends Component {
                 roundedCircle
                 alt=""
               ></Image>
-
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.firstName}
-                </b>
-              </span>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.lastName}
-                </b>
-              </span>
+              <a href={userLink}>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.firstName}
+                  </b>
+                </span>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.lastName}
+                  </b>
+                </span>
+              </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
               </span>
@@ -358,8 +365,11 @@ class ListInfo extends Component {
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
           let removeButtonShow = null;
-          if(this.props.location.state.list.creatorID==localStorage.getItem('username')){
-         // if (this.props.location.state.list.creatorID == "alaukika") {
+          if (
+            this.props.location.state.list.creatorID ==
+            localStorage.getItem("username")
+          ) {
+            // if (this.props.location.state.list.creatorID == "alaukika") {
             console.log("I am here");
             removeButtonShow = (
               <button
@@ -373,36 +383,41 @@ class ListInfo extends Component {
               </button>
             );
           }
-         let profileImg=settings.s3bucket + "profileAlias.jpeg";
-          
-         if(listItem.profilePicture!="profileAlias.jpeg" && listItem.profilePicture!=null )
-             profileImg= settings.s3bucket + listItem.profilePicture;
-          
-          
+          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          let userLink = "/profile/" + listItem.username;
+
+          if (
+            listItem.profilePicture != "profileAlias.jpeg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
+
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
-               src={profileImg}
-               // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
+                src={profileImg}
+                // src="https://i.pinimg.com/280x280_RS/7b/8d/fe/7b8dfea729e9ff134515fef97cf646df.jpg"
                 style={{
                   height: "48px",
                   width: "48px",
                   margin: "8px"
                 }}
+                onError={this.addDefaultSrc}
                 roundedCircle
                 alt=""
               ></Image>
-
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.firstName}
-                </b>
-              </span>
-              <span>
-                <b style={{ fontSize: "16px", marginRight: "8px" }}>
-                  {listItem.lastName}
-                </b>
-              </span>
+              <a href={userLink}>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.firstName}
+                  </b>
+                </span>
+                <span>
+                  <b style={{ fontSize: "16px", marginRight: "8px" }}>
+                    {listItem.lastName}
+                  </b>
+                </span>
+              </a>
               <span style={{ fontSize: "14px", color: "#808080" }}>
                 <b>@{listItem.username}</b>
               </span>
@@ -430,12 +445,14 @@ class ListInfo extends Component {
       if (this.state.addMemberList != "") {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
-          let profileImg=settings.s3bucket + "profileAlias.jpg";
-          
-         if(listItem.profilePicture!="profileAlias.jpg" && listItem.profilePicture!=null )
-             profileImg= settings.s3bucket + listItem.profilePicture;
-          
-          
+          let profileImg = settings.s3bucket + "profileAlias.jpg";
+
+          if (
+            listItem.profilePicture != "profileAlias.jpg" &&
+            listItem.profilePicture != null
+          )
+            profileImg = settings.s3bucket + listItem.profilePicture;
+
           memberDetails.push(
             <span>
               <button
@@ -598,23 +615,26 @@ class ListInfo extends Component {
 
     // const { tags, suggestions } = this.state;
     let links = [
-      { label: 'Home', link: '/home', className: "fas fa-home", active: true },
-      { label: 'Explore', link: '/Explore', className: "fas fa-hashtag" },
-      { label: 'Notifications', link: '#home', className: "fas fa-bell" },
-      { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
-      { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-      { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
-      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
-      { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
-      { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
-
-  ];
+      { label: "Home", link: "/home", className: "fas fa-home", active: true },
+      { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
+      { label: "Notifications", link: "#home", className: "fas fa-bell" },
+      { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
+      { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
+      { label: "Lists", link: "/List", className: "fas fa-list-alt" },
+      {
+        label: "Profile",
+        link: "/profile/" + localStorage.getItem("username"),
+        className: "fas fa-user-circle"
+      },
+      { label: "Deactivate", link: "/deactivate", className: "fa fa-ban" },
+      { label: "Delete", link: "/delete", className: "fa fa-trash-o" }
+    ];
 
     return (
       <div>
         <Row>
           <Col className="col-sm-3">
-            <LeftNav links={links}></LeftNav>
+          <LeftNav links={links}  history={this.props.history}></LeftNav>
           </Col>
           <Col className="col-sm-6">
             {display}

@@ -21,7 +21,11 @@ class BookmarkMain extends Component {
    
     
   }
- 
+  componentWillMount(){
+    if (!localStorage.getItem('username')) {
+      this.props.history.push("/");
+  }
+  }
 
   render() {
     let links = [
@@ -42,7 +46,7 @@ class BookmarkMain extends Component {
       <div>
         <Row>
           <Col className="col-sm-3 removePadding">
-            <LeftNav links={links}></LeftNav>
+            <LeftNav links={links}  history={this.props.history}></LeftNav>
           </Col>
           <Col className="col-sm-6 removePadding">
  <BookmarkTweets/>

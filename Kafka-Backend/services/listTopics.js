@@ -55,13 +55,28 @@ let createList = function(msg, callback) {
   //let userId = message.userId;
   console.log(msg.listDetails.creatorName);
   let respmsg = "";
+  // var list = Lists({
+  //   listname: msg.listDetails.listname,
+  //   description: msg.listDetails.description,
+  //   creatorID: msg.listDetails.creatorID,
+  //   creatorName: msg.listDetails.creatorName,
+  //   memberID: msg.listDetails.members
+  // });
+  Users.find({ username: msg.listDetails.creatorID }, function(
+    err,
+    result,
+    fields
+  ) {
+  console.log("Testin hjsahjsdhjh",result[0])
+  
   var list = Lists({
-    listname: msg.listDetails.listname,
-    description: msg.listDetails.description,
-    creatorID: msg.listDetails.creatorID,
-    creatorName: msg.listDetails.creatorName,
-    memberID: msg.listDetails.members
-  });
+      listname: msg.listDetails.listname,
+      description: msg.listDetails.description,
+      creatorID: msg.listDetails.creatorID,
+      creatorName:result[0].firstName+" "+result[0].lastName,
+      creatorImage:result[0].profilePicture,
+      memberID: msg.listDetails.members
+    });
 
   console.log(list);
   list.save(function(error, results) {
@@ -94,6 +109,7 @@ let createList = function(msg, callback) {
       );
     }
   });
+});
 };
 
 let findMember = function(msg, callback) {
@@ -154,7 +170,7 @@ let deleteList = function(msg, callback) {
   ) {
     Users.update(
       {},
-      { $pull: { listMember: msg.listDetails.listID } },
+      { $pull: { listMember: msg.listDetails.listID,listSubscriber: msg.listDetails.listID } },
       { multi: true },
       function(err, result, fields) {
         if (err) throw err;
