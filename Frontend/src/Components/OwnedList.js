@@ -39,7 +39,8 @@ this.setState({
 
   componentWillMount() {
     const data = {
-      userID: localStorage.getItem("username")
+     userID:this.props.user
+      // userID: localStorage.getItem("username")
       //userID: "alaukika"
     };
     console.log(data);

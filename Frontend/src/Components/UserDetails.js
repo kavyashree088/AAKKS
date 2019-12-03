@@ -95,7 +95,7 @@ class UserDetails extends Component {
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List', className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }

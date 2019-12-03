@@ -272,6 +272,8 @@ border-color:#ffffff;
   width:700px;
   text-align: left;
   border-color: rgb(243, 243, 243);
+  background-color:white;
+  padding: 10px;
 }
 
 .listButtonv4:hover {
