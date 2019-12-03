@@ -12,57 +12,57 @@ class GraphDoughnut extends Component{
         }
     }
 
-    // componentDidMount(){
+    componentDidMount(){
 
-    //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchLikes')
-    //     .then(response => {
-    //     console.log("Status Code : ",response.status);
-    //     if(response.status === 200){
+        var rooturl="localhost";
+        axios.get('http://'+rooturl+':3001/fetchLikes')
+        .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
         
-    //         console.log("Response data:", response.data);
+            console.log("Response data:", response.data.graphData);
 
-    //     }
-    //     const result=response.data;
-    //     const likes=[];
-    //     const ids=[]
-    //     for(let i=0;i<result.length;i++){
+        }
+        const result=response.data.graphData;
+        const likes=[];
+        const usernames=[]
+        for(let i=0;i<result.length;i++){
 
-    //         ids[i]=result[i]._id;
-    //         likes[i]=result[i].likes;
-    //     }
-    //     console.log("likes:", likes);
-    //     console.log("ids:", ids);
+            usernames[i]=result[i].username;
+            likes[i]=result[i].length;
+        }
+        console.log("likes:", likes);
+        console.log("usernames:", usernames);
         
-    //     const chartData1={
-    //         labels:ids, //tweets
-    //         datasets:[{
-    //             label:['hello'],
-    //             data:likes
-    //         ,
-    //         backgroundColor:[
-    //            'rgba(255, 99, 132, 0.6)',
-    //            'rgba(54, 162, 235, 0.6)',
-    //            'rgba(255, 206, 86, 0.6)',
-    //            'rgba(75, 192, 192, 0.6)',
-    //            'rgba(153, 102, 255, 0.6)',
-    //            'rgba(255, 159, 64, 0.6)',
-    //            'rgba(105, 179, 64, 0.6)',
-    //            'rgba(205, 159, 68, 0.6)',
-    //            'rgba(200, 200, 64, 0.6)',
-    //            'rgba(250, 200,185, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'
-    //         ]
-    //        }
-    //    ]
+        const chartData1={
+            labels:usernames, //tweets
+            datasets:[{
+                label:['hello'],
+                data:likes
+            ,
+            backgroundColor:[
+               'rgba(255, 99, 132, 0.6)',
+               'rgba(54, 162, 235, 0.6)',
+               'rgba(255, 206, 86, 0.6)',
+               'rgba(75, 192, 192, 0.6)',
+               'rgba(153, 102, 255, 0.6)',
+               'rgba(255, 159, 64, 0.6)',
+               'rgba(105, 179, 64, 0.6)',
+               'rgba(205, 159, 68, 0.6)',
+               'rgba(200, 200, 64, 0.6)',
+               'rgba(250, 200,185, 0.6)',
+               // 'rgba(255, 99, 132, 0.6)'
+            ]
+           }
+       ]
          
-    //     }
-    //     this.setState({
-    //         chartData:chartData1
-    //     })
+        }
+        this.setState({
+            chartData:chartData1
+        })
     
-    // });
-    // }
+    });
+    }
 
     static defaultProps={
         displayTitle:true,

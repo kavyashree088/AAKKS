@@ -81,7 +81,7 @@ class ProfileViews extends Component{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH LIKES",
+                            text:"MY PROFILE VIEWS/DAY",
                             fontSize:25
                         },
                         legend:{

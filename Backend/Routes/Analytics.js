@@ -108,7 +108,7 @@ router.get('/fetchLikes',function(req,res){
     console.log("infetch fetchLikes backend")
     console.log(req.body);
   
-    kafka.make_request("analytics", { "path": "profileViews" }, function(
+    kafka.make_request("analytics", { "path": "fetchLikes" }, function(
       err,
       results
     ) {

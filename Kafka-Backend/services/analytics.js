@@ -35,9 +35,9 @@ exports.analyticsService = function analyticsService(msg, callback) {
         //      profileViews(msg, callback);
         //     break;
 
-        // case 'fetchLikes':
-        //         fetchLikes(msg, callback);
-        //         break;
+        case 'fetchLikes':
+                fetchLikes(msg, callback);
+                break;
         // case 'getFollowersTweets':
         //     getFollowersTweets(msg, callback);
         //     break;
@@ -75,17 +75,26 @@ let graphBar = function(message, callback){
 
 //     console.log(current_timestamp);
     
-//     Tweets.find({createdAt:"2019-12-02T10:13:50.720+0000"}).then((result,err)=>{
+//     Tweets.find({createdAt:"2019-12-02T10:12:40.966+0000"}).then((result,err)=>{
 
 //         console.log("hour result:",result);
 //         console.log("cccc");
-//         const createdAt={result};
+        
 //         console.log("type of createdAt:",typeof(createdAt));
+//         callback(null,result);
 //     })
 //     for(let i=1;i<current_date.getHours();i++){
 
+//         Tweets.find({createdAt:"2019-12-02T10:12:40.966+0000"}).then((result,err)=>{
+
+//             console.log("hour result:",result);
+//             console.log("cccc");
+            
+//             console.log("type of createdAt:",typeof(createdAt));
+//             callback(null,result);
+//         })
 //     }
-//     callback(null,"hello");
+    
 //     // Tweets.find({}).sort({'hour':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
 //     //     // console.log(result);
  
@@ -100,7 +109,33 @@ let graphBar = function(message, callback){
 // let profileViews = function(message, callback){
 
 //     console.log("Inside profile Views kafka backend");
+
+//     var current_timestamp=Date.now();
+//     var current_date=new Date(current_timestamp);
+//     console.log(current_timestamp);
+//     console.log(current_date);
+//     console.log(current_date.getDate());
+//     console.log(current_date.getMonth());
+//     console.log(current_date.getFullYear());
+//     console.log(current_date.getHours());
   
+//     //Tweets.aggregate( [{$match: {recruiterid : msg.username}},{$group : {_id : {jobid : "$jobid",jobtitle: "$jobtitle"}, count:{$sum:1}} }, {$sort : {"count": 1}}, {$limit : 5}], function (err, result) {
+//     Tweets.aggregate( [{},{$group : {_id : {jobid : "$jobid",jobtitle: "$jobtitle"}, count:{$sum:1}} }, {$sort : {"count": 1}}, {$limit : 5}], function (err, result) {
+
+//         if (err) {
+//                  console.log(err);
+                
+//              } else if (result) {
+                
+//                 console.log(result);
+//             callback(null, result);
+//              }
+//              else {
+//                  console.log(" not found");
+//              }
+//          })
+
+
 //     Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
 //         // console.log(result);
  
@@ -112,18 +147,42 @@ let graphBar = function(message, callback){
 //      })
 // };
 
-// let fetchLikes = function(message, callback){
+let fetchLikes = function(message, callback){
 
-//     console.log("Inside fetch Likes request");
+    console.log("Inside fetch Likes request");
   
     
-//     Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
-//         // console.log(result);
+    Tweets.aggregate([
+       {
+
+        "$project":{
+            "username":1,
+            "likes":1,
+            "length":{"$size":"$likes"}
+        }
+       },
+       {
+           "$sort":{"length":-1}
+       },
+       {
+           "$limit":10
+       }
+    ]).then(
+        result=>{
+            console.log("likes:",result);
+            callback(null,result);
+        }
+        
+    )
+
+    
+    // Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
+    //     // console.log(result);
  
-//         if(err)
-//         console.log("error in mongo query")
+    //     if(err)
+    //     console.log("error in mongo query")
       
-//         console.log("Result:",result);
-//         callback(null,result);
-//      })
-// };
+    //     console.log("Result:",result);
+    //     callback(null,result);
+    //  })
+};
