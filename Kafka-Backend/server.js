@@ -7,7 +7,7 @@ var dbConnection = require('./database/dbConnectionPool');
 
 //topics file
 var tweetTopics = require('./services/tweetTopics.js');
-
+var analytics=require('./services/analytics');
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
@@ -58,6 +58,13 @@ function handleTopicRequest(topic_name, fname) {
           return;
         });
         break;
+      case 'analytics':
+        analytics.analyticsService(data.data, function(err, res) {
+          console.log("analytics.js")
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   })
 };
@@ -85,3 +92,4 @@ function response(data, res, producer) {
 //second argument is a function that will handle this topic request
 handleTopicRequest("loginSignuptopic", SignupSignin);
 handleTopicRequest("tweetTopics", tweetTopics);
+handleTopicRequest("analytics", analytics);

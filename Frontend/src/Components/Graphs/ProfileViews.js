@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 import axios from 'axios';
-class GraphDoughnut extends Component{
+class ProfileViews extends Component{
 
     constructor(props){
 
@@ -15,9 +15,9 @@ class GraphDoughnut extends Component{
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchLikes')
+    //     axios.get('http://'+rooturl+':3001/fetchProfileViews')
     //     .then(response => {
-    //     console.log("Status Code : ",response.status);
+    //     console.log("Status Code : ",response.status); 
     //     if(response.status === 200){
         
     //         console.log("Response data:", response.data);
@@ -108,4 +108,4 @@ class GraphDoughnut extends Component{
 
 }
 
-export default GraphDoughnut;
+export default ProfileViews;

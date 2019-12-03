@@ -1,13 +1,16 @@
 import React,{Component} from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import { Pie} from 'react-chartjs-2';
 import axios from 'axios';
-class GraphDoughnut extends Component{
+
+class HourlyGraph extends Component{
+    // width={100}
+    // height={50}
 
     constructor(props){
 
         super(props);
         this.state={
-             chartData:{}
+             chartData:{ }
 
         }
     }
@@ -15,7 +18,7 @@ class GraphDoughnut extends Component{
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchLikes')
+    //     axios.get('http://'+rooturl+':3001/hourlytweets')
     //     .then(response => {
     //     console.log("Status Code : ",response.status);
     //     if(response.status === 200){
@@ -24,21 +27,31 @@ class GraphDoughnut extends Component{
 
     //     }
     //     const result=response.data;
-    //     const likes=[];
+    //     const retweets=[];
     //     const ids=[]
     //     for(let i=0;i<result.length;i++){
 
     //         ids[i]=result[i]._id;
-    //         likes[i]=result[i].likes;
+    //         retweets[i]=result[i].retweets;
     //     }
-    //     console.log("likes:", likes);
+    //     console.log("retweets:", retweets);
     //     console.log("ids:", ids);
+        
+    //     // console.log("this.state.labels",this.state.labels)
+    //     // console.log("this.state.data",this.state.data)
+    //     // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
+    //     //  this.state.chartData.datasets[0].data=[600, 560 ];
+    //     //  console.log("chart:", this.state.chartData);
+    //     // //console.log("labels:",this.state.chartData.labels);
+    //     // console.log("data:",this.state.chartData.datasets[0].data)
         
     //     const chartData1={
     //         labels:ids, //tweets
     //         datasets:[{
-    //             label:['hello'],
-    //             data:likes
+    //             label:['retweets'],
+    //             data:
+    //                retweets  //retweets no.
+                
     //         ,
     //         backgroundColor:[
     //            'rgba(255, 99, 132, 0.6)',
@@ -51,11 +64,13 @@ class GraphDoughnut extends Component{
     //            'rgba(205, 159, 68, 0.6)',
     //            'rgba(200, 200, 64, 0.6)',
     //            'rgba(250, 200,185, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'
-    //         ]
+    //            // 'rgba(255, 99, 132, 0.6)'  use lato for the font family
+    //         ],
+    //         borderWidth:4,
+    //         hoverBorderWidth:3,
+    //         hoverBorderColor:"#000000"
     //        }
     //    ]
-         
     //     }
     //     this.setState({
     //         chartData:chartData1
@@ -64,25 +79,27 @@ class GraphDoughnut extends Component{
     // });
     // }
 
+
     static defaultProps={
         displayTitle:true,
         displayLegend:true,
         legendPosition:'bottom'
     }
     render(){
-
+        console.log('GraphPie') 
         return(
-            <div classname="chart" style={{width:500}}>
-                <Doughnut
-                    height={800}
+            <div classname="chart" style={{width:700}}>
+                <Pie
+                    height={700}
                     width={900}
                     data={this.state.chartData}
                     options={{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH LIKES",
-                            fontSize:25
+                            text:"TOP 10 TWEETS WITH RETWEETS",
+                            fontSize:25,
+                            fontFamily:'lato'
                         },
                         legend:{
                             display:this.props.displayLegend,
@@ -92,7 +109,7 @@ class GraphDoughnut extends Component{
                             }
                         }, 
                         layout:{
-                            padding:{
+                            padding:{       //keep padding 50 directly for the smaller look
                                 left:50,
                                 right:0
                             }
@@ -108,4 +125,4 @@ class GraphDoughnut extends Component{
 
 }
 
-export default GraphDoughnut;
+export default HourlyGraph;

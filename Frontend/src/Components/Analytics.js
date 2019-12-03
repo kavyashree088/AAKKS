@@ -8,6 +8,8 @@ import GraphDoughnut from './Graphs/GraphDoughnut';
 import GraphLine from './Graphs/GraphLine';
 import GraphPolar from './Graphs/GraphPolar';
 import GraphHorizontalBar from './Graphs/GraphHorizontalBar';
+import HourlyGraph from "./Graphs/HourlyGraph";
+import ProfileViews from "./Graphs/ProfileViews";
 
 class Analytics extends Component {
 
@@ -38,6 +40,11 @@ class Analytics extends Component {
                         <GraphBar/>
                     </div>
                 </div>
+                <div >
+                    <div>
+                        <HourlyGraph/>
+                    </div>
+                </div>
                 <div>
                     <div>
                    < GraphHorizontalBar/>
@@ -57,7 +64,7 @@ class Analytics extends Component {
                 
                 <div>
                     <div>
-                    <GraphLine />
+                    <ProfileViews />
                     </div>
                 
                 </div>

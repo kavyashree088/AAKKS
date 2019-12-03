@@ -23,7 +23,7 @@ console.log("Initializing passport");
 app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
-require('./Config/passport').passport;
+//require('./Config/passport').passport;
 
 var mongoose = require('mongoose');
 //var connStr = config.database_type + '://' + config.database_username + ':' + config.database_password + '@' + config.database_host + ':' + config.database_port + '/' + config.database_name;
@@ -50,6 +50,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const loginSignup = require('./Routes/LoginSignup')
 const tweetRoutes = require('./Routes/tweetRoutes');
+const analytics=require('./Routes/Analytics');
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
 
@@ -87,3 +88,4 @@ app.use(bodyParser.urlencoded({
  app.use(bodyParser.json());
  app.use('/', loginSignup);
  app.use('/', tweetRoutes);
+ app.use('/',analytics);
