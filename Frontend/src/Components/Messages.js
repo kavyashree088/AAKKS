@@ -323,11 +323,28 @@ class Messages extends Component {
                             </ul>
                         </div>)
                 } else {
-                    return (<div className="pt-3 padLeft">
-                        <h4 className="padLeft"><b>{this.state.currentMessage.user1.firstName}</b></h4>
-                        <b className="padLeft lightFont">@{this.state.currentMessage.user1.username}</b>
-                        <hr></hr>
-                    </div>)
+                    // return (<div className="pt-3 padLeft">
+                    //     <h4 className="padLeft"><b>{this.state.currentMessage.user1.firstName}</b></h4>
+                    //     <b className="padLeft lightFont">@{this.state.currentMessage.user1.username}</b>
+                    //     <hr></hr>
+                    // </div>)
+                    return (
+                        <div className="pt-3 padLeft">
+                            <h4 className="padLeft"><b>{this.state.currentMessage.user1.firstName}</b></h4>
+                            <b className="padLeft lightFont">@{this.state.currentMessage.user1.username}</b>
+                            <hr></hr>
+                            <ul style={{
+                                listStyle: "none",
+                                verticalAlign: "bottom",
+                                overflowY: "auto",
+                                maxHeight: "600px"
+                            }}>
+                                {this.state.currentMessage.messages.map(message => {
+                                    return this.renderMessage(message)
+                                })}
+
+                            </ul>
+                        </div>)
                 }
             }
         }
@@ -366,7 +383,7 @@ class Messages extends Component {
                     overflowX: "hidden"
                 }}>
                     <Col className="col-sm-3 fixed">
-                        <LeftNav links={links}  history={this.props.history} ></LeftNav>
+                        <LeftNav links={links} history={this.props.history} ></LeftNav>
 
                     </Col>
                     <Col className="col-sm-3 pt-3 fixed" >
