@@ -21,6 +21,7 @@ router = express.Router();
 var exports = module.exports = {};
 var Temp=require('../models/Temp');
 var Tweets = require('../models/TweetSchema');
+var Users=require('../models/UserSchema');
 
 exports.analyticsService = function analyticsService(msg, callback) {
     console.log("In Analytics Service path:", msg.path);
@@ -31,9 +32,9 @@ exports.analyticsService = function analyticsService(msg, callback) {
         // case 'hourlyGraph':
         //     hourlyGraph(msg, callback);
         //     break;
-        // case 'profileViews':
-        //      profileViews(msg, callback);
-        //     break;
+        case 'profileViews':
+             profileViews(msg, callback);
+            break;
 
         case 'fetchLikes':
                 fetchLikes(msg, callback);
@@ -44,12 +45,19 @@ exports.analyticsService = function analyticsService(msg, callback) {
         // case 'getFollowersTweets':
         //     getFollowersTweets(msg, callback);
         //     break;
+        // case 'monthlyTweets':
+        //     monthlyTweets(msg, callback);
+        //     break;
+        // case 'dailyTweets':
+        //     dailyTweets(msg, callback);
+        //     break;
+
     }
 };
 
 let graphBar = function(message, callback){
 
-    console.log("Inside analytics topic request");
+    console.log("Inside views request");
   
     Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
         // console.log(result);
@@ -57,7 +65,7 @@ let graphBar = function(message, callback){
         if(err)
         console.log("error in mongo query")
       
-        console.log("Result:",result);
+        //console.log("Result:",result);
         callback(null,result);
      })
 };
@@ -109,46 +117,32 @@ let graphBar = function(message, callback){
 //     //  })
 // };
 
-// let profileViews = function(message, callback){
+let profileViews = function(message, callback){
 
-//     console.log("Inside profile Views kafka backend");
+    console.log("Inside profile Views kafka backend");
 
-//     var current_timestamp=Date.now();
-//     var current_date=new Date(current_timestamp);
-//     console.log(current_timestamp);
-//     console.log(current_date);
-//     console.log(current_date.getDate());
-//     console.log(current_date.getMonth());
-//     console.log(current_date.getFullYear());
-//     console.log(current_date.getHours());
+    var current_timestamp=Date.now();
+    var current_date=new Date(current_timestamp);
+    console.log(current_timestamp);
+    console.log(current_date);
+    console.log(current_date.getDate());
+    console.log(current_date.getMonth());
+    console.log(current_date.getFullYear());
+    console.log(current_date.getHours());
   
-//     //Tweets.aggregate( [{$match: {recruiterid : msg.username}},{$group : {_id : {jobid : "$jobid",jobtitle: "$jobtitle"}, count:{$sum:1}} }, {$sort : {"count": 1}}, {$limit : 5}], function (err, result) {
-//     Tweets.aggregate( [{},{$group : {_id : {jobid : "$jobid",jobtitle: "$jobtitle"}, count:{$sum:1}} }, {$sort : {"count": 1}}, {$limit : 5}], function (err, result) {
+    
+    
 
-//         if (err) {
-//                  console.log(err);
-                
-//              } else if (result) {
-                
-//                 console.log(result);
-//             callback(null, result);
-//              }
-//              else {
-//                  console.log(" not found");
-//              }
-//          })
-
-
-//     Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
-//         // console.log(result);
+    Tweets.find({"createdAt":new Date("2019-12-02T10:12:40.966+0000")}).then((result,err)=>{  //Temp will be Tweets
+        // console.log(result);
  
-//         if(err)
-//         console.log("error in mongo query")
+        if(err)
+            console.log("error in mongo query")
       
-//         console.log("Result:",result);
-//         callback(null,result);
-//      })
-// };
+        console.log("Profile Views:",result);
+        callback(null,result);
+     })
+};
 
 let fetchLikes = function(message, callback){
 
@@ -172,7 +166,7 @@ let fetchLikes = function(message, callback){
        }
     ]).then(
         result=>{
-            console.log("likes:",result);
+            //console.log("likes:",result);
             callback(null,result);
         }
         
@@ -212,7 +206,7 @@ let fetchRetweets = function(message, callback){
        }
     ]).then(
         result=>{
-            console.log("retweets:",result);
+           // console.log("retweets:",result);
             callback(null,result);
         }
         

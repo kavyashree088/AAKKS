@@ -29,8 +29,8 @@ TweetSchema = new Schema({
   likes:[],
   retweets:[],
   createdAt : {
-      type: String,
-      default :""
+      type: Date,
+      // default :""
   },
   views : {
       type :String,

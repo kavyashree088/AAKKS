@@ -19,7 +19,7 @@ class GraphHorizontalBar extends Component{
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/tweetsperhour')
+    //     axios.get('http://'+rooturl+':3001/dailyTweets')
     //     .then(response => {
     //     console.log("Status Code : ",response.status);
     //     if(response.status === 200){
@@ -93,7 +93,7 @@ class GraphHorizontalBar extends Component{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"NUMBER OF TWEETS PER HOUR",
+                            text:"NUMBER OF TWEETS PER DAY",
                             fontSize:25
                         },
                         legend:{

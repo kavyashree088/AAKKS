@@ -10,6 +10,7 @@ import GraphPolar from './Graphs/GraphPolar';
 import GraphHorizontalBar from './Graphs/GraphHorizontalBar';
 import HourlyGraph from "./Graphs/HourlyGraph";
 import ProfileViews from "./Graphs/ProfileViews";
+import MonthlyGraph from "./Graphs/MonthlyGraph";
 
 class Analytics extends Component {
 
@@ -50,7 +51,11 @@ class Analytics extends Component {
                    < GraphHorizontalBar/>
                     </div>
                 </div>
-                      
+                <div>
+                    <div>
+                   < MonthlyGraph/>
+                    </div>
+                </div> 
                 <div >
                     <div>
                     <GraphDoughnut/>

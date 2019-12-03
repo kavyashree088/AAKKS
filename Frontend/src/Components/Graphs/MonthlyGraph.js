@@ -1,8 +1,10 @@
 import React,{Component} from 'react';
-import { Pie} from 'react-chartjs-2';
+import {Bar, Line, Pie} from 'react-chartjs-2';
 import axios from 'axios';
+import { identifier } from '@babel/types';
+import { isDate } from 'util';
 
-class HourlyGraph extends Component{
+class MonthlyGraph extends Component{
     // width={100}
     // height={50}
 
@@ -10,48 +12,38 @@ class HourlyGraph extends Component{
 
         super(props);
         this.state={
-             chartData:{ }
-
+            
+             chartData:{}
         }
     }
 
     // componentDidMount(){
 
     //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/hourlytweets')
+    //     axios.get('http://'+rooturl+':3001/monthlyTweets')
     //     .then(response => {
     //     console.log("Status Code : ",response.status);
     //     if(response.status === 200){
         
-    //         console.log("Response data:", response.data);
+    //         console.log("Response data:", response.data.graphData);
 
     //     }
-    //     const result=response.data;
-    //     const retweets=[];
-    //     const ids=[]
+    //     const result=response.data.graphData;
+    //     const views=[];
+    //     const usernames=[]
     //     for(let i=0;i<result.length;i++){
 
-    //         ids[i]=result[i]._id;
-    //         retweets[i]=result[i].retweets;
+    //         usernames[i]=result[i].username;
+    //         views[i]=result[i].views;
     //     }
-    //     console.log("retweets:", retweets);
-    //     console.log("ids:", ids);
-        
-    //     // console.log("this.state.labels",this.state.labels)
-    //     // console.log("this.state.data",this.state.data)
-    //     // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
-    //     //  this.state.chartData.datasets[0].data=[600, 560 ];
-    //     //  console.log("chart:", this.state.chartData);
-    //     // //console.log("labels:",this.state.chartData.labels);
-    //     // console.log("data:",this.state.chartData.datasets[0].data)
+    //     console.log("views:", views);
+    //     console.log("usernames:", usernames);
         
     //     const chartData1={
-    //         labels:ids, //tweets
+    //         labels:usernames, //tweets
     //         datasets:[{
-    //             label:['retweets'],
-    //             data:
-    //                retweets  //retweets no.
-                
+    //             label:['views'],
+    //             data:views
     //         ,
     //         backgroundColor:[
     //            'rgba(255, 99, 132, 0.6)',
@@ -64,11 +56,8 @@ class HourlyGraph extends Component{
     //            'rgba(205, 159, 68, 0.6)',
     //            'rgba(200, 200, 64, 0.6)',
     //            'rgba(250, 200,185, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'  use lato for the font family
-    //         ],
-    //         borderWidth:4,
-    //         hoverBorderWidth:3,
-    //         hoverBorderColor:"#000000"
+    //            // 'rgba(255, 99, 132, 0.6)'
+    //         ]
     //        }
     //    ]
     //     }
@@ -79,27 +68,26 @@ class HourlyGraph extends Component{
     // });
     // }
 
-
     static defaultProps={
         displayTitle:true,
         displayLegend:true,
         legendPosition:'bottom'
     }
     render(){
-        console.log('GraphPie') 
+
         return(
-            <div classname="chart" style={{width:700}}>
-                <Pie
-                    height={700}
-                    width={900}
+            <div classname="chart" style={{width:900}}>
+                <Bar
+                    height={600}
+                    width={2000}
                     data={this.state.chartData}
                     options={{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"HOURLY TWEETS GRAPH",
+                            text:"TWEETS PER MONTH",
                             fontSize:25,
-                            fontFamily:'lato'
+                            fontFamily:"Lato"
                         },
                         legend:{
                             display:this.props.displayLegend,
@@ -109,20 +97,29 @@ class HourlyGraph extends Component{
                             }
                         }, 
                         layout:{
-                            padding:{       //keep padding 50 directly for the smaller look
+                            padding:{
                                 left:50,
                                 right:0
                             }
                             
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                barPercentage: 0.5
+                            }]
                         }
                     }}
                     
                     />
-
             </div>
         );
     }
 
 }
 
-export default HourlyGraph;
+export default MonthlyGraph;
