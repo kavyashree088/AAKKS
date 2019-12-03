@@ -8,7 +8,7 @@
 /* eslint-disable indent */
 /* eslint-disable spaced-comment */
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown, Button } from 'react-bootstrap'
+import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown, Button, ButtonGroup } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import config from './../Config/settings'
@@ -63,7 +63,18 @@ class UserDetails extends Component {
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
         }).then(response => {
             console.log(response)
-            this.setState({ userProfile: response.data.result });
+            let data = {
+                username: localStorage.getItem("username")
+            }
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(async response => {
+                await this.setState({ userProfile: response.data.details.rows });
+            })
         })
     }
 
@@ -79,7 +90,19 @@ class UserDetails extends Component {
             config: { headers: { 'Content-Type': 'application/json' } },
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
         }).then(response => {
-            this.setState({ userProfile: response.data.result });
+            console.log(response)
+            let data = {
+                username: localStorage.getItem("username")
+            }
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(async response => {
+                await this.setState({ userProfile: response.data.details.rows });
+            })
         })
     }
 
@@ -87,6 +110,10 @@ class UserDetails extends Component {
         console.log("error")
         event.target.onError = null;
         event.target.src = `https://${config.imageurl}/profileAlias.jpeg`
+    }
+
+    lists = () => {
+        this.props.history.push("/List/" + this.state.user.username)
     }
     render() {
         let links = [
@@ -104,7 +131,7 @@ class UserDetails extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links}  history={this.props.history}></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
                     <Col className="col-sm-6 pt-3">
@@ -131,11 +158,21 @@ class UserDetails extends Component {
                                         <img className="img-thumbnail" src={`https://${config.imageurl}/${this.state.user.profilePicture}`} onError={this.addDefaultSrc} />
                                     </Row>
                                 </Col>
+
                                 <Col xs={8} >
                                     {this.state.userProfile.following !== undefined && this.state.userProfile.following.includes(this.state.user.username) ? (
-                                        <Button variant="primary" className="followButton" label="Edit Profile" onClick={this.unfollow}></Button>
+                                        <div>
+
+                                            <Button variant="primary" className="followButton" label="Edit Profile" onClick={this.unfollow}></Button>
+                                            <Button className="editButton" onClick={this.lists}>Lists</Button>
+                                        </div>
                                     ) : (
-                                            <Button className="editButton" label="Edit Profile" onClick={this.follow}>Follow</Button>
+                                            <div>
+
+                                                <Button className="editButton" label="Edit Profile" onClick={this.follow}>Follow</Button>
+                                                <Button className="editButton" onClick={this.lists}>Lists</Button>
+                                            </div>
+
                                         )}
 
                                 </Col>

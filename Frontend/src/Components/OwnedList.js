@@ -4,7 +4,7 @@ import "../CSS/List.css";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Image } from "react-bootstrap";
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 import ListSpecific from './ListSpecific';
 const settings = require("../Config/settings.js");
 
@@ -20,21 +20,21 @@ class OwnedList extends Component {
     super(props);
     this.state = {
       list: [],
-      showList:{},
-      redirectflag:false
+      showList: {},
+      redirectflag: false
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   handleButtonClick = value => {
-    var x=this.state.list.filter(item=>item._id==value);
+    var x = this.state.list.filter(item => item._id == value);
     console.log(x);
-    
+
     //display=(<Redirect to={{pathname:'./ListSpecific', state:{listID:x}}}/>)
-this.setState({
-  showList:x,
-  redirectflag:true
-})
+    this.setState({
+      showList: x,
+      redirectflag: true
+    })
   };
 
   componentWillMount() {
@@ -49,10 +49,10 @@ this.setState({
     axios
       .post(
         "http://" +
-          hostAddress +
-          ":" +
-          port +
-          "/showMyList/showMyList",
+        hostAddress +
+        ":" +
+        port +
+        "/showMyList/showMyList",
         data,
         config
       )
@@ -67,21 +67,21 @@ this.setState({
   addDefaultSrc = event => {
     console.log("error");
     event.target.onError = null;
-    event.target.src = settings.s3bucket +"profileAlias.jpeg";
+    event.target.src = settings.s3bucket + "profileAlias.jpeg";
   };
 
 
   render() {
 
-let redirectNav=null;
-    if(this.state.redirectflag){
-      console.log("Hi i am here :",this.state.showList );
+    let redirectNav = null;
+    if (this.state.redirectflag) {
+      console.log("Hi i am here :", this.state.showList);
       //redirectNav=<Redirect to={{pathname:'/ListSpecific', state:{listID:this.state.showList}}}/>
-      redirectNav=<Redirect to={{
+      redirectNav = <Redirect to={{
         pathname: '/ListSpecific',
         state: { list: this.state.showList }
-    }}
-/>
+      }}
+      />
       // redirectNav=<ListSpecific key='listspec' id={this.state.showList}/>
     }
 
@@ -89,16 +89,16 @@ let redirectNav=null;
     let details;
     if (this.state.list.length != 0) {
       details = this.state.list.map(listItem => {
-       
-        let profileImg=settings.s3bucket +listItem.creatorImage;
-          
+
+        let profileImg = settings.s3bucket + listItem.creatorImage;
+
         // if(listItem.creatorImage!="profileAlias.jpeg" && listItem.creatorImage!=null )
         //     profileImg= settings.s3bucket + listItem.creatorImage;
-         
-       
+
+
         console.log(profileImg)
         display.push(
-          <button name={listItem._id} onClick={this.handleButtonClick.bind(this,listItem._id)}>
+          <button name={listItem._id} onClick={this.handleButtonClick.bind(this, listItem._id)}>
             <div class="listButtonv4">
               <Image
                 src={profileImg}
@@ -122,11 +122,11 @@ let redirectNav=null;
               >
                 <b>
                   {" "}
-                  <span style={{margin:"0 0 0 0"}}> {listItem.memberID.length} </span> 
-                  <span style={{margin:"0 0 0 5px"}}>Members</span>
-                  <span style={{margin:"0 0 0 5px"}}>&#183;</span>
-                  <span style={{margin:"0 0 0 5px"}}> {listItem.subscriberID.length}</span>
-                <span style={{margin:"0 0 0 5px"}}> Subscribers</span>
+                  <span style={{ margin: "0 0 0 0" }}> {listItem.memberID.length} </span>
+                  <span style={{ margin: "0 0 0 5px" }}>Members</span>
+                  <span style={{ margin: "0 0 0 5px" }}>&#183;</span>
+                  <span style={{ margin: "0 0 0 5px" }}> {listItem.subscriberID.length}</span>
+                  <span style={{ margin: "0 0 0 5px" }}> Subscribers</span>
                 </b>
               </div>
             </div>
@@ -137,10 +137,10 @@ let redirectNav=null;
       console.log("Hello")
       display.push(
         <div>
-          <h4 style={{ textAlign: "center" ,marginTop:"70px",marginBottom:"2px"}}>
+          <h4 style={{ textAlign: "center", marginTop: "70px", marginBottom: "2px" }}>
             <b>You don't own any Lists yet</b>
           </h4>
-          <h6 style={{ textAlign: "center",color:"#808080" }}>When you do, it’ll show up here.</h6>
+          <h6 style={{ textAlign: "center", color: "#808080" }}>When you do, it’ll show up here.</h6>
         </div>
       );
     }

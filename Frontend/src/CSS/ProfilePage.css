@@ -37,6 +37,14 @@
   border: 1px solid #1da1f2;
   color: #1da1f2;
 }
+.editButtonGroup {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #1da1f2;
+  border-color: white;
+}
 .followButton {
   border-radius: 100px;
   box-shadow: none;
