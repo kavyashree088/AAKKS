@@ -134,7 +134,7 @@ class ListSpecific extends Component {
   addDefaultSrc = event => {
     console.log("error");
     event.target.onError = null;
-    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+    event.target.src = settings.s3bucket +"profileAlias.jpeg";
   };
 
   handleShowSubscriber = () => {
@@ -187,13 +187,15 @@ class ListSpecific extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
-          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          // let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let userLink = "/profile/" + listItem.username;
-          if (
-            listItem.profilePicture != "profileAlias.jpeg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpeg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
+
+          let profileImg = settings.s3bucket + listItem.profilePicture;
 
           display.push(
             <div style={{ borderColor: "#808080" }}>
@@ -244,13 +246,15 @@ class ListSpecific extends Component {
 
       if (this.state.members.length != 0) {
         modalContent = this.state.members.map(listItem => {
-          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          // let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          let profileImg = settings.s3bucket + listItem.profilePicture;
+
           let userLink = "/profile/" + listItem.username;
-          if (
-            listItem.profilePicture != "profileAlias.jpeg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpeg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
 
           display.push(
             <div style={{ borderColor: "#808080" }}>
@@ -364,15 +368,16 @@ class ListSpecific extends Component {
       { label: "Deactivate", link: "/deactivate", className: "fa fa-ban" },
       { label: "Delete", link: "/delete", className: "fa fa-trash-o" }
     ];
+    let profileImg1 = settings.s3bucket + this.props.location.state.list[0].creatorImage;
 
-    let profileImg1 = settings.s3bucket + "profileAlias.jpeg";
+    // let profileImg1 = settings.s3bucket + "profileAlias.jpeg";
 
-    if (
-      this.props.location.state.list[0].creatorImage != "profileAlias.jpeg" &&
-      this.props.location.state.list[0].creatorImage != null
-    )
-      profileImg1 =
-        settings.s3bucket + this.props.location.state.list[0].creatorImage;
+    // if (
+    //   this.props.location.state.list[0].creatorImage != "profileAlias.jpeg" &&
+    //   this.props.location.state.list[0].creatorImage != null
+    // )
+    //   profileImg1 =
+    //     settings.s3bucket + this.props.location.state.list[0].creatorImage;
 
     return (
       <div>

@@ -28,7 +28,7 @@ class MemberList extends Component {
   addDefaultSrc = event => {
     console.log("error");
     event.target.onError = null;
-    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+    event.target.src = settings.s3bucket +"profileAlias.jpeg";
   };
 
 
@@ -86,13 +86,14 @@ class MemberList extends Component {
     let details;
     if (this.state.list.length != 0) {
       details = this.state.list.map(listItem => {
-        let profileImg = settings.s3bucket + "profileAlias.jpeg";
+        // let profileImg = settings.s3bucket + "profileAlias.jpeg";
 
-        if (
-          listItem.creatorImage != "profileAlias.jpeg" &&
-          listItem.creatorImage != null
-        )
-          profileImg = settings.s3bucket + listItem.creatorImage;
+        // if (
+        //   listItem.creatorImage != "profileAlias.jpeg" &&
+        //   listItem.creatorImage != null
+        // )
+        //   profileImg = settings.s3bucket + listItem.creatorImage;
+        let profileImg = settings.s3bucket + listItem.creatorImage;
 
         display.push(
           <button

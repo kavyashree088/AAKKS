@@ -282,7 +282,7 @@ class ListInfo extends Component {
   addDefaultSrc = event => {
     console.log("error");
     event.target.onError = null;
-    event.target.src = `https://${settings.s3bucket}/profileAlias.jpeg`;
+    event.target.src = settings.s3bucket +"profileAlias.jpeg";
   };
 
   render() {
@@ -311,14 +311,14 @@ class ListInfo extends Component {
 
       if (this.state.subscribers.length != 0) {
         modalContent = this.state.subscribers.map(listItem => {
-          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+         // let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let userLink = "/profile/" + listItem.username;
-          if (
-            listItem.profilePicture != "profileAlias.jpeg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
-
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpeg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
+          let profileImg = settings.s3bucket + listItem.profilePicture;
           display2.push(
             <div style={{ borderColor: "#808080" }}>
               <Image
@@ -386,14 +386,14 @@ class ListInfo extends Component {
               </button>
             );
           }
-          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+         // let profileImg = settings.s3bucket + "profileAlias.jpeg";
           let userLink = "/profile/" + listItem.username;
-
-          if (
-            listItem.profilePicture != "profileAlias.jpeg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
+          let profileImg = settings.s3bucket + listItem.profilePicture;
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpeg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
 
           display2.push(
             <div style={{ borderColor: "#808080" }}>
@@ -448,13 +448,14 @@ class ListInfo extends Component {
       if (this.state.addMemberList != "") {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
-          let profileImg = settings.s3bucket + "profileAlias.jpg";
+          let profileImg = settings.s3bucket + listItem.profilePicture;
+          // let profileImg = settings.s3bucket + "profileAlias.jpg";
 
-          if (
-            listItem.profilePicture != "profileAlias.jpg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
 
           memberDetails.push(
             <span>

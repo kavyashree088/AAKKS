@@ -287,13 +287,14 @@ class List extends Component {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
 
-          let profileImg = settings.s3bucket + "profileAlias.jpeg";
+          let profileImg=settings.s3bucket +listItem.creatorImage;
+          // let profileImg = settings.s3bucket + "profileAlias.jpeg";
 
-          if (
-            listItem.profilePicture != "profileAlias.jpeg" &&
-            listItem.profilePicture != null
-          )
-            profileImg = settings.s3bucket + listItem.profilePicture;
+          // if (
+          //   listItem.profilePicture != "profileAlias.jpeg" &&
+          //   listItem.profilePicture != null
+          // )
+          //   profileImg = settings.s3bucket + listItem.profilePicture;
 
           memberDetails.push(
             <span>
@@ -409,7 +410,7 @@ class List extends Component {
                 color: "rgb(124, 124, 124)"
               }}
             >
-              <b>@AlaukikaD</b>
+              <b>{localStorage.getItem('username')}</b>
             </div>
 
             {console.log("blehhh")}
