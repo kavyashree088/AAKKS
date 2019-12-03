@@ -5,6 +5,9 @@ import LeftNav from "./LeftNav";
 import config from './../Config/settings'
 import axios from 'axios';
 import RightNav from "./RighNav";
+import ReplyModal from './ReplyModal';
+import TweetModal from './TweetModal';
+import TweetComponent from './TweetComponent.js';
 
 class Explore extends Component {
     constructor(props) {
@@ -12,7 +15,8 @@ class Explore extends Component {
         this.state = {
             searchText: "",
             allUsers: [],
-            searchList: []
+            searchList: [],
+            hashTagList: []
         }
     }
 
@@ -46,6 +50,15 @@ class Explore extends Component {
     handleSearch = (event) => {
         if (event.key === "Enter") {
             console.log(this.state.searchText)
+            let tag = this.state.searchText.split("#")[1];
+            console.log(tag)
+            axios({
+                method: 'get',
+                url: 'http://' + config.hostname + ':3001/getTweetesWithHashTags/' + tag,
+            }).then(response => {
+                console.log(response)
+                this.setState({ hashTagList: response.data });
+            })
         }
     }
 
@@ -65,6 +78,20 @@ class Explore extends Component {
             });
         }
 
+    }
+    renderTweets() {
+        let tweetsMarkup = [];
+        if (this.state.hashTagList && this.state.hashTagList.length > 0) {
+            let i = 0;
+            for (i = 0; i < this.state.hashTagList.length; i++) {
+                tweetsMarkup.push(<TweetComponent key={i} tweet={this.state.hashTagList[i]} />);
+            }
+            tweetsMarkup.push(<ReplyModal key={i + 1} />)
+            tweetsMarkup.push(<TweetModal key={i + 2} />)
+            return tweetsMarkup;
+        } else {
+            return <div></div>;
+        }
     }
     render() {
         let links = [
@@ -145,6 +172,15 @@ class Explore extends Component {
                                     )}</Card.Body>)}</div>)}
                             </Dropdown.Menu>
                         </Dropdown>
+                        <hr />
+                        <div>
+                            {(this.state.searchText.startsWith('#') && this.state.hashTagList.length === 0) ? (
+                                <div>
+                                    There are no tweets with {this.state.searchText}
+                                </div>
+                            ) : (<div></div>)}
+                        </div>
+                        {this.renderTweets()}
                     </Col>
                     <Col className="col-sm-3" style={{
                         borderLeft: "2px solid rgb(180, 177, 177)",
