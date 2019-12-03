@@ -9,6 +9,11 @@ module.exports = {
     'connection_string': 'mongodb+srv://root:root@clusterkc-cr6mm.mongodb.net/Twitter?retryWrites=true&w=majority',
 
 
+
+    's3bucket' : 'https://twitter-g12-bucket.s3.us-east-2.amazonaws.com/',
+    'frontendHostName' : 'localhost',
+    'frontendPort' : 3000,
+
     'kafka_host': 'localhost',
     'kafka_port': '2181',
 

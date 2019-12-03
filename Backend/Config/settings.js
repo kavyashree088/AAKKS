@@ -16,7 +16,12 @@ module.exports = {
 
     'kafka_host': 'localhost',
     'kafka_port': '2181',
+   
+    's3bucket' : 'https://twitter-g12-bucket.s3.us-east-2.amazonaws.com/',
+    'frontendHostName' : 'localhost',
+    'frontendPort' : 3000,
 
+    'redis_host' : '127.0.0.1',
     //'redis_host' : 'cmpetwitter-0001-001.qwkoiy.0001.use1.cache.amazonaws.com',
     //'redis_host' : 'redistest-001.qwkoiy.0001.use1.cache.amazonaws.com',
     //'redis_host' : 'redistest.qwkoiy.ng.0001.use1.cache.amazonaws.com',
