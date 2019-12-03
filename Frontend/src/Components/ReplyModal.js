@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { replyATweet} from '../JS/Actions/tweetAction.js';
 import { getUserName, getUserFullName } from "./tweetApis.js";
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 const {processTweetText} = require('./tweetApis.js');
 class ReplyModalInner extends Component{
     state = {

@@ -7,11 +7,11 @@ import LeftNav from "./LeftNav";
 import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 const config = {
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    Authorization: "Bearer " + localStorage.getItem("token"),
     "Content-Type": "application/json"
   }
 };
@@ -211,10 +211,12 @@ class ListInfo extends Component {
   };
 
   addMembersToList = () => {
-    var t1 = [];
+    var t2 = new Set();
     this.state.addMemberList.map(item => {
-      t1.push(item.username);
+      t2.add(item.username);
     });
+    
+    var t1=[...t2];
     console.log(t1);
     const data = {
       members: t1,

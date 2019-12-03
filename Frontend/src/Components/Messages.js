@@ -4,7 +4,7 @@ import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import profile from "../Images/kavya.jpg"
 import profileAlias from "../Images/profileAlias.jpeg"
-import config from './../config/settings'
+import config from './../Config/settings'
 import axios from 'axios';
 
 class Messages extends Component {

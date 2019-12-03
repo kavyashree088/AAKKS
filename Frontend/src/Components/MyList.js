@@ -20,11 +20,11 @@ import { hostAddress, port } from "../Constants/index";
 import OwnedList from "./OwnedList";
 import SubscribedList from "./SusbscribedList";
 import MemberList from "./MemberList";
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 const config = {
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    Authorization: "Bearer " + localStorage.getItem("token"),
     "Content-Type": "application/json"
   }
 };
@@ -177,10 +177,12 @@ class List extends Component {
   };
 
   createList = e => {
-    var t1 = [];
+    var t2 = new Set();
     this.state.addMemberList.map(item => {
-      t1.push(item.username);
+      t2.add(item.username);
     });
+    
+    var t1=[...t2];
     console.log(t1);
     console.log("Hi there I am in create list");
     e.preventDefault();

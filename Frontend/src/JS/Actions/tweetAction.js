@@ -1,6 +1,7 @@
 import {DASHBOARDTWEETS, CURRENTTWEET,BOOKMARKEDTWEETS,LISTTWEETS} from "../Types/types.js";
 import axios from "axios";
 import swal from 'sweetalert';
+const token= localStorage.getItem("token");
 
 export const getListTweets = (dataObj) => dispatch => {
     let url = dataObj.url;
@@ -11,7 +12,7 @@ export const getListTweets = (dataObj) => dispatch => {
         url,        
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        //headers: {"Authorization" : `Bearer ${token}`}
+        headers: {"Authorization" : `Bearer ${token}`}
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -41,7 +42,7 @@ export const getBookmarkTweets = (dataObj) => dispatch => {
         url,        
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        //headers: {"Authorization" : `Bearer ${token}`}
+        headers: {"Authorization" : `Bearer ${token}`}
     })
         .then((response) => {
             if (response.status >= 500) {

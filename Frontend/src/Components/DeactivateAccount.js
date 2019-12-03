@@ -6,7 +6,7 @@ import LeftNav from './LeftNav';
 import Button from 'react-bootstrap/Button'
 
 import axios from 'axios';
-import config from './../config/settings'
+import config from './../Config/settings'
 
 import { Redirect } from 'react-router'
 

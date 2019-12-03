@@ -13,7 +13,7 @@ import {
     CardLink
   } from "reactstrap";
 import UserListModal from './UserListModal';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 class IndividualTweetInner extends Component{
     componentDidMount(){

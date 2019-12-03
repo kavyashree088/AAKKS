@@ -6,11 +6,11 @@ import { hostAddress, port } from "../Constants/index";
 import { Image } from "react-bootstrap";
 import {Redirect} from 'react-router';
 import ListSpecific from './ListSpecific';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 const config = {
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    Authorization: "Bearer " + localStorage.getItem("token"),
     "Content-Type": "application/json"
   }
 };

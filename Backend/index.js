@@ -7,7 +7,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 var morgan = require('morgan');
-var config = require('./config/settings');
+var config = require('./Config/settings');
 var kafka = require("./kafka/client");
 var passport = require('passport');
 
@@ -17,7 +17,7 @@ console.log("Initializing passport");
 app.use(passport.initialize());
 
 // Bring in defined Passport Strategy
-require('./config/passport').passport;
+require('./Config/passport').passport;
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));

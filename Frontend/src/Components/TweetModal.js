@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import { connect } from 'react-redux';
 import { retweetWithComment} from '../JS/Actions/tweetAction.js';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 const {processTweetText} = require('./tweetApis.js');
 class TweetModalInner extends Component{
     state ={

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from 'react-router'
 
-import config from '../../config/settings.js'
+import config from '../../Config/settings.js'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'

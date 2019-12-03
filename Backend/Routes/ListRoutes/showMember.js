@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 var kafka = require('../../kafka/client');
+var jwt = require('jsonwebtoken');
+var passport = require('passport');
 
+var requireAuth = passport.authenticate('jwt', { session: false });
 
-router.post('/showMember',  function (req, res) {
+router.post('/showMember', requireAuth, function (req, res) {
     console.log("Inside show members of a list");
     console.log("Req is :");
     console.log(req.body);

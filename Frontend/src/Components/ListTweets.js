@@ -7,7 +7,7 @@ import {getListTweets} from '../JS/Actions/tweetAction';
 import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import TweetComponent from './TweetComponent.js';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 const getUserName="anjali";
 
 export class ListTweets extends Component {

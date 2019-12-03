@@ -15,7 +15,7 @@ import Tab from 'react-bootstrap/Tab'
 
 import axios from 'axios';
 import { Redirect } from 'react-router'
-import config from '../../config/settings.js'
+import config from '../../Config/settings.js'
 
 
 export class UserProfile extends Component {

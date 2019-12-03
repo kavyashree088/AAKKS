@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../CSS/navbar.css"
 import Dropdown from 'react-bootstrap/Dropdown'
-import config from '../config/settings'
+import config from '../Config/settings'
 import axios from 'axios';
 
 

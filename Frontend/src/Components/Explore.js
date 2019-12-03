@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
-import config from './../config/settings'
+import config from './../Config/settings'
 import axios from 'axios';
 
 class Explore extends Component {

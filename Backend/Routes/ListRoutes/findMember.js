@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 var kafka = require('../../kafka/client');
+var jwt = require('jsonwebtoken');
+var passport = require('passport');
 
+var requireAuth = passport.authenticate('jwt', { session: false });
 
-router.post('/findMember',  function (req, res) {
+router.post('/findMember',requireAuth,  function (req, res) {
     console.log("Inside find Member");
     console.log("Req is :");
     console.log(req.body);

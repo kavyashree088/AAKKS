@@ -7,11 +7,11 @@ import axios from "axios";
 import { hostAddress, port } from "../Constants/index";
 import { Redirect } from "react-router";
 import ListTweets from './ListTweets';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 
 const config = {
   headers: {
-    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    Authorization: "Bearer " + localStorage.getItem("token"),
     "Content-Type": "application/json"
   }
 };
