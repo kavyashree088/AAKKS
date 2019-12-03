@@ -7,8 +7,9 @@ import { getDashboardTweets } from '../JS/Actions/tweetAction.js';
 import ReplyModal from './ReplyModal';
 import TweetModal from './TweetModal';
 import TweetComponent from './TweetComponent.js';
-const settings = require("../Config/settings.js");
 import Pagination from 'react-bootstrap/Pagination'
+const settings = require("../Config/settings.js");
+
 const {getUserName, getPageSize} = require('./tweetApis.js');
 
 export class DashboardTweets extends Component {

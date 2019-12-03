@@ -225,7 +225,7 @@ let processTweets = async (tweets) => {
 let getDashboardTweets = async (message, callback) => {
     let { username, pageNum, pageSize } = message;
     let offset = (pageNum - 1) * pageSize;
-    let followingActive = [], following = [];
+    let following = [];
     await user.findOne({ username }, async (err, result) => {
         if (err) {
             console.log("unable to insert into database", err);
@@ -236,31 +236,44 @@ let getDashboardTweets = async (message, callback) => {
             if (result) {
                 following = result.following;
                 if (following && following.length > 0) {
-                    for (let i = 0; i < following.length; i++) {
-                        let person1 = following[i];
-                        console.log("person1 is..");
-                        console.log(person1);
-                        await user.findOne({ 'username': person1 }, (err, result) => {
-                            console.log("user follower result..");
-                            console.log(result);
-                            if (result && result.active) {
-                                followingActive.push(person1);
+                    await user.find({ $and: [{ username: { $in: following } }, { active: true }] }, { username }, async (err, result2) => {
+                        console.log("user follower result..");
+                        console.log(result2);
+                        if (result2 && result2.length > 0) {
+                            let list = [];
+                            for (let i = 0; i < result2.length; i++) {
+                                let names = result2[i]["username"];
+                                list.push(names);
                             }
-                        });
-                    }
-                }
-                console.log("followingactive..");
-                console.log(followingActive);
-                if (followingActive && followingActive.length > 0) {
-                    await tweet.find({ username: { $in: followingActive } }).lean().exec(async (err, result) => {
-                        if (err) {
-                            console.log("unable to insert into database", err);
-                            callback(err, "Database Error");
-                        } else if (result) {
-                            console.log("tweets returned!!");
-                            console.log(result);
-                            result = await processTweets(result);
-                            callback(null, { status: 200, message: result });
+                            console.log(list)
+                            //followingActive.push(person1);
+                            /* await tweet.find({ username: { $in: list } }).lean().exec(async (err, result3) => {
+                                 if (err) {
+                                     console.log("unable to insert into database", err);
+                                     callback(err, "Database Error");
+                                 } else if (result3) {
+                                     console.log("tweets returned!!");
+                                     console.log(result3);
+                                     result = await processTweets(result3);
+                                     callback(null, { status: 200, message: result });
+                                 } else {
+                                     callback(null, { status: 401, message: "tweets list cannot be returned!!" });
+                                 }
+                             });*/
+                            await tweet.find({ username: { $in: list } }).sort({ createdAt: -1 }).skip(offset).limit(pageSize).lean().exec(async (err, result3) => {
+                                if (err) {
+                                    console.log("unable to insert into database", err);
+                                    callback(err, "Database Error");
+                                } else if (result3 && result3.length > 0) {
+                                    console.log("tweets returned!!");
+                                    console.log(result3);
+                                    result3 = await processTweets(result3);
+                                    callback(null, { status: 200, message: result3 });
+                                } else {
+                                    callback(null, { status: 401, message: "tweets list cannot be returned!!" });
+                                }
+                            });
+
                         } else {
                             callback(null, { status: 401, message: "tweets list cannot be returned!!" });
                         }
@@ -268,28 +281,7 @@ let getDashboardTweets = async (message, callback) => {
                 } else {
                     callback(null, { status: 401, message: "tweets list cannot be returned!!" });
                 }
-
             }
-            console.log("followingactive..");
-            console.log(followingActive);
-            if (followingActive && followingActive.length > 0) {
-                await tweet.find({ username: { $in: followingActive } }).sort({ createdAt: -1 }).skip(offset).limit(pageSize).lean().exec(async (err, result) => {
-                    if (err) {
-                        console.log("unable to insert into database", err);
-                        callback(err, "Database Error");
-                    } else if (result && result.length > 0) {
-                        console.log("tweets returned!!");
-                        console.log(result);
-                        result = await processTweets(result);
-                        callback(null, { status: 200, message: result });
-                    } else {
-                        callback(null, { status: 401, message: "tweets list cannot be returned!!" });
-                    }
-                });
-            } else {
-                callback(null, { status: 401, message: "tweets list cannot be returned!!" });
-            }
-
         }
     });
 };

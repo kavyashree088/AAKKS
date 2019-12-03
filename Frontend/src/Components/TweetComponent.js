@@ -21,7 +21,6 @@ import { TweetBody } from "./TweetBody.js";
 import $ from 'jquery';
 
 const settings = require("../Config/settings.js");
-const { processTweetText, getUserName, getUserFullName } = require('./tweetApis.js');
 const { processTweetText, getUserName, getMonthAndDate, getUserFullName } = require('./tweetApis.js');
 
 

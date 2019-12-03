@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap';
+import RightNav from './RighNav'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 
@@ -27,13 +28,16 @@ class Home extends Component {
                     <Col className="col-sm-3">
                         <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
-                    <Col className="col-sm-6 homeComponent">
+                    <Col className="col-sm-5 homeComponent">
                         <h5 className='homeHeading' style={{ fontWeight: "bolder" }}>Home</h5>
                         <TweetContent />
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-3" style={{
+                        borderLeft: "2px solid rgb(180, 177, 177)",
+                        height: "100vh"
+                    }}>
+                        <div className="" id="navbarSide">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>

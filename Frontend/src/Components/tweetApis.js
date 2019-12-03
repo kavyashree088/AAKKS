@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import {
     Card,
     CardImg,
@@ -7,32 +7,31 @@ import {
     CardTitle,
     CardSubtitle,
     CardLink
-  } from "reactstrap";
+} from "reactstrap";
 
 export const processTweetText = (tweetText) => {
     let hyperLinkExp = /http:\/\/[\w\.\/]*/g;
     let textArr = tweetText.split(' ');
-    for(let i=0; i<textArr.length; i++){
+    for (let i = 0; i < textArr.length; i++) {
         let text = textArr[i];
         let match = hyperLinkExp.exec(text);
-        if(match){
+        if (match) {
             let http = /http:\/\//g;
-            text = text.replace(http,"") + " ";
-            textArr[i] = <CardLink key={i} href={textArr[i]} target = "_blank" className= 'blue' onClick={(evt) => {evt.stopPropagation();}}>{text}</CardLink>
+            text = text.replace(http, "") + " ";
+            textArr[i] = <CardLink key={i} href={textArr[i]} target="_blank" className='blue' onClick={(evt) => { evt.stopPropagation(); }}>{text}</CardLink>
         } else {
             textArr[i] = textArr[i] + " ";
         }
     }
     return <CardText> {textArr} </CardText>;
- }
+}
 export const getUserFullName = () => {
     //TODO : combine localstorage firstname + " "+ lastname
-    return 'Anjali Bandaru';
+    return localStorage.getItem("firstname") + " " + localStorage.getItem("lastname");
     //return 'Keerthi Akella';
 }
-export const getUserName =() => {
-    //TODO : get from local storage
-    return 'anjali';
+export const getUserName = () => {
+    return localStorage.getItem("username");
     //return 'keerthi';
 }
 export const getPageSize = () => {

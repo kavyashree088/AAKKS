@@ -13,7 +13,7 @@ import {
 import { replyATweet } from '../JS/Actions/tweetAction.js';
 import { getUserName, getUserFullName } from "./tweetApis.js";
 import $ from 'jquery';
-const settings = require("../config/settings.js");
+const settings = require("../Config/settings.js");
 const { processTweetText } = require('./tweetApis.js');
 class ReplyModalInner extends Component {
   state = {
@@ -93,6 +93,7 @@ class ReplyModalInner extends Component {
             <div className="modal-footer">
               <button className="btn btn-primary btn-circle" type="submit" onClick={(evt) => this.replyClickHandler(evt)} style={{ position: 'absolute', right: '60px', fontWeight: "bold" }}>Reply</button><br /><br /><br />
             </div>
+
           </div>
         </div>
 
@@ -102,8 +103,7 @@ class ReplyModalInner extends Component {
         </div>
 
       </div>
-        </div >
-      </div >
+
 
     );
   }
