@@ -24,8 +24,8 @@ class ProfileViews extends Component{
 
         }
         const result=response.data.graphData;
-        const viewCount=[];
-        const usernames=[]
+        var viewCount=[];
+        var usernames=[]
         for(let i=0;i<result.length;i++){
 
             usernames[i]=result[i].username;

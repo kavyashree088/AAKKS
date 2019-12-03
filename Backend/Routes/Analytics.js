@@ -160,62 +160,62 @@ router.get('/fetchRetweets',function(req,res){
      
 });
 
-// router.get('/dailyTweets',function(req,res){
+router.get('/dailyTweets',function(req,res){
     
     
-//   console.log("infetch daily  tweets backend")
+  console.log("in fetch daily  tweets backend---------------------------")
   
 
-//   kafka.make_request("analytics", { "path": "dailyTweets" }, function(
-//     err,
-//     results
-//   ) {
-//     console.log("results:",results);
-//     if (err) {
-//       console.log("Inside err");
-//       res.json({
-//         status: "error",
-//         msg: "System Error, Try Again."
-//       });
-//     } else {
-//       console.log("Inside else");
-//       res.json({
-//         graphData: results
-//       });
+  kafka.make_request("analytics", { "path": "dailyTweets" }, function(
+    err,
+    results
+  ) {
+    console.log("results:",results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else");
+      res.json({
+        graphData: results
+      });
 
-//       res.end();
-//     }
-//   });
+      res.end();
+    }
+  });
      
-// });
+});
 
-// router.get('/monthlyTweets',function(req,res){
+router.get('/monthlyTweets',function(req,res){
     
     
-//   console.log("infetch monthlyTweets backend")
+  console.log("infetch monthlyTweets backend")
   
 
-//   kafka.make_request("analytics", { "path": "monthlyTweets" }, function(
-//     err,
-//     results
-//   ) {
-//     console.log("results:",results);
-//     if (err) {
-//       console.log("Inside err");
-//       res.json({
-//         status: "error",
-//         msg: "System Error, Try Again."
-//       });
-//     } else {
-//       console.log("Inside else");
-//       res.json({
-//         graphData: results
-//       });
+  kafka.make_request("analytics", { "path": "monthlyTweets" }, function(
+    err,
+    results
+  ) {
+    console.log("results:",results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else");
+      res.json({
+        graphData: results
+      });
 
-//       res.end();
-//     }
-//   });
+      res.end();
+    }
+  });
      
-// });
+});
 
 module.exports=router;

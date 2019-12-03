@@ -42,15 +42,13 @@ exports.analyticsService = function analyticsService(msg, callback) {
         case 'fetchRetweets':
             fetchRetweets(msg, callback);
             break;
-        // case 'getFollowersTweets':
-        //     getFollowersTweets(msg, callback);
-        //     break;
-        // case 'monthlyTweets':
-        //     monthlyTweets(msg, callback);
-        //     break;
-        // case 'dailyTweets':
-        //     dailyTweets(msg, callback);
-        //     break;
+
+        case 'monthlyTweets':
+            monthlyTweets(msg, callback);
+            break;
+        case 'dailyTweets':
+            dailyTweets(msg, callback);
+            break;
 
     }
 };
@@ -133,8 +131,30 @@ let profileViews = function(message, callback){
     
     
 
-    Tweets.find({"createdAt":new Date("2019-12-02T10:12:40.966+0000")}).then((result,err)=>{  //Temp will be Tweets
-        // console.log(result);
+    // Tweets.find({"createdAt":new Date("2019-12-02T10:12:40.966+0000")}).then((result,err)=>{  //Temp will be Tweets
+    //     // console.log(result);
+ 
+    //     if(err)
+    //         console.log("error in mongo query")
+      
+    //     console.log("Profile Views:",result);
+    //     callback(null,result);
+    //  })
+
+    //  Tweets.find({"createdAt":{"$gte": new Date(2019, 11, 2), "$lt": new Date(2019, 11, 3)}}).then((result,err)=>{  //Temp will be Tweets
+    //     // console.log(result);  //workingg
+ 
+    //     if(err)
+    //         console.log("error in mongo query")
+      
+    //     console.log("Profile Views:",result);
+    //     callback(null,result);
+    //  })
+
+    
+
+    Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (5 * 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
+        // console.log(result);  //workingg
  
         if(err)
             console.log("error in mongo query")
@@ -212,4 +232,68 @@ let fetchRetweets = function(message, callback){
         
     )
 
+};
+
+let dailyTweets = function(message, callback){
+
+    console.log("Inside daily tweets request------------------------");
+
+    var x=[];
+    Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (2* 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
+        // console.log(result);  //workingg
+ 
+        if(err)
+            console.log("error in mongo query")
+      
+        console.log("Daily Tweets result:",result);
+        
+        result.forEach(element => {
+
+            var y=element.createdAt.getDate();
+            console.log("day:",y);
+
+            if(x.some(o=>o.day===y)){
+                let obj=x.find(i=>i.day===y);
+                let index=x.indexOf(obj);
+                x[index].count=x[index].count+1;
+            }
+            else
+                x.push({day:y,count:1})
+            
+        });
+        console.log("xxxxx:",x);
+        callback(null,x);
+     })
+};
+
+let monthlyTweets = function(message, callback){
+
+    console.log("Inside daily tweets request------------------------");
+
+    var x=[];
+    Tweets.find({"createdAt":{"$gte": new Date(2019, 0, 2), "$lt": new Date(2019, 11, 4)}}).then((result,err)=>{  //Temp will be Tweets
+        // console.log(result);  //workingg
+ 
+        if(err)
+            console.log("error in mongo query")
+      
+        console.log("monthlyTweets Tweets result:",result);
+        
+        result.forEach(element => {
+
+            var y=element.createdAt.getMonth();
+            console.log("month:",y);
+
+            if(x.some(o=>o.month===y)){
+                let obj=x.find(i=>i.month===y);
+                let index=x.indexOf(obj);
+                x[index].count=x[index].count+1;
+            }
+            else
+                x.push({month:y,count:1})
+            
+        });
+        console.log("QQQQQQQ:",x);
+        callback(null,x);
+     })
 };

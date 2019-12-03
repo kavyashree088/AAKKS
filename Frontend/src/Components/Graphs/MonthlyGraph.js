@@ -17,56 +17,56 @@ class MonthlyGraph extends Component{
         }
     }
 
-    // componentDidMount(){
+    componentDidMount(){
 
-    //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/monthlyTweets')
-    //     .then(response => {
-    //     console.log("Status Code : ",response.status);
-    //     if(response.status === 200){
+        var rooturl="localhost";
+        axios.get('http://'+rooturl+':3001/monthlyTweets')
+        .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
         
-    //         console.log("Response data:", response.data.graphData);
+            console.log("Response data:", response.data.graphData);
 
-    //     }
-    //     const result=response.data.graphData;
-    //     const views=[];
-    //     const usernames=[]
-    //     for(let i=0;i<result.length;i++){
+        }
+        const result=response.data.graphData;
+        const views=[];
+        const usernames=[]
+        for(let i=0;i<result.length;i++){
 
-    //         usernames[i]=result[i].username;
-    //         views[i]=result[i].views;
-    //     }
-    //     console.log("views:", views);
-    //     console.log("usernames:", usernames);
+            usernames[i]=result[i].month;
+            views[i]=result[i].count;
+        }
+        console.log("views:", views);
+        console.log("usernames:", usernames);
         
-    //     const chartData1={
-    //         labels:usernames, //tweets
-    //         datasets:[{
-    //             label:['views'],
-    //             data:views
-    //         ,
-    //         backgroundColor:[
-    //            'rgba(255, 99, 132, 0.6)',
-    //            'rgba(54, 162, 235, 0.6)',
-    //            'rgba(255, 206, 86, 0.6)',
-    //            'rgba(75, 192, 192, 0.6)',
-    //            'rgba(153, 102, 255, 0.6)',
-    //            'rgba(255, 159, 64, 0.6)',
-    //            'rgba(105, 179, 64, 0.6)',
-    //            'rgba(205, 159, 68, 0.6)',
-    //            'rgba(200, 200, 64, 0.6)',
-    //            'rgba(250, 200,185, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'
-    //         ]
-    //        }
-    //    ]
-    //     }
-    //     this.setState({
-    //         chartData:chartData1
-    //     })
+        const chartData1={
+            labels:usernames, //tweets
+            datasets:[{
+                label:['views'],
+                data:views
+            ,
+            backgroundColor:[
+               'rgba(255, 99, 132, 0.6)',
+               'rgba(54, 162, 235, 0.6)',
+               'rgba(255, 206, 86, 0.6)',
+               'rgba(75, 192, 192, 0.6)',
+               'rgba(153, 102, 255, 0.6)',
+               'rgba(255, 159, 64, 0.6)',
+               'rgba(105, 179, 64, 0.6)',
+               'rgba(205, 159, 68, 0.6)',
+               'rgba(200, 200, 64, 0.6)',
+               'rgba(250, 200,185, 0.6)',
+               // 'rgba(255, 99, 132, 0.6)'
+            ]
+           }
+       ]
+        }
+        this.setState({
+            chartData:chartData1
+        })
     
-    // });
-    // }
+    });
+    }
 
     static defaultProps={
         displayTitle:true,
