@@ -86,7 +86,7 @@ class GraphBar extends Component{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH VIEWS",
+                            text:"TOP 10 TWEETS WITH MORE VIEWS",
                             fontSize:25,
                             fontFamily:"Lato"
                         },

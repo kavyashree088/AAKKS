@@ -125,7 +125,7 @@ router.post('/getUserTweets', function (req, res) {
         res.status(200).json({ message: tweets });
       } else {
         console.log("tweets not cached in redis!!");
-        kafka.make_request('tweetTopics', { 'path': 'getUserTweets', userId }, function (err, result) {
+        kafka.make_request('tweetTopics', { 'path': 'getUserTweets', username }, function (err, result) {
 
           var responseObj = {
             status: false,

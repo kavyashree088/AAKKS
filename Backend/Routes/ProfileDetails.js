@@ -265,7 +265,7 @@ router.put("/unfollow", (req, res) => {
 })
 
 
-router.post('/getLikes', requireAuth, function (req, res) {
+router.post('/getLikes',  function (req, res) {
   //console.log(req)
   let username = req.body.username
   let redisKey = "userProfile_" + username;
@@ -297,7 +297,7 @@ router.post('/getLikes', requireAuth, function (req, res) {
   }
 })
 
-router.post('/getReplies', requireAuth, function (req, res) {
+router.post('/getReplies', function (req, res) {
   // console.log(req)
   let username = req.body.username
   let redisKey = "userProfile_" + username;
@@ -330,7 +330,7 @@ router.post('/getReplies', requireAuth, function (req, res) {
 })
 
 
-router.post('/getTweets', requireAuth, function (req, res) {
+router.post('/getTweets',  function (req, res) {
   // console.log(req)
   let username = req.body.username
   let redisKey = "userProfile_" + username;

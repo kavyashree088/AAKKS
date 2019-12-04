@@ -51,11 +51,7 @@ class GraphPie extends Component{
                'rgba(255, 206, 86, 0.6)',
                'rgba(75, 192, 192, 0.6)',
                'rgba(153, 102, 255, 0.6)',
-               'rgba(255, 159, 64, 0.6)',
-               'rgba(105, 179, 64, 0.6)',
-               'rgba(205, 159, 68, 0.6)',
-               'rgba(200, 200, 64, 0.6)',
-               'rgba(250, 200,185, 0.6)',
+              
              
             ],
             borderWidth:4,
@@ -89,7 +85,7 @@ class GraphPie extends Component{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH RETWEETS",
+                            text:"TOP 5 TWEETS WITH MORE RETWEETS",
                             fontSize:25,
                             fontFamily:'lato'
                         },
