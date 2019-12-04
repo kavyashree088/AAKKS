@@ -44,7 +44,7 @@ router.get('/fetchviews',function(req,res){
        
 });
 
-router.get('/hourlytweets',function(req,res){
+router.get('/hourlyTweets',function(req,res){
     
     
     console.log("in hourly tweets backend")
