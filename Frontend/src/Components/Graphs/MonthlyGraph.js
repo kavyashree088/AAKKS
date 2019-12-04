@@ -3,7 +3,7 @@ import {Bar, Line, Pie} from 'react-chartjs-2';
 import axios from 'axios';
 import { identifier } from '@babel/types';
 import { isDate } from 'util';
-
+import config from '../../config/settings';
 class MonthlyGraph extends Component{
 
     constructor(props){
@@ -17,8 +17,8 @@ class MonthlyGraph extends Component{
 
     componentDidMount(){
 
-        var rooturl="localhost";
-        axios.get('http://'+rooturl+':3001/monthlyTweets')
+        //var rooturl="localhost";
+        axios.get('http://'+config.hostname+':3001/monthlyTweets')
         .then(response => {
         console.log("Status Code : ",response.status);
         if(response.status === 200){

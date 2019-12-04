@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { Pie} from 'react-chartjs-2';
 import axios from 'axios';
-
+import config from '../../config/settings';
 class HourlyGraph extends Component{
  
     constructor(props){
@@ -15,8 +15,8 @@ class HourlyGraph extends Component{
 
     componentDidMount(){
 
-        var rooturl="localhost";
-        axios.get('http://'+rooturl+':3001/hourlyTweets')
+        //var rooturl="localhost";
+        axios.get('http://'+config.hostname+':3001/hourlyTweets')
         .then(response => {
         console.log("Status Code : ",response.status);
         if(response.status === 200){

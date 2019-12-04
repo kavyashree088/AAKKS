@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import { HorizontalBar} from 'react-chartjs-2';
 import axios from 'axios';
+import config from '../../config/settings'
+
 class GraphHorizontalBar extends Component{
 
     constructor(props){
@@ -16,8 +18,8 @@ class GraphHorizontalBar extends Component{
 
     componentDidMount(){
 
-        var rooturl="localhost";
-        axios.get('http://'+rooturl+':3001/dailyTweets')
+      //  var rooturl="localhost";
+        axios.get('http://'+config.hostname+':3001/dailyTweets')
         .then(response => {
         console.log("Status Code : ",response.status);
         if(response.status === 200){

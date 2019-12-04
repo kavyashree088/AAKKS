@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 import axios from 'axios';
+import config from '../../config/settings'
+
 class GraphDoughnut extends Component{
 
     constructor(props){
@@ -14,8 +16,8 @@ class GraphDoughnut extends Component{
 
     componentDidMount(){
 
-        var rooturl="localhost";
-        axios.get('http://'+rooturl+':3001/fetchLikes')
+        //var rooturl="localhost";
+        axios.get('http://'+config.hostname+':3001/fetchLikes')
         .then(response => {
         console.log("Status Code : ",response.status);
         if(response.status === 200){
