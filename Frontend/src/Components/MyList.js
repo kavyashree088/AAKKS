@@ -50,7 +50,7 @@ class List extends Component {
       members: [],
       memberSearch: "",
       addMemberList: [],
-      currentUser : this.props.match.params.username
+      currentUser: this.props.match.params.username
     };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
     pageRefresh = false;
@@ -196,24 +196,24 @@ class List extends Component {
               <Tab style={{ width: "33%" }} tabFor="one">
                 Owned
               </Tab>
-    
+
               <Tab style={{ width: "33%" }} tabFor="two">
                 Subscribed
               </Tab>
-    
+
               <Tab style={{ width: "33%" }} tabFor="three">
                 Member
               </Tab>
             </TabList>
-    
+
             <TabPanel tabId="one">
-              <OwnedList user={this.state.currentUser}/>
+              <OwnedList user={this.state.currentUser} />
             </TabPanel>
-    
+
             <TabPanel tabId="two">
-              <SubscribedList user={this.state.currentUser}/>
+              <SubscribedList user={this.state.currentUser} />
             </TabPanel>
-    
+
             <TabPanel tabId="three">
               <MemberList user={this.state.currentUser} />
             </TabPanel>
@@ -236,7 +236,7 @@ class List extends Component {
       { label: "Notifications", link: "#home", className: "fas fa-bell" },
       { label: "Messages", link: "/Messages", className: "fas fa-envelope" },
       { label: "Bookmarks", link: "/Bookmarks", className: "fas fa-bookmark" },
-      { label: "Lists", link: "/List/"+ localStorage.getItem("username"), className: "fas fa-list-alt" },
+      { label: "Lists", link: "/List/" + localStorage.getItem("username"), className: "fas fa-list-alt" },
       {
         label: "Profile",
         link: "/profile/" + localStorage.getItem("username"),
@@ -296,7 +296,7 @@ class List extends Component {
         this.state.addMemberList.map(listItem => {
           console.log("Hello:", listItem);
 
-          let profileImg=settings.s3bucket +listItem.creatorImage;
+          let profileImg = settings.s3bucket + listItem.creatorImage;
           // let profileImg = settings.s3bucket + "profileAlias.jpeg";
 
           // if (
@@ -397,14 +397,14 @@ class List extends Component {
       );
     }
 
-    let createShow=null;
-    if(localStorage.getItem('username')==this.state.currentUser){
-      createShow=(
+    let createShow = null;
+    if (localStorage.getItem('username') == this.state.currentUser) {
+      createShow = (
         <i
-                style={{ colour: "blue", marginRight: "14px" }}
-                className="far fa-edit float-right fa-list-alt"
-                onClick={this.handleNewList}
-              ></i>
+          style={{ colour: "blue", marginRight: "14px" }}
+          className="far fa-edit float-right fa-list-alt"
+          onClick={this.handleNewList}
+        ></i>
       )
     }
     return (
@@ -413,7 +413,7 @@ class List extends Component {
           <Col className="col-sm-3 removePadding">
             <LeftNav links={links} history={this.props.history}></LeftNav>
           </Col>
-          <Col className="col-sm-6 removePadding">
+          <Col className="col-sm-5 removePadding">
             {redi}
             <div style={{ fontSize: "18px", paddingTop: "2%" }}>
               <b>Lists</b>
@@ -443,16 +443,11 @@ class List extends Component {
               <Modal.Body>{modalContent}</Modal.Body>
             </Modal>
           </Col>
-          <Col
-            className="col-sm-3"
-            style={{
-              borderLeft: "2px solid rgb(180, 177, 177)",
-              height: "100vh"
-            }}
-          >
-            <div className="" id="navbarSide">
+          <Col className="col-sm-4 navbar-side-right">
+            <div className="col-sm-10">
               <RightNav></RightNav>
             </div>
+
           </Col>
         </Row>
       </div>

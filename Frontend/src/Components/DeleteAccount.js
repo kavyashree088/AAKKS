@@ -9,6 +9,7 @@ import axios from 'axios';
 import config from '../Config/settings'
 
 import { Redirect } from 'react-router'
+import RightNav from './RighNav';
 
 
 export class DeleteAccount extends Component {
@@ -80,7 +81,7 @@ export class DeleteAccount extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
 
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
@@ -106,7 +107,7 @@ export class DeleteAccount extends Component {
                             <p>
                                 You’re about to start the process of deleting your Twitter account.
                             Your display name, <b>@{this.state.username}</b>, and public profile will no longer be viewable on Twitter.com,
-                                Twitter for iOS, or Twitter for Android.
+                                        Twitter for iOS, or Twitter for Android.
                             </p>
                             <center>
                                 <Button onClick={this.deleteButton} variant="danger">Delete Account</Button>
@@ -118,9 +119,9 @@ export class DeleteAccount extends Component {
                         </div>
 
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>

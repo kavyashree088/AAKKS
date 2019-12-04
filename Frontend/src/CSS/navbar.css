@@ -68,7 +68,7 @@
 }
 .navbar-side-right {
   height: 100%;
-  width: 25%;
+  width: 40%;
   position: fixed;
   top: 0;
   right: 0;
@@ -141,4 +141,7 @@ a:active {
   padding: 20px;
   margin-left: 20px;
   border-radius: 25px;
+}
+.centerContent {
+  height: 100vh;
 }

@@ -6,7 +6,8 @@ import {
 import "../CSS/navbar.css";
 import "../CSS/List.css";
 import LeftNav from "./LeftNav";
-import BookmarkTweets from './BookmarkTweets' ;
+import BookmarkTweets from './BookmarkTweets';
+import RightNav from "./RighNav";
 
 const config = {
   headers: {
@@ -18,13 +19,13 @@ const config = {
 class BookmarkMain extends Component {
   constructor(props) {
     super(props);
-   
-    
+
+
   }
-  componentWillMount(){
+  componentWillMount() {
     if (!localStorage.getItem('username')) {
       this.props.history.push("/");
-  }
+    }
   }
 
   render() {
@@ -34,30 +35,31 @@ class BookmarkMain extends Component {
       { label: 'Notifications', link: '#home', className: "fas fa-bell" },
       { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
       { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-      { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
-      { label: 'Profile', link: '/profile/'+localStorage.getItem('username'), className: "fas fa-user-circle" },
+      { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
+      { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
       { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
       { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
 
-  ];
+    ];
 
-      
+
     return (
       <div>
         <Row>
           <Col className="col-sm-3 removePadding">
-            <LeftNav links={links}  history={this.props.history}></LeftNav>
+            <LeftNav links={links} history={this.props.history}></LeftNav>
           </Col>
-          <Col className="col-sm-6 removePadding">
- <BookmarkTweets/>
+          <Col className="col-sm-5">
+            <BookmarkTweets />
           </Col>
-          <Col className="col-sm-3">
-            <div class="navbar-side-right" id="navbarSide">
-              here
+          <Col className="col-sm-4 navbar-side-right">
+            <div className="col-sm-10">
+              <RightNav></RightNav>
             </div>
+
           </Col>
         </Row>
-      </div>
+      </div >
     );
   }
 }

@@ -182,11 +182,8 @@ class Explore extends Component {
                         </div>
                         {this.renderTweets()}
                     </Col>
-                    <Col className="col-sm-3" style={{
-                        borderLeft: "2px solid rgb(180, 177, 177)",
-                        height: "100vh"
-                    }}>
-                        <div className="" id="navbarSide">
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
                             <RightNav></RightNav>
                         </div>
 

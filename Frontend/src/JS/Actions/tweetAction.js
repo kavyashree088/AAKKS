@@ -1,8 +1,10 @@
-import {DASHBOARDTWEETS, CURRENTTWEET,BOOKMARKEDTWEETS,LISTTWEETS,SETPAGENUM,LIKESTWEETS,
-    REPLIESTWEETS, USERTWEETS} from "../Types/types.js";
+import {
+    DASHBOARDTWEETS, CURRENTTWEET, BOOKMARKEDTWEETS, LISTTWEETS, SETPAGENUM, LIKESTWEETS,
+    REPLIESTWEETS, USERTWEETS
+} from "../Types/types.js";
 import axios from "axios";
 import swal from 'sweetalert';
-const token= localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
 export const getListTweets = (dataObj) => dispatch => {
     let url = dataObj.url;
@@ -10,10 +12,10 @@ export const getListTweets = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: {"Authorization" : `Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -22,11 +24,11 @@ export const getListTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            console.log( responseData)
-            if(responseData.status){
+            console.log(responseData)
+            if (responseData.status) {
                 dispatch({
                     type: LISTTWEETS,
-                    payload : responseData.message
+                    payload: responseData.message
                 });
             }
         }).catch(function (err) {
@@ -34,29 +36,33 @@ export const getListTweets = (dataObj) => dispatch => {
         });
 }
 
-export const usertweets = (dataObj) => dispatch => {
+export const getUserTweets = (dataObj) => dispatch => {
+    debugger;
+    console.log("in getUserTweets....");
     let url = dataObj.url;
     let data = dataObj.data;
     axios.defaults.withCredentials = true;
+    console.log(data)
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: {"Authorization" : `Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
+            debugger;
             if (response.status >= 500) {
                 throw new Error("Bad response from server");
             }
             return response.data;
         })
         .then((responseData) => {
-            console.log( responseData)
-            if(responseData.status){
+            console.log(responseData)
+            if (responseData.responseMessage && responseData.responseMessage.status) {
                 dispatch({
                     type: USERTWEETS,
-                    payload : responseData.message
+                    payload: responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {
@@ -70,10 +76,10 @@ export const getBookmarkTweets = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: {"Authorization" : `Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -82,11 +88,11 @@ export const getBookmarkTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            console.log( responseData)
-            if(responseData.status){
+            console.log(responseData)
+            if (responseData.status) {
                 dispatch({
                     type: BOOKMARKEDTWEETS,
-                    payload : responseData.message
+                    payload: responseData.message
                 });
             }
         }).catch(function (err) {
@@ -100,10 +106,10 @@ export const getLikesTweets = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: {"Authorization" : `Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -112,11 +118,11 @@ export const getLikesTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            console.log( responseData)
-            if(responseData.status){
+            console.log(responseData)
+            if (responseData.responseMessage && responseData.responseMessage.status) {
                 dispatch({
                     type: LIKESTWEETS,
-                    payload : responseData.message
+                    payload: responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {
@@ -130,10 +136,10 @@ export const getRepliesTweets = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: {"Authorization" : `Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -142,11 +148,11 @@ export const getRepliesTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            console.log( responseData)
-            if(responseData.status){
+            console.log(responseData)
+            if (responseData.responseMessage && responseData.responseMessage.status) {
                 dispatch({
                     type: REPLIESTWEETS,
-                    payload : responseData.message
+                    payload: responseData.responseMessage.rows
                 });
             }
         }).catch(function (err) {
@@ -164,7 +170,7 @@ export const getDashboardTweets = (dataObj) => dispatch => {
     let currPageNum = data.pageNum;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -176,14 +182,14 @@ export const getDashboardTweets = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            if(responseData.status){
+            if (responseData.status) {
                 dispatch({
                     type: DASHBOARDTWEETS,
                     payload : responseData
                 });
                 dispatch({
                     type: SETPAGENUM,
-                    payload : (currPageNum+1)
+                    payload: (currPageNum + 1)
                 });
             }
         }).catch(function (err) {
@@ -198,7 +204,7 @@ export const getTweetDetails = (dataObj) => dispatch => {
     //axios.get(url, {params: params}, )
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -212,11 +218,11 @@ export const getTweetDetails = (dataObj) => dispatch => {
         .then((responseData) => {
             //swal(responseData.message);
             //TODO Add like in local likes
-            if(responseData.status){
+            if (responseData.status) {
                 dispatch({
                     type: CURRENTTWEET,
-                    payload : responseData.message
-               });
+                    payload: responseData.message
+                });
             }
         }).catch(function (err) {
             console.log(err)
@@ -229,7 +235,7 @@ export const likeATweet = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -254,7 +260,7 @@ export const unlikeATweet = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -278,7 +284,7 @@ export const bookmarkATweet = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -302,7 +308,7 @@ export const unbookmarkATweet = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -321,17 +327,17 @@ export const unbookmarkATweet = (dataObj) => dispatch => {
 }
 
 export const setCurrentTweet = (currentTweet) => dispatch => {
-   dispatch({
+    dispatch({
         type: CURRENTTWEET,
-        payload : currentTweet
-   });
+        payload: currentTweet
+    });
 }
 
 export const setCurrentPageNum = (pageNum) => dispatch => {
     dispatch({
         type: SETPAGENUM,
-        payload : pageNum
-   });
+        payload: pageNum
+    });
 }
 export const replyATweet = (dataObj) => dispatch => {
     let url = dataObj.url;
@@ -339,7 +345,7 @@ export const replyATweet = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -364,7 +370,7 @@ export const retweetWithoutComment = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}
@@ -389,7 +395,7 @@ export const retweetWithComment = (dataObj) => dispatch => {
     axios.defaults.withCredentials = true;
     axios({
         method: 'post',
-        url,        
+        url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
         //headers: {"Authorization" : `Bearer ${token}`}

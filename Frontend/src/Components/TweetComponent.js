@@ -182,6 +182,12 @@ class TweetComponentInner extends Component {
             return <div></div>
         }
     }
+    clickUser = (link) => (event) => {
+        this.props.history.push({
+            pathname: "/userDetailsPage/" + link,
+            state: { user: link }
+        });
+    }
 
     render() {
         let { userFullName, username, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic, createdAt } = this.props.tweet;
@@ -190,7 +196,7 @@ class TweetComponentInner extends Component {
         let { likesNum, repliesNum, retweetNum } = this.state;
         //TODO get from local storage
         let { likeClass, bookmarkClass, retweetClass } = this.state;
-        let userLinkUrl = '/userDetailsPage/' + username;
+        let userLinkUrl = username;
         //let tweetUrl = 'http://' + settings.frontendHostName +':' +settings.port +'/tweet/'+tweetId;
         let tweetUrl = '/tweet/' + tweetId;
         let profileImg = settings.s3bucket + profilePic;
@@ -205,8 +211,7 @@ class TweetComponentInner extends Component {
                         <CardBody>
                             <Row>{this.displayRetweetFormat(this.props.tweet)}</Row>
                             <Row>
-                            
-                                <Col xs={2}>
+                                <Col xs={4}>
                                     <Image src={profileImg}
                                         style={{
                                             height: "100px",
@@ -218,10 +223,13 @@ class TweetComponentInner extends Component {
                                     ></Image>
 
                                 </Col>
-                                <Col xs={9}>
-                                    <a href={userLinkUrl}>
-                                        <CardTitle className='blue bolder' >{userFullName}<span className='grey normal'> @{username}</span> &nbsp; &nbsp; <span className='grey normal'>{postedDateStr}</span></CardTitle>
-                                    </a>
+                                <Col xs={8}>
+                                    <Row>
+                                        <a className="active" onClick={this.clickUser(userLinkUrl)}>
+                                            <CardTitle className='blue bolder' >{userFullName}<span className='grey normal'> @{username}</span> &nbsp; &nbsp; <span className='grey normal'>{postedDateStr}</span></CardTitle>
+                                        </a>
+                                    </Row>
+
                                     {processTweetText(tweetText)}
                                     {this.displayImages(media)}
                                     {this.renderInnerTweet(isRetweet, actualTweetDetails)}

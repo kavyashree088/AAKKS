@@ -1,65 +1,66 @@
 .rwt__tabs[data-rwt-vertical="true"] {
-    display: flex;
-  }
-  
-  .rwt__tablist:not([aria-orientation="vertical"]) {
-      border-bottom: 1px solid #ddd;
-  }
-  
-  .rwt__tablist[aria-orientation="vertical"] {
-    display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      flex-grow: 0;
-      border-right: 1px solid #ddd;
-      margin-right: 1rem;
-  }
-  
-  .rwt__tab {
-      background: transparent;
-      border: 0;
+  display: flex;
+}
+
+.rwt__tablist:not([aria-orientation="vertical"]) {
+  border-bottom: 1px solid #ddd;
+}
+
+.rwt__tablist[aria-orientation="vertical"] {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-right: 1px solid #ddd;
+  margin-right: 1rem;
+}
+
+.rwt__tab {
+  background: transparent;
+  border: 0;
   font-weight: bold;
-  font-family:sans-serif;
-  color:rgb(124, 124, 124);
-      font-size: inherit;
-      padding: 1rem 2rem;
-    transition: background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  
-  .rwt__tab[aria-selected="false"]:hover,
-  .rwt__tab:focus {
-    outline: 0;
-    background-color: #f4f4f4;
-    color:rgba(29, 161, 242, 1);
-      background-color: rgb(229, 244, 253);
-  }
-  
-  .rwt__tab[aria-selected="true"] {
-      position: relative;
-  }
-  
+  font-family: sans-serif;
+  color: rgb(124, 124, 124);
+  font-size: inherit;
+  padding: 1rem 2rem;
+  transition: background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.rwt__tab[aria-selected="false"]:hover,
+.rwt__tab:focus {
+  outline: 0;
+  background-color: #f4f4f4;
+  color: rgba(29, 161, 242, 1);
+  background-color: rgb(229, 244, 253);
+}
+
+.rwt__tab[aria-selected="true"] {
+  position: relative;
+}
+
+.rwt__tab[aria-selected="true"]:after {
+  content: "";
+  position: absolute;
+}
+
+.rwt__tablist:not([aria-orientation="vertical"])
   .rwt__tab[aria-selected="true"]:after {
-      content: '';
-      position: absolute;
-  }
-  
-  .rwt__tablist:not([aria-orientation="vertical"]) .rwt__tab[aria-selected="true"]:after {
-    bottom: -1px;
-      left: 0;
-      width: 100%;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
 
-      border-bottom: 3px solid rgba(29, 161, 242, 1);
-  }
-  
-  .rwt__tablist[aria-orientation="vertical"] .rwt__tab[aria-selected="true"]:after {
-    right: -1px;
-    top: 0;
-    height: 100%;
-    border-right: 3px solid rgba(29, 161, 242, 1);
-  }
+  border-bottom: 3px solid rgba(29, 161, 242, 1);
+}
 
+.rwt__tablist[aria-orientation="vertical"]
+  .rwt__tab[aria-selected="true"]:after {
+  right: -1px;
+  top: 0;
+  height: 100%;
+  border-right: 3px solid rgba(29, 161, 242, 1);
+}
 
-  .vertical-menu {
+.vertical-menu {
   height: calc(100vh - 4rem);
 }
 .side-bar {
@@ -127,19 +128,6 @@
 .active {
   color: rgba(29, 161, 242, 1);
 }
-.navbar-side-right {
-  height: 100%;
-  width: 25%;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0;
-  list-style: none;
-  border-left: 2px solid rgb(180, 177, 177);
-  background-color: white;
-  overflow-y: scroll;
-  z-index: 1000;
-}
 .ip2 {
   border-radius: 25px;
 }
@@ -167,113 +155,111 @@ a:active {
 }
 
 .listbutton {
-  width:100%;
-  height:50px;
-  text-align:left;
+  width: 100%;
+  height: 50px;
+  text-align: left;
   border-color: rgb(243, 243, 243);
 }
 
 .listbutton2 {
-  width:100%;
-  height:50px;
-  color:rgb(196, 52, 52);
+  width: 100%;
+  height: 50px;
+  color: rgb(196, 52, 52);
   border-color: rgb(243, 243, 243);
 }
 
 .listbutton:hover {
-  background-color:  rgb(241, 241, 241);
+  background-color: rgb(241, 241, 241);
 }
 
-
 .listbutton1 {
-  width:100%;
-  height:50px;
-  color:rgba(29, 161, 242, 1);
+  width: 100%;
+  height: 50px;
+  color: rgba(29, 161, 242, 1);
   border-color: rgb(243, 243, 243);
 }
 
 .listbutton1:hover {
-  background-color:rgb(231, 245, 255) ;
-  
+  background-color: rgb(231, 245, 255);
 }
 .listbutton2:hover {
   background-color: rgb(248, 237, 237);
- 
 }
-.modalbutton{
-border-color:#ffffff;
+.modalbutton {
+  border-color: #ffffff;
 }
 
-.modalbutton:hover{
- text-decoration-line: underline;
-  }
+.modalbutton:hover {
+  text-decoration-line: underline;
+}
 
-
-.listSpecificButton{
+.listSpecificButton {
   background-color: #ffffff;
-  margin:20px;
-  padding-top:10px;
-  padding-bottom:10px;
-  padding-left:18px;
-  padding-right:18px;
+  margin: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 18px;
+  padding-right: 18px;
   border-radius: 25px;
   font-weight: bold;
   border-color: rgba(29, 161, 242, 1);
-  color:rgba(29, 161, 242, 1);
+  color: rgba(29, 161, 242, 1);
 }
-.removePadding{
-  padding-left:0px !important;
-  padding-right:0px !important;
-  width:50ch
+.removePadding {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  width: 50ch;
 }
-.savebutton{
+.savebutton {
   background-color: rgba(29, 161, 242, 1);
-          float: right;
-          margin: 0 4%;
-          width:80px;
-          height:40px;
-          border-radius:25px;
-          color: white;
-          padding: 8px;
+  float: right;
+  margin: 0 4%;
+  width: 80px;
+  height: 40px;
+  border-radius: 25px;
+  color: white;
+  padding: 8px;
 }
 
-.savebutton:disabled{
+.savebutton:disabled {
   background-color: rgb(155, 155, 155);
 }
 
-.listSpecificButtonv2{
- 
-  margin:20px;
-  padding-top:10px;
-  padding-bottom:10px;
-  padding-left:18px;
-  padding-right:18px;
+.listSpecificButtonv2 {
+  margin: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 18px;
+  padding-right: 18px;
   border-radius: 25px;
   font-weight: bold;
-  background-color:  rgba(29, 161, 242, 1);
+  background-color: rgba(29, 161, 242, 1);
   border-color: rgba(29, 161, 242, 1);
-  color:#ffffff;
+  color: #ffffff;
 }
 
-.listSpecificButtonv2:hover{
+.listSpecificButtonv2:hover {
   border-color: rgba(29, 161, 242, 1);
-  color:rgba(29, 161, 242, 1);
+  color: rgba(29, 161, 242, 1);
   background-color: #ffffff;
 }
 
-.listSpecificButton:hover{
-  background-color:  rgba(29, 161, 242, 1);
+.listSpecificButton:hover {
+  background-color: rgba(29, 161, 242, 1);
   border-color: rgba(29, 161, 242, 1);
-  color:#ffffff;
+  color: #ffffff;
 }
 
-
-.listButtonv4{
-  width:700px;
+.listButtonv4 {
+  width: 700px;
   text-align: left;
   border-color: rgb(243, 243, 243);
-  background-color:white;
+  background-color: white;
   padding: 10px;
+}
+.button {
+  background-color: "white";
+  padding: "0px";
 }
 
 .listButtonv4:hover {
@@ -292,41 +278,46 @@ border-color:#ffffff;
   padding: 2rem;
 }
 
-.inputList{
+.inputList {
   border-radius: 8px;
-              background-color: rgb(252, 252, 255);
-              border-bottom: solid black 1px;
-              height: 50px;
+  background-color: rgb(252, 252, 255);
+  border-bottom: solid black 1px;
+  height: 50px;
 }
 
-.wideinput{
-  width:40ch;
+.wideinput {
+  width: 40ch;
 }
 
-.levelClass{
-  margin:3%;
-  background-color:  rgba(29, 161, 242, 1);
-  padding:30%;
-  border-radius:7px;
-  color:white;
+.levelClass {
+  margin: 3%;
+  background-color: rgba(29, 161, 242, 1);
+  padding: 30%;
+  border-radius: 7px;
+  color: white;
 }
 
-.tagbutton{
+.tagbutton {
   border-color: rgba(29, 161, 242, 1) solid 3px;
-  border-radius:16px;
-  padding:5px ;
-  color:rgba(29, 161, 242, 1);
+  border-radius: 16px;
+  padding: 5px;
+  color: rgba(29, 161, 242, 1);
 }
-.tagbutton:hover{
-background-color: rgb(231, 245, 255);
+.tagbutton:hover {
+  background-color: rgb(231, 245, 255);
 }
 
-.removeButton{
+.removeButton {
   background-color: rgb(204, 62, 62);
-  border-color:rgb(204, 62, 62);
-  color:white;
-  float:right;
-  border-radius:12px;
-padding:5px;
-margin:10px;
+  border-color: rgb(204, 62, 62);
+  color: white;
+  float: right;
+  border-radius: 12px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.profiletag {
+  margin: 10px 8px 10px 8px;
+  color: #808080;
 }

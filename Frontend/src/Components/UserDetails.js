@@ -8,14 +8,20 @@
 /* eslint-disable indent */
 /* eslint-disable spaced-comment */
 import React, { Component } from "react";
-import { Row, Col, InputGroup, FormControl, Accordion, Card, Image, Dropdown, Button } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import "../CSS/navbar.css"
 import LeftNav from "./LeftNav";
 import config from './../Config/settings'
 import axios from 'axios';
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import RepliesTweets from './UserProfile/RepliesTweets';
+import LikesTweets from './UserProfile/LikesTweets';
+import MyUserTweets from './UserProfile/MyUserTweets';
+import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
+//import Tabs from 'react-bootstrap/Tabs'
+//mport Tab from 'react-bootstrap/Tab'
+import { Link } from "react-router-dom";
 import coverImage from "../Components/UserProfile/CoverPhoto.jpg"
+import RightNav from "./RighNav";
 //eslint-disable-next-line
 class UserDetails extends Component {
     constructor(props) {
@@ -28,8 +34,30 @@ class UserDetails extends Component {
 
     componentWillMount() {
         if (localStorage.getItem('username')) {
-            console.log(this.props.location.state.user)
-            this.setState({ user: this.props.location.state.user })
+            console.log(this.props.location.state)
+            if (this.props.location.state.user.username === undefined) {
+                let data = {
+                    username: this.props.location.state.user
+                }
+                axios({
+                    method: 'post',
+                    url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                    data,
+                    config: { headers: { 'Content-Type': 'application/json' } },
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+                }).then(async response => {
+                    await this.setState({ user: response.data.details.rows });
+                })
+                if (this.props.location.state.user === localStorage.getItem("username")) {
+                    this.props.history.push("/profile/" + localStorage.getItem("username"))
+                }
+            } else {
+                this.setState({ user: this.props.location.state.user })
+                if (this.props.location.state.user.username === localStorage.getItem("username")) {
+                    this.props.history.push("/profile/" + localStorage.getItem("username"))
+                }
+            }
+
             let data = {
                 username: localStorage.getItem("username")
             }
@@ -63,7 +91,18 @@ class UserDetails extends Component {
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
         }).then(response => {
             console.log(response)
-            this.setState({ userProfile: response.data.result });
+            let data = {
+                username: localStorage.getItem("username")
+            }
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(async response => {
+                await this.setState({ userProfile: response.data.details.rows });
+            })
         })
     }
 
@@ -79,7 +118,19 @@ class UserDetails extends Component {
             config: { headers: { 'Content-Type': 'application/json' } },
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
         }).then(response => {
-            this.setState({ userProfile: response.data.result });
+            console.log(response)
+            let data = {
+                username: localStorage.getItem("username")
+            }
+            axios({
+                method: 'post',
+                url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                data,
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(async response => {
+                await this.setState({ userProfile: response.data.details.rows });
+            })
         })
     }
 
@@ -88,6 +139,10 @@ class UserDetails extends Component {
         event.target.onError = null;
         event.target.src = `https://${config.imageurl}/profileAlias.jpeg`
     }
+
+    lists = () => {
+        this.props.history.push("/List/" + this.state.user.username)
+    }
     render() {
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home" },
@@ -95,7 +150,7 @@ class UserDetails extends Component {
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
@@ -104,10 +159,10 @@ class UserDetails extends Component {
             <div>
                 <Row>
                     <Col className="col-sm-3">
-                        <LeftNav links={links}  history={this.props.history}></LeftNav>
+                        <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
-                    <Col className="col-sm-6 pt-3">
+                    <Col className="col-sm-5 pt-3">
                         <div>
                             <Row>
                                 <Col className="col-sm-1" style={{
@@ -131,11 +186,21 @@ class UserDetails extends Component {
                                         <img className="img-thumbnail" src={`https://${config.imageurl}/${this.state.user.profilePicture}`} onError={this.addDefaultSrc} />
                                     </Row>
                                 </Col>
+
                                 <Col xs={8} >
                                     {this.state.userProfile.following !== undefined && this.state.userProfile.following.includes(this.state.user.username) ? (
-                                        <Button variant="primary" className="followButton" label="Edit Profile" onClick={this.unfollow}></Button>
+                                        <div>
+
+                                            <Button variant="primary" className="followButton" label="Edit Profile" onClick={this.unfollow}></Button>
+                                            <Button className="editButton" onClick={this.lists}>Lists</Button>
+                                        </div>
                                     ) : (
-                                            <Button className="editButton" label="Edit Profile" onClick={this.follow}>Follow</Button>
+                                            <div>
+
+                                                <Button className="editButton" label="Edit Profile" onClick={this.follow}>Follow</Button>
+                                                <Button className="editButton" onClick={this.lists}>Lists</Button>
+                                            </div>
+
                                         )}
 
                                 </Col>
@@ -153,36 +218,90 @@ class UserDetails extends Component {
                                     margin: "2px"
                                 }}><b>Location: </b>{this.state.user.city}</p>
                                 <Row>
-                                    <Col><p style={{
+                                    {/* <Col><p style={{
                                         marginRight: "5px",
                                         marginLeft: "5px"
                                     }}><b>{this.state.user.followers.length || 0}</b><b className="lightFont"> Followers</b></p></Col>
 
                                     <Col>
                                         <p><b>{this.state.user.following.length || 0}</b><b className="lightFont"> Following</b></p>
+                                    </Col> */}
+                                    <Col className="col-sm-3">
+                                        <Link class="profiletag"
+                                            style={{
+                                                marginRight: "10px"
+                                            }}
+                                            to={{
+                                                pathname: "/follow",
+                                                state: {
+                                                    following: this.state.user.following,
+                                                    followers: this.state.user.followers,
+                                                    showFollowers: true,
+                                                    currentUsername: this.state.user.username
+                                                }
+                                            }}
+                                        >
+                                            {this.state.user.followers.length} Followers
+                                    </Link>
                                     </Col>
-
+                                    <Col className="col-sm-3">
+                                        <Link class="profiletag"
+                                            to={{
+                                                pathname: "/follow",
+                                                state: {
+                                                    following: this.state.user.following,
+                                                    followers: this.state.user.followers,
+                                                    showFollowers: true,
+                                                    currentUsername: this.state.user.username
+                                                }
+                                            }}
+                                        >
+                                            {this.state.user.following.length} Following
+                                    </Link>
+                                    </Col>
                                 </Row>
                             </div>
                             <div>
-                                <Tabs defaultActiveKey="profile" id="profileTweets">
+                                <Tabs
+                                    defaultTab="one"
+                                    class="removePadding"
+                                    onChange={tabId => {
+                                        console.log(tabId);
+                                    }}
+                                    style={{ margin: "0px", padding: "0px" }}
+                                >
+                                    <TabList>
+                                        <Tab style={{ width: "33%" }} tabFor="one">
+                                            Tweets
+                                        </Tab>
 
-                                    <Tab className="profileTab" eventKey="tweets" title="Tweets">
+                                        <Tab style={{ width: "33%" }} tabFor="two">
+                                            Retweets
+                                        </Tab>
 
-                                    </Tab>
-                                    <Tab eventKey="replies" title="Retweets" className="profileTab">
+                                        <Tab style={{ width: "33%" }} tabFor="three">
+                                            Likes
+                                        </Tab>
+                                    </TabList>
 
-                                    </Tab>
-                                    <Tab eventKey="likes" title="Likes" className="profileTab">
+                                    <TabPanel tabId="one">
+                                        <MyUserTweets user={this.state.user.username} />
+                                    </TabPanel>
 
-                                    </Tab>
+                                    <TabPanel tabId="two">
+                                        <RepliesTweets user={this.state.user.username} />
+                                    </TabPanel>
+
+                                    <TabPanel tabId="three">
+                                        <LikesTweets user={this.state.user.username} />
+                                    </TabPanel>
                                 </Tabs>
                             </div>
                         </div>
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>

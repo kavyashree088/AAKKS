@@ -9,6 +9,7 @@ import axios from 'axios';
 import config from './../Config/settings'
 
 import { Redirect } from 'react-router'
+import RightNav from './RighNav';
 
 
 export class DeactivateAccount extends Component {
@@ -118,9 +119,9 @@ export class DeactivateAccount extends Component {
                         </div>
 
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>
