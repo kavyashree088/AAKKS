@@ -16,6 +16,7 @@ import axios from 'axios';
 import RepliesTweets from './UserProfile/RepliesTweets';
 import LikesTweets from './UserProfile/LikesTweets';
 import MyUserTweets from './UserProfile/MyUserTweets';
+import '../CSS/List.css'
 import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
 //import Tabs from 'react-bootstrap/Tabs'
 //mport Tab from 'react-bootstrap/Tab'
@@ -249,7 +250,7 @@ class UserDetails extends Component {
                                                 }
                                             }}
                                         >
-                                            {followerCount} Followers
+                                           <b> {followerCount} Followers</b>
                                     </Link>
                                     </Col>
                                     <Col className="col-sm-3">
@@ -264,7 +265,7 @@ class UserDetails extends Component {
                                                 }
                                             }}
                                         >
-                                            {followingCount || 0} Following
+                                           <b> {followingCount || 0} Following</b>
                                     </Link>
                                     </Col>
                                 </Row>
