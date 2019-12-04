@@ -98,7 +98,7 @@ router.post('/getProfileDetails', function (req, res) {
                 console.log(response)
                 console.log(response.result)
                 console.log("user profile set to cache in redis!!");
-                redisClient.expire(redisKey, 100);
+                redisClient.expire(redisKey, 10);
                 res.status(status).json(responseObj);
               } else {
                 responseObj.status = 200;
@@ -203,7 +203,7 @@ router.get("/allUsers", (req, res) => {
 
               } else {
                 console.log(response)
-                redisClient.expire(redisKey, 100);
+                redisClient.expire(redisKey, 10);
                 details = {}
                 details.details = result;
                 res.status(status).json(details);
