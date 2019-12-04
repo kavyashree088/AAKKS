@@ -81,7 +81,7 @@ class GraphDoughnut extends Component{
                        maintainAspectRatio:false,
                         title:{
                             display:this.props.displayTitle,
-                            text:"TOP 10 TWEETS WITH LIKES",
+                            text:"TOP 10 TWEETS WITH MORE LIKES",
                             fontSize:25
                         },
                         legend:{

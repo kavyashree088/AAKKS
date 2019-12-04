@@ -161,7 +161,7 @@ let fetchRetweets = function(message, callback){
            "$sort":{"length":-1}
        },
        {
-           "$limit":10
+           "$limit":5
        }
     ]).then(
         result=>{
