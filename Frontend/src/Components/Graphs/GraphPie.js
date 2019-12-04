@@ -3,8 +3,6 @@ import { Pie} from 'react-chartjs-2';
 import axios from 'axios';
 
 class GraphPie extends Component{
-    // width={100}
-    // height={50}
 
     constructor(props){
 
@@ -37,20 +35,13 @@ class GraphPie extends Component{
         console.log("retweets:", retweets);
         console.log("usernames:", usernames);
         
-        // console.log("this.state.labels",this.state.labels)
-        // console.log("this.state.data",this.state.data)
-        // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
-        //  this.state.chartData.datasets[0].data=[600, 560 ];
-        //  console.log("chart:", this.state.chartData);
-        // //console.log("labels:",this.state.chartData.labels);
-        // console.log("data:",this.state.chartData.datasets[0].data)
         
         const chartData1={
-            labels:usernames, //tweets
+            labels:usernames,
             datasets:[{
                 label:['retweets'],
                 data:
-                   retweets  //retweets no.
+                   retweets  
                 
             ,
             backgroundColor:[
@@ -64,7 +55,7 @@ class GraphPie extends Component{
                'rgba(205, 159, 68, 0.6)',
                'rgba(200, 200, 64, 0.6)',
                'rgba(250, 200,185, 0.6)',
-               // 'rgba(255, 99, 132, 0.6)'  use lato for the font family
+             
             ],
             borderWidth:4,
             hoverBorderWidth:3,
@@ -109,7 +100,7 @@ class GraphPie extends Component{
                             }
                         }, 
                         layout:{
-                            padding:{       //keep padding 50 directly for the smaller look
+                            padding:{       
                                 left:50,
                                 right:0
                             }

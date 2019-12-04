@@ -2,8 +2,6 @@ import React,{Component} from 'react';
 import { HorizontalBar} from 'react-chartjs-2';
 import axios from 'axios';
 class GraphHorizontalBar extends Component{
-    // width={100}
-    // height={50}
 
     constructor(props){
 
@@ -109,9 +107,7 @@ class GraphHorizontalBar extends Component{
                                 }
                             }]
                         },
-                        // tooltips:{
-                        //     enabled:false
-                        // }
+                      
                     }}
                     
                     />

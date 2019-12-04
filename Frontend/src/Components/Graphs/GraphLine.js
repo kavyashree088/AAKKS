@@ -31,14 +31,10 @@ class GraphLine  extends Component{
 
         }
         const result=response.data.graphData;
-        //const result=response.data.graphData;
+        
         var viewCount=result.viewCount;
         var username=result.username;
-        // for(let i=0;i<result.length;i++){
-
-        //     usernames[i]=result[i].username;
-        //     viewCount[i]=result[i].viewCount;
-        // }
+      
         console.log("viewCount:", viewCount);
         console.log("usernames:", username);
         
@@ -81,8 +77,7 @@ class GraphLine  extends Component{
                'rgba(200, 200, 64, 0.6)',
                'rgba(250, 200,185, 0.6)',
                
-               
-               // 'rgba(255, 99, 132, 0.6)'
+            
             ]
            }
        ]
@@ -94,9 +89,6 @@ class GraphLine  extends Component{
     
     });
     }
-
-
-
 
 
     static defaultProps={

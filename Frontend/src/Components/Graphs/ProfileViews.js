@@ -26,11 +26,7 @@ class ProfileViews extends Component{
         const result=response.data.graphData;
         var viewCount=result.viewCount;
         var username=result.username;
-        // for(let i=0;i<result.length;i++){
-
-        //     usernames[i]=result[i].username;
-        //     viewCount[i]=result[i].viewCount;
-        // }
+     
         console.log("viewCount:", viewCount);
         console.log("usernames:", username);
         
@@ -51,7 +47,7 @@ class ProfileViews extends Component{
                'rgba(205, 159, 68, 0.6)',
                'rgba(200, 200, 64, 0.6)',
                'rgba(250, 200,185, 0.6)',
-               // 'rgba(255, 99, 132, 0.6)'
+               
             ]
            }
        ]
