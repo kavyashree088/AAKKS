@@ -36,20 +36,23 @@ class UserDetails extends Component {
     componentWillMount() {
         if (localStorage.getItem('username')) {
             console.log(this.props.location.state)
-            if (this.props.location.state.user.username === undefined) {
+            if (this.props.location.state === undefined) {
+
                 let data = {
-                    username: this.props.location.state.user
+                    username: this.props && this.props.match.params.username ? this.props.match.params.username : ''
                 }
+                console.log(data)
                 axios({
                     method: 'post',
                     url: 'http://' + config.hostname + ':3001/getProfileDetails',
                     data,
                     config: { headers: { 'Content-Type': 'application/json' } },
                     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
-                }).then(async response => {
-                    await this.setState({ user: response.data.details.rows });
+                }).then(response => {
+                    console.log(response.data.details.rows)
+                    this.setState({ user: response.data.details.rows });
                 })
-                if (this.props.location.state.user === localStorage.getItem("username")) {
+                if (data.username === localStorage.getItem("username")) {
                     this.props.history.push("/profile/" + localStorage.getItem("username"))
                 }
             } else {
@@ -74,6 +77,7 @@ class UserDetails extends Component {
         } else {
             this.props.history.push("/");
         }
+        console.log(this.state.user)
     }
 
     back = () => {
@@ -156,6 +160,9 @@ class UserDetails extends Component {
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
         ];
+
+        let followerCount = this.state.user.followers !== undefined ? this.state.user.followers.length : 0
+        let followingCount = this.state.user.following !== undefined ? this.state.user.following.length : 0
         return (
             <div>
                 <Row>
@@ -242,7 +249,7 @@ class UserDetails extends Component {
                                                 }
                                             }}
                                         >
-                                            {this.state.user.followers.length} Followers
+                                            {followerCount} Followers
                                     </Link>
                                     </Col>
                                     <Col className="col-sm-3">
@@ -257,7 +264,7 @@ class UserDetails extends Component {
                                                 }
                                             }}
                                         >
-                                            {this.state.user.following.length} Following
+                                            {followingCount || 0} Following
                                     </Link>
                                     </Col>
                                 </Row>
@@ -277,7 +284,7 @@ class UserDetails extends Component {
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="two">
-                                        Replies
+                                            Retweets
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="three">
