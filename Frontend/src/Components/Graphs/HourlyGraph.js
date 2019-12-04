@@ -3,9 +3,7 @@ import { Pie} from 'react-chartjs-2';
 import axios from 'axios';
 
 class HourlyGraph extends Component{
-    // width={100}
-    // height={50}
-
+ 
     constructor(props){
 
         super(props);
@@ -28,10 +26,10 @@ class HourlyGraph extends Component{
         }
         const result=response.data.graphData;
         const retweets=[];
-        //const ids=[]
+      
         for(let i=0;i<result.length;i++){
 
-           // ids[i]=result[i]._id;
+    
             retweets[i]=result[i].count;
         }
         console.log("retweets:", retweets);
@@ -42,7 +40,7 @@ class HourlyGraph extends Component{
             datasets:[{
                 label:['Hourly Tweets'],
                 data:
-                   retweets  //retweets no.
+                   retweets 
                 
             ,
             backgroundColor:[
@@ -58,7 +56,7 @@ class HourlyGraph extends Component{
                'rgba(250, 200,185, 0.6)',
                'rgba(54, 32, 25, 0.6)',
                'rgba(255, 206, 226, 0.6)',
-               // 'rgba(255, 99, 132, 0.6)'  use lato for the font family
+               
             ],
             borderWidth:4,
             hoverBorderWidth:3,
@@ -103,7 +101,7 @@ class HourlyGraph extends Component{
                             }
                         }, 
                         layout:{
-                            padding:{       //keep padding 50 directly for the smaller look
+                            padding:{      
                                 left:50,
                                 right:0
                             }

@@ -42,13 +42,13 @@ let graphBar = function(message, callback){
 
     console.log("Inside views request");
   
-    Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
-        // console.log(result);
+    Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  
+    
  
         if(err)
         console.log("error in mongo query")
       
-        //console.log("Result:",result);
+        
         callback(null,result);
      })
 };
@@ -59,8 +59,7 @@ let hourlyGraph = function(message, callback){
 
         var x=[];
     Tweets.find({"createdAt":{"$gte": new Date(2019, 6, 2), "$lt": new Date(2019, 11, 30)}}).then((result,err)=>{  //Temp will be Tweets
-        console.log("hourly tweet result:",result);  
- 
+        
         if(err)
             console.log("error in mongo query")
       
@@ -68,7 +67,6 @@ let hourlyGraph = function(message, callback){
         result.forEach(element => {
 
             var y=element.createdAt.getHours();
-            console.log("HOURRRRRR---YYYYYYYYYYYYYY:",y);
 
             if(lookup.includes(y)){
                 console.log("inside if");
@@ -81,7 +79,7 @@ let hourlyGraph = function(message, callback){
                 x.push({hour:y,count:1})
         }
         });
-        console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH:",x);
+        
         callback(null,x);
      })
     
@@ -93,31 +91,22 @@ let profileViews = function(message, callback){
     console.log("Inside profile Views kafka backend");
 
     var current_timestamp=Date.now();
-    var current_date=new Date(current_timestamp);
-    console.log(current_timestamp);
-    console.log(current_date);
-    console.log(current_date.getDate());
-    console.log(current_date.getMonth());
-    console.log(current_date.getFullYear());
-    console.log(current_date.getHours());
-  
+    var current_date=new Date(current_timestamp);  
     
     console.log("Inside views request");
-    console.log(message)
-    //localStorage.setItem("username","keerthi");         ///DELETE THIS AFTER MERGING
-    //var username=localStorage.getItem('username');
+  
     var username=message.body.username;
-    console.log("----------------------------------------------------------------------------------------------",message)
+    
 
-    Users.findOne({"username":username}).then((result,err)=>{  //Temp will be Tweets
+    Users.findOne({"username":username}).then((result,err)=>{  
         console.log(result)
-         console.log("PROFILEEEE VIEWCOOUNTT:",result.viewCount);
+         console.log("Profile Count:",result.viewCount);
  
         
         if(err)
-        console.log("error in mongo query")
+        console.log("error in Mongo query")
       
-        //console.log("Result:",result);
+       
         callback(null,result);
      })
 
@@ -146,22 +135,12 @@ let fetchLikes = function(message, callback){
        }
     ]).then(
         result=>{
-            //console.log("likes:",result);
+           
             callback(null,result);
         }
         
     )
 
-    
-    // Tweets.find({}).sort({'views':-1}).limit(10).then((result,err)=>{  //Temp will be Tweets
-    //     // console.log(result);
- 
-    //     if(err)
-    //     console.log("error in mongo query")
-      
-    //     console.log("Result:",result);
-    //     callback(null,result);
-    //  })
 };
 
 let fetchRetweets = function(message, callback){
@@ -186,7 +165,7 @@ let fetchRetweets = function(message, callback){
        }
     ]).then(
         result=>{
-           // console.log("retweets:",result);
+           
             callback(null,result);
         }
         
@@ -196,11 +175,11 @@ let fetchRetweets = function(message, callback){
 
 let dailyTweets = function(message, callback){
 
-    console.log("Inside daily tweets request------------------------");
+    console.log("Inside daily tweets request");
 
     var x=[];
     Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (7* 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
-        // console.log(result);  //workingg
+      
  
         if(err)
             console.log("error in mongo query")
@@ -228,11 +207,11 @@ let dailyTweets = function(message, callback){
 
 let monthlyTweets = function(message, callback){
 
-    console.log("Inside daily tweets request------------------------");
+    console.log("Inside daily tweets request");
 
     var x=[];
     Tweets.find({"createdAt":{"$gte": new Date(2019, 0, 2), "$lt": new Date(2019, 11, 4)}}).then((result,err)=>{  //Temp will be Tweets
-        // console.log(result);  //workingg
+        
  
         if(err)
             console.log("error in mongo query")
@@ -253,7 +232,7 @@ let monthlyTweets = function(message, callback){
                 x.push({month:y,count:1})
             
         });
-        console.log("QQQQQQQ:",x);
+        console.log("Q:",x);
         callback(null,x);
      })
 };

@@ -35,7 +35,7 @@ class GraphDoughnut extends Component{
         console.log("usernames:", usernames);
         
         const chartData1={
-            labels:usernames, //tweets
+            labels:usernames, 
             datasets:[{
                 label:['hello'],
                 data:likes
@@ -51,7 +51,7 @@ class GraphDoughnut extends Component{
                'rgba(205, 159, 68, 0.6)',
                'rgba(200, 200, 64, 0.6)',
                'rgba(250, 200,185, 0.6)',
-               // 'rgba(255, 99, 132, 0.6)'
+            
             ]
            }
        ]
