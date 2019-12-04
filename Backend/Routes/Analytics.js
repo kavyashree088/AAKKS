@@ -161,10 +161,6 @@ router.get('/fetchRetweets',function(req,res){
 });
 
 router.get('/dailyTweets',function(req,res){
-    
-    
-  console.log("in fetch daily  tweets backend---------------------------")
-  
 
   kafka.make_request("analytics", { "path": "dailyTweets" }, function(
     err,

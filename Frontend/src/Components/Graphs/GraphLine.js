@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
-
+import axios from 'axios';
 class GraphLine  extends Component{
     // width={100}
     // height={50}
@@ -16,54 +16,81 @@ class GraphLine  extends Component{
         }
     }
 
-    // componentDidMount(){
+    componentDidMount(){
 
-    //     var rooturl="localhost";
-    //     axios.get('http://'+rooturl+':3001/fetchProfileViews')
-    //     .then(response => {
-    //     console.log("Status Code : ",response.status);
-    //     if(response.status === 200){
+        var rooturl="localhost";
+        axios.get('http://'+rooturl+':3001/fetchProfileViews')
+        .then(response => {
+        console.log("Status Code : ",response.status); 
+        if(response.status === 200){
         
-    //         console.log("Response data:", response.data.graphData);
+            console.log("Response data:", response.data.graphData);
 
-    //     }
-    //     const result=response.data.graphData;
-    //     const views=[];
-    //     const usernames=[]
-    //     for(let i=0;i<result.length;i++){
+        }
+        const result=response.data.graphData;
+        //const result=response.data.graphData;
+        var viewCount=result.viewCount;
+        var username=result.username;
+        // for(let i=0;i<result.length;i++){
 
-    //         usernames[i]=result[i].username;
-    //         views[i]=result[i].views;
-    //     }
-    //     console.log("views:", views);
-    //     console.log("usernames:", usernames);
+        //     usernames[i]=result[i].username;
+        //     viewCount[i]=result[i].viewCount;
+        // }
+        console.log("viewCount:", viewCount);
+        console.log("usernames:", username);
         
-    //     const chartData1={
-    //         labels:usernames, //tweets
-    //         datasets:[{
-    //             label:['Population'],
-    //             data:[
-    //                 1,2,3,4,5,6,7,8,9,10,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,,  //views
-    //             ]
-    //         ,
-    //         backgroundColor:[
-    //            'rgba(255, 99, 132, 0.6)',
-    //            // 'rgba(54, 162, 235, 0.6)',
-    //            // 'rgba(255, 206, 86, 0.6)',
-    //            // 'rgba(75, 192, 192, 0.6)',
-    //            // 'rgba(153, 102, 255, 0.6)',
-    //            // 'rgba(255, 159, 64, 0.6)',
-    //            // 'rgba(255, 99, 132, 0.6)'
-    //         ]
-    //        }
-    //    ]
-    //     }
-    //     this.setState({
-    //         chartData:chartData1
-    //     })
+        const chartData1={
+            labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], //tweets
+            datasets:[{
+                label:['hello'],
+                data:[10,15,15,16,20,25,19,17,10,20,25,17,19,23,20,17,18,11,24,16,14,14,15,10,6,17,14,17,viewCount]
+            ,
+            backgroundColor:[
+              
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                'rgba(105, 179, 64, 0.6)',
+                'rgba(205, 159, 68, 0.6)',
+                'rgba(200, 200, 64, 0.6)',
+                'rgba(250, 200,185, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+               'rgba(54, 162, 235, 0.6)',
+               'rgba(255, 206, 86, 0.6)',
+               'rgba(75, 192, 192, 0.6)',
+               'rgba(153, 102, 255, 0.6)',
+               'rgba(255, 159, 64, 0.6)',
+               'rgba(105, 179, 64, 0.6)',
+               'rgba(205, 159, 68, 0.6)',
+               'rgba(200, 200, 64, 0.6)',
+               'rgba(250, 200,185, 0.6)',
+               'rgba(255, 99, 132, 0.6)',
+               'rgba(54, 162, 235, 0.6)',
+               'rgba(255, 206, 86, 0.6)',
+               'rgba(75, 192, 192, 0.6)',
+               'rgba(153, 102, 255, 0.6)',
+               'rgba(255, 159, 64, 0.6)',
+               'rgba(105, 179, 64, 0.6)',
+               'rgba(205, 159, 68, 0.6)',
+               'rgba(200, 200, 64, 0.6)',
+               'rgba(250, 200,185, 0.6)',
+               
+               
+               // 'rgba(255, 99, 132, 0.6)'
+            ]
+           }
+       ]
+         
+        }
+        this.setState({
+            chartData:chartData1
+        })
     
-    // });
-    // }
+    });
+    }
 
 
 

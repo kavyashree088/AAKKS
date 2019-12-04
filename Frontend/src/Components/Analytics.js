@@ -69,7 +69,7 @@ class Analytics extends Component {
                 
                 <div>
                     <div>
-                    <ProfileViews />
+                    <GraphLine />
                     </div>
                 
                 </div>

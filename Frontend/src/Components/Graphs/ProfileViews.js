@@ -24,18 +24,18 @@ class ProfileViews extends Component{
 
         }
         const result=response.data.graphData;
-        var viewCount=[];
-        var usernames=[]
-        for(let i=0;i<result.length;i++){
+        var viewCount=result.viewCount;
+        var username=result.username;
+        // for(let i=0;i<result.length;i++){
 
-            usernames[i]=result[i].username;
-            viewCount[i]=result[i].viewCount;
-        }
+        //     usernames[i]=result[i].username;
+        //     viewCount[i]=result[i].viewCount;
+        // }
         console.log("viewCount:", viewCount);
-        console.log("usernames:", usernames);
+        console.log("usernames:", username);
         
         const chartData1={
-            labels:usernames, //tweets
+            labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], //tweets
             datasets:[{
                 label:['hello'],
                 data:viewCount

@@ -129,7 +129,23 @@ let profileViews = function(message, callback){
     console.log(current_date.getHours());
   
     
-    
+    console.log("Inside views request");
+  
+    //localStorage.setItem("username","keerthi");         ///DELETE THIS AFTER MERGING
+    //var username=localStorage.getItem('username');
+    var username="keerthi";
+
+    Users.findOne({"username":username}).then((result,err)=>{  //Temp will be Tweets
+        console.log(result)
+         console.log("PROFILEEEE VIEWCOOUNTT:",result.viewCount);
+ 
+        
+        if(err)
+        console.log("error in mongo query")
+      
+        //console.log("Result:",result);
+        callback(null,result);
+     })
 
     // Tweets.find({"createdAt":new Date("2019-12-02T10:12:40.966+0000")}).then((result,err)=>{  //Temp will be Tweets
     //     // console.log(result);
@@ -153,15 +169,15 @@ let profileViews = function(message, callback){
 
     
 
-    Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (5 * 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
-        // console.log(result);  //workingg
+    // Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (5 * 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
+    //     // console.log(result);  //workingg
  
-        if(err)
-            console.log("error in mongo query")
+    //     if(err)
+    //         console.log("error in mongo query")
       
-        console.log("Profile Views:",result);
-        callback(null,result);
-     })
+    //     console.log("Profile Views:",result);
+    //     callback(null,result);
+    //  })
 };
 
 let fetchLikes = function(message, callback){
