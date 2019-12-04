@@ -168,6 +168,13 @@ class TweetComponentInner extends Component {
         $(window)[0].location.href = url;
     }
 
+    clickUser = (link) => (event) => {
+        this.props.history.push({
+            pathname: "/userDetailsPage/" + link,
+            state: { user: link }
+        });
+    }
+
     render() {
         //debugger;
         let { userFullName, username, userId, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic, createdAt } = this.props.tweet;
@@ -176,7 +183,7 @@ class TweetComponentInner extends Component {
         let { likesNum, repliesNum, retweetNum } = this.state;
         //TODO get from local storage
         let { likeClass, bookmarkClass, retweetClass } = this.state;
-        let userLinkUrl = '/profile/' + username;
+        let userLinkUrl = username;
         //let tweetUrl = 'http://' + settings.frontendHostName +':' +settings.port +'/tweet/'+tweetId;
         let tweetUrl = '/tweet/' + tweetId;
         let profileImg = settings.s3bucket + profilePic;
@@ -204,7 +211,7 @@ class TweetComponentInner extends Component {
                                 </Col>
                                 <Col xs={8}>
                                     <Row>
-                                        <a href={userLinkUrl}>
+                                        <a className="active" onClick={this.clickUser(userLinkUrl)}>
                                             <CardTitle className='blue bolder' >{userFullName}<span className='grey normal'> @{username}</span> &nbsp; &nbsp; <span className='grey normal'>{postedDateStr}</span></CardTitle>
                                         </a>
                                     </Row>

@@ -21,6 +21,7 @@ import { TabProvider, Tab, Tabs, TabPanel, TabList } from "react-web-tabs";
 //mport Tab from 'react-bootstrap/Tab'
 import { Link } from "react-router-dom";
 import coverImage from "../Components/UserProfile/CoverPhoto.jpg"
+import RightNav from "./RighNav";
 //eslint-disable-next-line
 class UserDetails extends Component {
     constructor(props) {
@@ -34,10 +35,29 @@ class UserDetails extends Component {
     componentWillMount() {
         if (localStorage.getItem('username')) {
             console.log(this.props.location.state)
-            this.setState({ user: this.props.location.state.user })
-            if (this.props.location.state.user.username === localStorage.getItem("username")) {
-                this.props.history.push("/profile/" + localStorage.getItem("username"))
+            if (this.props.location.state.user.username === undefined) {
+                let data = {
+                    username: this.props.location.state.user
+                }
+                axios({
+                    method: 'post',
+                    url: 'http://' + config.hostname + ':3001/getProfileDetails',
+                    data,
+                    config: { headers: { 'Content-Type': 'application/json' } },
+                    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+                }).then(async response => {
+                    await this.setState({ user: response.data.details.rows });
+                })
+                if (this.props.location.state.user === localStorage.getItem("username")) {
+                    this.props.history.push("/profile/" + localStorage.getItem("username"))
+                }
+            } else {
+                this.setState({ user: this.props.location.state.user })
+                if (this.props.location.state.user.username === localStorage.getItem("username")) {
+                    this.props.history.push("/profile/" + localStorage.getItem("username"))
+                }
             }
+
             let data = {
                 username: localStorage.getItem("username")
             }
@@ -142,7 +162,7 @@ class UserDetails extends Component {
                         <LeftNav links={links} history={this.props.history}></LeftNav>
 
                     </Col>
-                    <Col className="col-sm-6 pt-3">
+                    <Col className="col-sm-5 pt-3">
                         <div>
                             <Row>
                                 <Col className="col-sm-1" style={{
@@ -256,7 +276,7 @@ class UserDetails extends Component {
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="two">
-                                            Retweets & replies
+                                            Retweets
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="three">
@@ -279,9 +299,9 @@ class UserDetails extends Component {
                             </div>
                         </div>
                     </Col>
-                    <Col className="col-sm-3">
-                        <div className="navbar-side-right" id="navbarSide">
-                            here
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
+                            <RightNav></RightNav>
                         </div>
 
                     </Col>

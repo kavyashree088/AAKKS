@@ -15,7 +15,7 @@ class Home extends Component {
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
 
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
@@ -32,11 +32,8 @@ class Home extends Component {
                         <h5 className='homeHeading' style={{ fontWeight: "bolder" }}>Home</h5>
                         <TweetContent />
                     </Col>
-                    <Col className="col-sm-3" style={{
-                        borderLeft: "2px solid rgb(180, 177, 177)",
-                        height: "100vh"
-                    }}>
-                        <div className="" id="navbarSide">
+                    <Col className="col-sm-4 navbar-side-right">
+                        <div className="col-sm-10">
                             <RightNav></RightNav>
                         </div>
 
