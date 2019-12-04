@@ -83,6 +83,7 @@ export class DeleteAccount extends Component {
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
             { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
+            {label: 'Analytics', link: '/Analytics', className: "fas fa-poll" } ,
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
 

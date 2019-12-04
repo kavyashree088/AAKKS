@@ -56,7 +56,7 @@ const loginSignupRoutes = require('./Routes/LoginSignup')
 const tweetRoutes = require('./Routes/tweetRoutes');
 const messageRoutes = require('./Routes/messageRoutes')
 const profileDetailsRoutes = require('./Routes/ProfileDetails')
-
+const analytics=require('./Routes/Analytics');
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
 
@@ -122,7 +122,7 @@ app.use('/unsubscribeList',unsubscribeListRouter);
 app.use('/updateList',updateListRouter);
 
 app.use('/getBookmarks',getBookmarksRouter);
-
+app.use('/',analytics);
 
 app.use(bodyParser.json());
 app.use('/messages', messageRoutes);

@@ -11,6 +11,20 @@ body {
   size: 9px;
 }
 
+.nav-btn-circle{
+     
+  background-color:rgba(29, 161, 242, 1);
+  border: none;
+  color:#ffffff;
+  padding: 10px 60px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 14px 2px;
+  cursor: pointer;
+  border-radius: 50px; 
+  
+}
 .btn-circle {
   background-color: rgba(29, 161, 242, 1);
   border: none;
