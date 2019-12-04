@@ -76,9 +76,9 @@ class MonthlyGraph extends Component{
     render(){
 
         return(
-            <div classname="chart" style={{width:900}}>
+            <div classname="chart" style={{width:600}}>
                 <Bar
-                    height={600}
+                    height={500}
                     width={2000}
                     data={this.state.chartData}
                     options={{

@@ -74,7 +74,7 @@ class GraphDoughnut extends Component{
         return(
             <div classname="chart" style={{width:500}}>
                 <Doughnut
-                    height={800}
+                    height={500}
                     width={900}
                     data={this.state.chartData}
                     options={{

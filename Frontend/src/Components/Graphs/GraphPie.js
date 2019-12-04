@@ -90,7 +90,7 @@ class GraphPie extends Component{
         return(
             <div classname="chart" style={{width:700}}>
                 <Pie
-                    height={700}
+                    height={500}
                     width={900}
                     data={this.state.chartData}
                     options={{

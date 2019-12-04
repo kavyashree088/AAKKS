@@ -40,7 +40,7 @@ class GraphLine  extends Component{
         console.log("usernames:", username);
         
         const chartData1={
-            labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30], //tweets
+            labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
             datasets:[{
                 label:['hello'],
                 data:[10,15,15,16,20,25,19,17,10,20,25,17,19,23,20,17,18,11,24,16,14,14,15,10,6,17,14,17,viewCount]
@@ -106,7 +106,7 @@ class GraphLine  extends Component{
         return(
             <div classname="chart" style={{width:700}}>
                 <Line
-                    height={400}
+                    height={500}
                     width={900}
                     data={this.state.chartData}
                     options={{

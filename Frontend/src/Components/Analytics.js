@@ -36,6 +36,7 @@ class Analytics extends Component {
                     <h5>Analytics</h5>
                     </Navbar>
                 </div>
+                <div style={{display:'inline-block',float:'right'}}>
                 <div >
                     <div>
                         <GraphBar/>
@@ -43,9 +44,14 @@ class Analytics extends Component {
                 </div>
                 <div >
                     <div>
+                        <br/>
+                        <br/>
+                        <br/>
                         <HourlyGraph/>
                     </div>
                 </div>
+                </div>
+                <div style={{display:'inline-block',float:'left'}}>
                 <div>
                     <div>
                    < GraphHorizontalBar/>
@@ -53,12 +59,18 @@ class Analytics extends Component {
                 </div>
                 <div>
                     <div>
-                   < MonthlyGraph/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <GraphDoughnut/>
+                   
                     </div>
-                </div> 
+                </div>
+                </div>
+                <div style={{display:'inline-block'}}>
                 <div >
                     <div>
-                    <GraphDoughnut/>
+                    < MonthlyGraph/>
                     </div>
                 </div>
                 <div>
@@ -66,16 +78,19 @@ class Analytics extends Component {
                         <GraphPie/>
                     </div>
                 </div>
+                </div>
                 
+                <div style={{display:'inline-block',float:'right'}}>
                 <div>
                     <div>
                     <GraphLine />
                     </div>
                 
                 </div>
-                
+                </div>
+                </div>
 
-            </div>
+            
       );
     }
     

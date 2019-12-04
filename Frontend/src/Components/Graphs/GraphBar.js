@@ -76,7 +76,7 @@ class GraphBar extends Component{
     render(){
 
         return(
-            <div classname="chart" style={{width:900}}>
+            <div classname="chart" style={{width:800}}>
                 <Bar
                     height={600}
                     width={2000}
@@ -110,7 +110,7 @@ class GraphBar extends Component{
                                 }
                             }],
                             xAxes: [{
-                                barPercentage: 0.5
+                                barPercentage: 0.8
                             }]
                         }
                     }}

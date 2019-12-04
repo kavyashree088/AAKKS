@@ -35,15 +35,7 @@ class HourlyGraph extends Component{
             retweets[i]=result[i].count;
         }
         console.log("retweets:", retweets);
-        //console.log("ids:", ids);
         
-        // console.log("this.state.labels",this.state.labels)
-        // console.log("this.state.data",this.state.data)
-        // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
-        //  this.state.chartData.datasets[0].data=[600, 560 ];
-        //  console.log("chart:", this.state.chartData);
-        // //console.log("labels:",this.state.chartData.labels);
-        // console.log("data:",this.state.chartData.datasets[0].data)
         
         const chartData1={
             labels:['9AM-10AM','10AM-11AM','11AM-12PM','1PM-2PM','2PM-3PM','3PM-4PM','4PM-5PM','5PM-6PM','6PM-7PM','7PM-8PM','8PM-9PM'], //tweets
@@ -90,9 +82,9 @@ class HourlyGraph extends Component{
     render(){
         console.log('GraphPie') 
         return(
-            <div classname="chart" style={{width:700}}>
+            <div classname="chart" style={{width:500}}>
                 <Pie
-                    height={700}
+                    height={500}
                     width={900}
                     data={this.state.chartData}
                     options={{

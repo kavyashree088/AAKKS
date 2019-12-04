@@ -38,16 +38,8 @@ class GraphHorizontalBar extends Component{
         console.log("daily tweet count:", views);
         console.log("ids:", ids);
         
-        // console.log("this.state.labels",this.state.labels)
-        // console.log("this.state.data",this.state.data)
-        // this.state.chartData.labels=["5dd358f0c61c33580e0aed06", "5dd35926c61c33580e0aed09"];
-        //  this.state.chartData.datasets[0].data=[600, 560 ];
-        //  console.log("chart:", this.state.chartData);
-        // //console.log("labels:",this.state.chartData.labels);
-        // console.log("data:",this.state.chartData.datasets[0].data)
-        
         const chartData1={
-            labels:ids, //tweets
+            labels:ids, 
                  datasets:[{
                      label:['tweets per hour'],
                      data:views
@@ -63,7 +55,7 @@ class GraphHorizontalBar extends Component{
                     'rgba(205, 159, 68, 0.6)',
                     'rgba(200, 200, 64, 0.6)',
                     'rgba(250, 200,185, 0.6)',
-                    // 'rgba(255, 99, 132, 0.6)'
+                  
                  ]
                 }
             ]
@@ -84,9 +76,9 @@ class GraphHorizontalBar extends Component{
     render(){
 
         return(
-            <div classname="chart" style={{width:900}}>
+            <div classname="chart" style={{width:800}}>
                 <HorizontalBar
-                    height={800}
+                    height={600}
                     width={900}
                     data={this.state.chartData}
                     options={{
