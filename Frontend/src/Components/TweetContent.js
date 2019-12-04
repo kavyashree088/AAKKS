@@ -172,9 +172,9 @@ export class TweetContent extends Component {
                 <div className="space">
                     <div>
                         <form className='tweetWrite' onSubmit={this.writeATweet}>
-                            <Row>
+                            
                                 <textarea id="tweetArea" name="tweetText" onChange={(e) => this.tweetTextHandler(e.target)} className="form-control" rows="4" style={{ borderColor: "white", fontSize: "21px" }} placeholder="What's happening?" autoFocus value={this.state.tweetText} maxLength={TWEETCHARLIMIT}></textarea>
-                            </Row>
+                           
                             <Row>
                                 <Col xs={1}>
                                     <div className="image-upload">
