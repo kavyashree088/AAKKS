@@ -114,7 +114,7 @@ let createList = function(msg, callback) {
 
 let findMember = function(msg, callback) {
   console.log(msg.listDetails);
-  Users.find({ username: msg.listDetails.username }, function(
+  Users.find({$and:[ {username: msg.listDetails.username},{active:true} ] }, function(
     err,
     result,
     fields
@@ -214,7 +214,7 @@ let showListTweet = function(msg, callback) {
 
 let showMember = function(msg, callback) {
   console.log(msg.listDetails);
-  Users.find({ listMember: msg.listDetails.listID }, function(
+  Users.find({$and:[{ listMember: msg.listDetails.listID},{active:true}] }, function(
     err,
     result,
     fields
@@ -263,7 +263,7 @@ let showSubscribedList = function(msg, callback) {
 
 let showSubscriber = function(msg, callback) {
   console.log(msg.listDetails);
-  Users.find({ listSubscriber: msg.listDetails.listID }, function(
+  Users.find({$and:[{listSubscriber: msg.listDetails.listID},{active:true}]}, function(
     err,
     result,
     fields
