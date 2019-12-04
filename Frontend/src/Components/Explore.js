@@ -16,7 +16,8 @@ class Explore extends Component {
             searchText: "",
             allUsers: [],
             searchList: [],
-            hashTagList: []
+            hashTagList: [],
+            topTweets: []
         }
     }
 
@@ -28,6 +29,14 @@ class Explore extends Component {
             }).then(response => {
                 console.log(response)
                 this.setState({ allUsers: response.data.details.rows });
+            })
+            axios({
+                method: 'get',
+                url: 'http://' + config.hostname + ':3001/fetchViews',
+                config: { headers: { 'Content-Type': 'application/json' } },
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            }).then(async response => {
+                await this.setState({ topTweets: response.data.graphData });
             })
         } else {
             this.props.history.push("/");
@@ -93,6 +102,22 @@ class Explore extends Component {
             return <div></div>;
         }
     }
+
+    renderTopTweets() {
+        let tweetsMarkup = [];
+        if (this.state.topTweets && this.state.topTweets.length > 0) {
+            let i = 0;
+            for (i = 0; i < this.state.topTweets.length; i++) {
+                tweetsMarkup.push(<TweetComponent key={i} tweet={this.state.topTweets[i]} />);
+            }
+            tweetsMarkup.push(<ReplyModal key={i + 1} />)
+            tweetsMarkup.push(<TweetModal key={i + 2} />)
+            return tweetsMarkup;
+        } else {
+            return <div></div>;
+        }
+    }
+
     render() {
         let links = [
             { label: 'Home', link: '/home', className: "fas fa-home" },
@@ -100,9 +125,9 @@ class Explore extends Component {
             { label: 'Notifications', link: '#home', className: "fas fa-bell" },
             { label: 'Messages', link: '/Messages', className: "fas fa-envelope" },
             { label: 'Bookmarks', link: '/Bookmarks', className: "fas fa-bookmark" },
-            { label: 'Lists', link: '/List/'+localStorage.getItem('username'), className: "fas fa-list-alt" },
+            { label: 'Lists', link: '/List/' + localStorage.getItem('username'), className: "fas fa-list-alt" },
             { label: 'Profile', link: '/profile/' + localStorage.getItem('username'), className: "fas fa-user-circle" },
-            {label: 'Analytics', link: '/Analytics', className: "fas fa-poll" } ,
+            { label: 'Analytics', link: '/Analytics', className: "fas fa-poll" },
             { label: 'Deactivate', link: '/deactivate', className: "fa fa-ban" },
             { label: 'Delete', link: '/delete', className: "fa fa-trash-o" }
         ];
@@ -179,7 +204,10 @@ class Explore extends Component {
                                 <div>
                                     There are no tweets with {this.state.searchText}
                                 </div>
-                            ) : (<div></div>)}
+                            ) : (<div>
+                                <h3>Today's Top Tweets</h3>
+                                {this.renderTopTweets()}
+                            </div>)}
                         </div>
                         {this.renderTweets()}
                     </Col>
