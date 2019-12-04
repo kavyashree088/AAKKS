@@ -48,7 +48,7 @@ export const getUserTweets = (dataObj) => dispatch => {
         url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: { "Authorization": `Bearer ${token}` }
+     //   headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             debugger;
@@ -109,7 +109,7 @@ export const getLikesTweets = (dataObj) => dispatch => {
         url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: { "Authorization": `Bearer ${token}` }
+      //  headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
@@ -139,7 +139,7 @@ export const getRepliesTweets = (dataObj) => dispatch => {
         url,
         data,
         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-        headers: { "Authorization": `Bearer ${token}` }
+       // headers: { "Authorization": `Bearer ${token}` }
     })
         .then((response) => {
             if (response.status >= 500) {
