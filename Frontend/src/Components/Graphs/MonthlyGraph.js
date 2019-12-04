@@ -42,7 +42,7 @@ class MonthlyGraph extends Component{
         const chartData1={
             labels:usernames, //tweets
             datasets:[{
-                label:['views'],
+                label:['Monthly Tweet'],
                 data:views
             ,
             backgroundColor:[

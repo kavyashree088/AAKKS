@@ -39,9 +39,9 @@ class GraphHorizontalBar extends Component{
         console.log("ids:", ids);
         
         const chartData1={
-            labels:ids, 
+            labels:['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'], 
                  datasets:[{
-                     label:['tweets per hour'],
+                     label:['Daily tweets upto last 7 Days'],
                      data:views
                  ,
                  backgroundColor:[

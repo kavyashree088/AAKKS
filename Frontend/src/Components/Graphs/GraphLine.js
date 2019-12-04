@@ -45,7 +45,7 @@ class GraphLine  extends Component{
         const chartData1={
             labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
             datasets:[{
-                label:['hello'],
+                label:['Profile Views Per Day'],
                 data:[10,15,15,16,20,25,19,17,10,20,25,17,19,23,20,17,18,11,24,16,14,14,15,10,6,17,14,17,viewCount]
             ,
             backgroundColor:[
