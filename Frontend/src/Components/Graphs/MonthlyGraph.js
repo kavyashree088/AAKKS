@@ -31,7 +31,7 @@ class MonthlyGraph extends Component{
         const usernames=[]
         for(let i=0;i<result.length;i++){
 
-            usernames[i]=result[i].month;
+            usernames[i]=result[i].month+1;
             views[i]=result[i].count;
         }
         console.log("views:", views);
