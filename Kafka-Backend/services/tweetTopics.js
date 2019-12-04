@@ -238,12 +238,14 @@ let getDashboardTweets = async (message, callback) => {
             console.log(result);
             if (result) {
                 following = result.following;
-                
-                if (following && following.length > 0) {
+                if(!following){
+                    following = [];
+                }
+                //if (following && following.length > 0) {
                     await user.find({ $and: [{ username: { $in: following } }, { active: true }] }, { username }, async (err, result2) => {
                         console.log("user follower result..");
                         console.log(result2);
-                        if (result2 && result2.length > 0) {
+                        //if (result2 && result2.length > 0) {
                             let list = [];
                             for (let i = 0; i < result2.length; i++) {
                                 let names = result2[i]["username"];
@@ -282,13 +284,13 @@ let getDashboardTweets = async (message, callback) => {
                                 }
                             });
 
-                        } else {
+                       /* } else {
                             callback(null, { status: 401, message: "tweets list cannot be returned!!" });
-                        }
+                        }*/
                     });
-                } else {
+               /* } else {
                     callback(null, { status: 401, message: "tweets list cannot be returned!!" });
-                }
+                }*/
             }
         }
     });

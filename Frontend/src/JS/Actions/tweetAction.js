@@ -272,7 +272,7 @@ export const unlikeATweet = (dataObj) => dispatch => {
             return response.data;
         })
         .then((responseData) => {
-            swal(responseData.message);
+            //swal(responseData.message);
         }).catch(function (err) {
             console.log(err)
         });

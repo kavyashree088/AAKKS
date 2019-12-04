@@ -13,6 +13,9 @@ import {
     CardLink
 } from "reactstrap";
 import UserListModal from './UserListModal';
+import ReplyModal from './ReplyModal';
+import TweetModal from './TweetModal';
+
 const settings = require("../Config/settings.js");
 
 class IndividualTweetInner extends Component {
@@ -46,6 +49,8 @@ class IndividualTweetInner extends Component {
             return (
                 <div>
                     <TweetComponent tweet={this.props.currentTweet} />
+                    <ReplyModal />
+                    <TweetModal />
                     <Card>
                         <Row className='likeRetweetCount'>
                             &nbsp;  &nbsp; 
