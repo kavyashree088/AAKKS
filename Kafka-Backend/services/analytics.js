@@ -103,10 +103,11 @@ let profileViews = function(message, callback){
   
     
     console.log("Inside views request");
-  
+    console.log(message)
     //localStorage.setItem("username","keerthi");         ///DELETE THIS AFTER MERGING
     //var username=localStorage.getItem('username');
-    var username="keerthi";
+    var username=message.body.username;
+    console.log("----------------------------------------------------------------------------------------------",message)
 
     Users.findOne({"username":username}).then((result,err)=>{  //Temp will be Tweets
         console.log(result)
