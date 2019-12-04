@@ -28,7 +28,8 @@ class UserDetails extends Component {
         super(props)
         this.state = {
             user: {},
-            userProfile: {}
+            userProfile: {},
+            topTweets: []
         }
     }
 

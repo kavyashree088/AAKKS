@@ -199,7 +199,7 @@ let dailyTweets = function(message, callback){
     console.log("Inside daily tweets request------------------------");
 
     var x=[];
-    Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (2* 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
+    Tweets.find({"createdAt":{"$gte": new Date((new Date().getTime() - (7* 24 * 60 * 60 * 1000)))}}).then((result,err)=>{  //Temp will be Tweets
         // console.log(result);  //workingg
  
         if(err)

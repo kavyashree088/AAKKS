@@ -42,7 +42,7 @@ class GraphBar extends Component{
         const chartData1={
             labels:usernames, //tweets
             datasets:[{
-                label:['views'],
+                label:['Tweet View'],
                 data:views
             ,
             backgroundColor:[
