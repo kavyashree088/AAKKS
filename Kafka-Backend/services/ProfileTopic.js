@@ -237,7 +237,7 @@ async function unfollow(msg, callback) {
 async function getReplies(msg, callback) {
     console.log("In user getReplies topic service. Msg: ", msg);
 
-    Tweets.find({$or:[{ retweets:{$elemMatch:{username: msg.data,}},replies:{$elemMatch:{username: msg.data,}}}]}, async function (err, rows) {
+    Tweets.find({replies:{$elemMatch:{username: msg.data}}}, function (err, rows) {
        // console.log(rows)
         if (err) {
             console.log(err);
@@ -254,7 +254,7 @@ async function getReplies(msg, callback) {
 async function getLikes(msg, callback) {
     console.log("In user getLikes topic service. Msg: ", msg);
 
-    Tweets.find({ likes:{$elemMatch:{username: msg.data}}}, async function (err, rows) {
+    Tweets.find({ likes:{$elemMatch:{username: msg.data}}}, function (err, rows) {
         console.log(rows)
         if (err) {
             console.log(err);

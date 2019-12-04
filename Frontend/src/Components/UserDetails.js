@@ -276,7 +276,7 @@ class UserDetails extends Component {
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="two">
-                                            Retweets
+                                        Replies
                                         </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="three">
