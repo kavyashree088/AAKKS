@@ -76,7 +76,7 @@ async function updateProfile(msg, callback) {
     console.log(msg)
     console.log(msg.data.username)
     let con = await dbConnection();
-
+    let userDetails = {};
     var fullname = msg.data.firstName + ' ' + msg.data.lastName;
     let userDetailsObj = {
         "firstName": msg.data.firstName,
@@ -93,14 +93,14 @@ async function updateProfile(msg, callback) {
     }
 
     try {
-
+        
         Users.findOneAndUpdate({ 'username': msg.data.username }, {
             $set: userDetailsObj
         },
-
             async function (err, results) {
                 console.log("results:")
                 console.log(results);
+                userDetails=results;
                 console.log(err)
                 if (err) {
                     console.log(err);
@@ -109,14 +109,91 @@ async function updateProfile(msg, callback) {
                     if (results) {
                         console.log("results:")
                         console.log(results);
-                        callback(null, { status: 200 });
-                        results.save(function (err) {
+                        callback(null, { status: 200,data : userDetails});
+                        results.save(async function (err) {
                             if (!err) {
-                                callback(null, { status: 200, message: "user updated successfully!!" });
+                                var tweetObj = {
+                                    userFullName: fullname
+                               }
+                               if (msg.picture) {
+                                tweetObj['profilePic'] = msg.picture;
+                            }
+                        
+                                await Tweets.updateMany({ 'username': msg.data.username }, {
+                                    $set: tweetObj
+                                },
+                        
+                                    async function (err, results) {
+                                        console.log("results:")
+                                        console.log(results);
+                                        console.log(err)
+                                        if (err) {
+                                            console.log(err);
+                                           // callback(err, "Database Error");
+                                        } else {
+                                            if (results) {
+                                                console.log("results:")
+                                                console.log(results);
+                                            //  callback(null, { status: 200 });
+                                                results.save(function (err) {
+                                                    if (!err) {
+                                                    //    callback(null, { status: 200, message: "user updated successfully!!" });
+                                                    } else {
+                                                      //  callback(null, { status: 200, message: "user updated failed!!" });
+                                                    }
+                                                })
+                                            }
+                                            else {
+                                                console.log("No results found");
+                                               // callback(null, { status: 205 });
+                                            }
+                                        }
+                        
+                                    });
+                                    var listObj = {
+                                        creatorName: fullname
+                                   }
+                                   if (msg.picture) {
+                                    listObj['creatorImage'] = msg.picture;
+                                }
+                            
+                                   await Lists.updateMany({ 'creatorID': msg.data.username }, {
+                                        $set: listObj
+                                    },
+                            
+                                        async function (err, results) {
+                                            console.log("List results:")
+                                            console.log(results);
+                                            console.log(err)
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err, "Database Error");
+                                            } else {
+                                                if (results) {
+                                                    console.log("results:")
+                                                    console.log(results);
+                                                   // callback(null, { status: 200 });
+                                                    results.save(function (err) {
+                                                        if (!err) {
+                                                      //      callback(null, { status: 200, message: "user updated successfully!!", data:userDetails });
+                                                        } else {
+                                                      //      callback(null, { status: 200, message: "user updated failed!!" });
+                                                        }
+                                                    })
+                                                }
+                                                else {
+                                                    console.log("No results found");
+                                                  //  callback(null, { status: 205 });
+                                                }
+                                            }
+                            
+                                        })
+                              //  callback(null, { status: 200, message: "user updated successfully!!" });
                             } else {
                                 callback(null, { status: 200, message: "user updated failed!!" });
                             }
                         })
+                        
                     }
                     else {
                         console.log("No results found");
@@ -132,7 +209,7 @@ async function updateProfile(msg, callback) {
 
         console.log(savedUser)
 
-
+       
         //creatorImage: msg.profilePicture
         // Lists.update({creatorID: msg.data.profileDetails.username},{
         //     $set:
@@ -237,7 +314,7 @@ async function unfollow(msg, callback) {
 async function getReplies(msg, callback) {
     console.log("In user getReplies topic service. Msg: ", msg);
 
-    Tweets.find({replies:{$elemMatch:{username: msg.data}}}, function (err, rows) {
+    Tweets.find({retweets:{$elemMatch:{username: msg.data}}}, function (err, rows) {
        // console.log(rows)
         if (err) {
             console.log(err);

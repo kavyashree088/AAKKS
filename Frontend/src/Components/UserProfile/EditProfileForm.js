@@ -22,6 +22,7 @@ export class EditProfileForm extends Component {
             profilePicture: '',
             isUser: true,
             updateDone: false,
+            imageName:""
         }
 
         this.handleClose = this.handleClose.bind(this);
@@ -83,7 +84,7 @@ export class EditProfileForm extends Component {
     }
     handleClose = (e, closeCallback) => {
         this.setState({
-            show: true
+            show: true,
         })
         //debugger;
         closeCallback();
@@ -95,6 +96,7 @@ export class EditProfileForm extends Component {
         this.setState({
             show: false
         })
+        
         saveCallback(this.state);
     }
 
@@ -106,7 +108,8 @@ export class EditProfileForm extends Component {
         let file = files[0];
        
         this.setState({
-            profilePicture: file
+            profilePicture: file,
+            imageName: file.name
         });
     }
 
@@ -125,6 +128,7 @@ export class EditProfileForm extends Component {
 
         return (
             <div>
+             
                 <Modal show={this.state.show} id="modalId" onHide={(e) => {
                     this.handleClose(e, this.props.onClose);
                 }}>
@@ -141,7 +145,7 @@ export class EditProfileForm extends Component {
                                     </label>
                                   
                                     <input id="input-file" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
-
+{this.state.imageName}
                                 </div>
                             </Form.Group>
                             <Form.Group controlId="formName">

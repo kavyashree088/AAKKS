@@ -58,13 +58,26 @@ class TweetComponentInner extends Component {
                     }
                 }
             }
+            let retweets = this.props.tweet.retweets;
 
+            if (retweets.length > 0) {
+                            this.state.retweetsNum = retweets.length;
+                            // let currUserretweetd = false;
+                            for (let i = 0; i < retweets.length; i++) {
+                                let retweet = retweets[i];
+                                if (retweet.username === currUserName) {
+                                    //currUserretweetd = true;
+                                    this.state.retweetClass = 'fas fa-retweet fa-lg dropdown green';
+                                    break;
+                                }
+                            }
+             }
             if (this.props.tweet.bookmarks.includes(currUserName)) {
                 this.state.bookmarkClass = 'fas fa-bookmark orange';
             }
-            if (this.state.retweetNum > 0) {
-                this.state.retweetClass = 'fas fa-retweet fa-lg dropdown green';
-            }
+            // if (this.state.retweetNum > 0) {
+            //     this.state.retweetClass = 'fas fa-retweet fa-lg dropdown green';
+            // }
         }
     }
 

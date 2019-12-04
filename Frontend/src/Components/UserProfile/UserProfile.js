@@ -45,7 +45,8 @@ export class UserProfile extends Component {
             likes: [],
             tweets: "",
             redirectToFollowers: false,
-            redirectToFollowing: false
+            redirectToFollowing: false,
+            reloadFlag:false
         };
         // this.updateProfile = this.updateProfile.bind(this);
         this.closeEditProfileModal = this.closeEditProfileModal.bind(this);
@@ -224,26 +225,42 @@ export class UserProfile extends Component {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
+                debugger;
                 if (response.status === 200) {
                     console.log("response from DB: ");
                     console.log(response.data);
+                    this.setState({
+                        username: response.data.responseMessage.data.username,
+                        firstName: response.data.responseMessage.data.firstName,
+                        lastName: response.data.responseMessage.data.lastName,
+                        email: response.data.responseMessage.data.email,
+                        city: response.data.responseMessage.data.city,
+                        state: response.data.responseMessage.data.state,
+                        zipcode: response.data.responseMessage.data.zipcode,
+                        description: response.data.responseMessage.data.description,
+                        followers: response.data.responseMessage.data.followers,
+                        following: response.data.responseMessage.data.following,
+                        profilePicture: response.data.responseMessage.data.profilePicture,
+                        reloadFlag:true
+                    });
                 } else {
                     console.log("Status Code: ", response.status);
                     console.log(response.data.responseMessage);
                 }
-                this.setState({
-                    username: response.data.details.rows.username,
-                    firstName: response.data.details.rows.firstName,
-                    lastName: response.data.details.rows.lastName,
-                    email: response.data.details.rows.email,
-                    city: response.data.details.rows.city,
-                    state: response.data.details.rows.state,
-                    zipcode: response.data.details.rows.zipcode,
-                    description: response.data.details.rows.description,
-                    followers: response.data.details.rows.followers,
-                    following: response.data.details.rows.following,
-                    profilePicture: response.data.details.rows.profilePicture
-                });
+                // this.setState({
+                //     username: response.data.details.rows.username,
+                //     firstName: response.data.details.rows.firstName,
+                //     lastName: response.data.details.rows.lastName,
+                //     email: response.data.details.rows.email,
+                //     city: response.data.details.rows.city,
+                //     state: response.data.details.rows.state,
+                //     zipcode: response.data.details.rows.zipcode,
+                //     description: response.data.details.rows.description,
+                //     followers: response.data.details.rows.followers,
+                //     following: response.data.details.rows.following,
+                //     profilePicture: response.data.details.rows.profilePicture,
+                //     reloadFlag:true
+                // });
             })
             .catch(error => {
                 console.log(error);
@@ -329,6 +346,10 @@ export class UserProfile extends Component {
     //   };
 
     render() {
+        let ReloadPage=null;
+        if(this.state.reloadFlag){
+        ReloadPage=window.location.reload();
+        }
         let links = [
             { label: "Home", link: "/home", className: "fas fa-home", active: true },
             { label: "Explore", link: "/Explore", className: "fas fa-hashtag" },
@@ -398,8 +419,9 @@ export class UserProfile extends Component {
                         <LeftNav links={links} history={this.props.history}></LeftNav>
                     </Col>
                     <Col className="col-sm-5">
-                        <div>
-                            <b>{this.state.firstName}</b>
+                        <div style={{margin:"2% 2% 2% 0"}}>
+                            {ReloadPage}
+                           <h4><b><span>{this.state.firstName}</span>&nbsp;<span>{this.state.lastName}</span></b></h4> 
                             {/* <p>number of tweets</p> */}
                         </div>
 
@@ -526,7 +548,7 @@ export class UserProfile extends Component {
               </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="two">
-                                            Replies
+                                            Retweets
               </Tab>
 
                                         <Tab style={{ width: "33%" }} tabFor="three">

@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 3001;
-
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -20,9 +19,6 @@ var config = require('./Config/settings');
 var passport = require('passport');
 
 var kafka = require("./Kafka/client");
-
-
-
 console.log("Initializing passport");
 app.use(passport.initialize());
 
@@ -51,15 +47,7 @@ testDBConection = async () => {
 testDBConection();
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-const loginSignupRoutes = require('./Routes/LoginSignup')
-const tweetRoutes = require('./Routes/tweetRoutes');
-const messageRoutes = require('./Routes/messageRoutes')
-const profileDetailsRoutes = require('./Routes/ProfileDetails')
-const analytics=require('./Routes/Analytics');
-
 app.use('/uploads', express.static(path.join(__dirname, '/uploads/')));
-
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://' + config.client + ':3000', credentials: true }));
 
@@ -71,14 +59,13 @@ app.use(session({
   activeDuration: 5 * 60 * 1000
 }));
 //use cors to allow cross origin resource sharing
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(bodyParser.json());
+
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://' + config.client + ':3000');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -87,7 +74,6 @@ app.use(function (req, res, next) {
   res.setHeader('Cache-Control', 'no-cache');
   next();
 });
-
 
 const createListRouter = require('./Routes/ListRoutes/createList');
 const addMemberRouter = require('./Routes/ListRoutes/addMember');
@@ -103,8 +89,12 @@ const showSubscriberRouter = require('./Routes/ListRoutes/showSubscriber');
 const subscribeListRouter = require('./Routes/ListRoutes/subscribeList');
 const unsubscribeListRouter = require('./Routes/ListRoutes/unsubscribeList');
 const updateListRouter = require('./Routes/ListRoutes/updateList');
-
 const getBookmarksRouter = require('./Routes/getBookmarks');
+const loginSignupRoutes = require('./Routes/LoginSignup')
+const tweetRoutes = require('./Routes/tweetRoutes');
+const messageRoutes = require('./Routes/messageRoutes')
+const profileDetailsRoutes = require('./Routes/ProfileDetails')
+const analytics=require('./Routes/Analytics');
 
 app.use('/createList',createListRouter);
 app.use('/addMember',addMemberRouter);
@@ -120,14 +110,9 @@ app.use('/showSubscriber',showSubscriberRouter);
 app.use('/subscribeList',subscribeListRouter);
 app.use('/unsubscribeList',unsubscribeListRouter);
 app.use('/updateList',updateListRouter);
-
 app.use('/getBookmarks',getBookmarksRouter);
 app.use('/',analytics);
-
-app.use(bodyParser.json());
 app.use('/messages', messageRoutes);
-app.use(bodyParser.json());
-
 app.use('/', loginSignupRoutes);
 app.use('/', tweetRoutes);
 app.use('/', profileDetailsRoutes);
