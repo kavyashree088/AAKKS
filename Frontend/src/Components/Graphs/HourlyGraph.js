@@ -85,7 +85,7 @@ class HourlyGraph extends Component{
             <div classname="chart" style={{width:500}}>
                 <Pie
                     height={500}
-                    width={900}
+                    width={500}
                     data={this.state.chartData}
                     options={{
                        maintainAspectRatio:false,

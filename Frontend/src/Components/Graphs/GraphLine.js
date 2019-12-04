@@ -18,8 +18,11 @@ class GraphLine  extends Component{
 
     componentDidMount(){
 
+        
+            var username=localStorage.getItem('username')
+        
         var rooturl="localhost";
-        axios.get('http://'+rooturl+':3001/fetchProfileViews')
+        axios.get('http://'+rooturl+':3001/fetchProfileViews/'+username)
         .then(response => {
         console.log("Status Code : ",response.status); 
         if(response.status === 200){

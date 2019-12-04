@@ -11,6 +11,7 @@ import GraphHorizontalBar from './Graphs/GraphHorizontalBar';
 import HourlyGraph from "./Graphs/HourlyGraph";
 import ProfileViews from "./Graphs/ProfileViews";
 import MonthlyGraph from "./Graphs/MonthlyGraph";
+import {Row,Col} from 'react-bootstrap';
 
 class Analytics extends Component {
 
@@ -36,58 +37,24 @@ class Analytics extends Component {
                     <h5>Analytics</h5>
                     </Navbar>
                 </div>
-                <div style={{display:'inline-block',float:'right'}}>
-                <div >
-                    <div>
-                        <GraphBar/>
-                    </div>
-                </div>
-                <div >
-                    <div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <HourlyGraph/>
-                    </div>
-                </div>
-                </div>
-                <div style={{display:'inline-block',float:'left'}}>
-                <div>
-                    <div>
-                   < GraphHorizontalBar/>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <GraphDoughnut/>
-                   
-                    </div>
-                </div>
-                </div>
-                <div style={{display:'inline-block'}}>
-                <div >
-                    <div>
-                    < MonthlyGraph/>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <GraphPie/>
-                    </div>
-                </div>
-                </div>
-                
-                <div style={{display:'inline-block',float:'right'}}>
-                <div>
-                    <div>
-                    <GraphLine />
-                    </div>
-                
-                </div>
-                </div>
+                <Row>
+                    <Col><GraphBar/></Col>
+                    <Col style={{marginRight:"0px"}}><HourlyGraph/></Col>
+                </Row>
+                <br/><br/>
+                <Row>
+                    <Col><GraphHorizontalBar/></Col>
+                    <Col><GraphDoughnut/></Col>
+                </Row>
+                <br/><br/>
+                <Row>
+                    <Col><MonthlyGraph/></Col>
+                    <Col><GraphPie/></Col>
+                </Row>
+                <br/><br/>
+                <Row>
+                    <Col><GraphLine/></Col>
+                </Row>
                 </div>
 
             

@@ -67,13 +67,16 @@ router.get('/hourlyTweets',function(req,res){
        
 });
 
-router.get('/fetchProfileViews',function(req,res){
+router.get('/fetchProfileViews/:username',function(req,res){
     
     
     console.log("infetch Profile views  backend")
-    console.log(req.body);
+    console.log(req.params.username);
   
-    kafka.make_request("analytics", { "path": "profileViews" }, function(
+    let body={
+      username:req.params.username
+    }
+    kafka.make_request("analytics", { "path": "profileViews" ,body}, function(
       err,
       results
     ) {
