@@ -59,7 +59,7 @@ class TweetModalInner extends Component {
             <div class="modal-header">
               <h4 class="modal-title">Retweet with a comment</h4>
               <br />
-              <button type="button" class="close" data-dismiss="modal">
+              <button type="button" className="close" data-dismiss="modal">
                 &times;
                   </button>
             </div>

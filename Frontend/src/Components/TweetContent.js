@@ -91,6 +91,10 @@ export class TweetContent extends Component {
             }).catch(function (err) {
                 console.log(err)
             });
+            this.setState({
+                tweetImages : ""
+            })
+            
     }
 
 
@@ -111,7 +115,8 @@ export class TweetContent extends Component {
         // let tweetImages = this.state.tweetImages; 
         //tweetImages.push(file);
         this.setState({
-            tweetImages: file
+            tweetImages: file,
+            imageName : file.name
         });
         /* let userId = '123';
          let tweetText = 'sample';
@@ -177,6 +182,7 @@ export class TweetContent extends Component {
                                             <i id="image" className="far fa-image fa-2x"></i>
                                         </label>
                                         <input id="input-file" className="hidden" type="file" onChange={(e) => this.onFileChange(e.target.files)} />
+                                        <span>{this.state.imageName}</span>
                                     </div>
                                 </Col >
 

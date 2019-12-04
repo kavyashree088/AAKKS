@@ -19,7 +19,7 @@ var morgan = require('morgan');
 var config = require('./Config/settings');
 var passport = require('passport');
 
-var kafka = require("./kafka/client");
+var kafka = require("./Kafka/client");
 
 
 

@@ -78,7 +78,7 @@ router.post('/login', function (req, res) {
 
     if (result.status == 200) {
       console.log("result.password")
-      console.log(result.status)
+      console.log(result)
       console.log(result.password)
       crypt.compareHash(password, result.password, function (err, isMatch) {
         if (isMatch && !err) {

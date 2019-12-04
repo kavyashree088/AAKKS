@@ -17,14 +17,16 @@ const initialState = {
   pageNum: 1,
   likestweets: [],
   repliestweets: [],
-  usertweets:[]
+  usertweets:[],
+  following : []
 };
 
 export const tweetReducer = function(state = initialState, action) {
   switch (action.type) {
     case DASHBOARDTWEETS:
       return Object.assign({}, state, {
-        dashboardTweets: action.payload
+        dashboardTweets: action.payload.message,
+        following : action.payload.following
       });
     case CURRENTTWEET:
       return Object.assign({}, state, {

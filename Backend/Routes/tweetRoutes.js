@@ -274,6 +274,7 @@ router.post('/getDashboardTweets', function (req, res) {
       console.log('Tweets returned successfully!');
       responseObj.status = true;
       responseObj.message = result.message;
+      responseObj.following = result.following;
       //res.status(200).json(responseObj);
     } else if (result.status === 401) {
       console.log('Tweets cannot be returned!!');

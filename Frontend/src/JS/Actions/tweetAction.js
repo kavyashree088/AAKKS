@@ -179,7 +179,7 @@ export const getDashboardTweets = (dataObj) => dispatch => {
             if(responseData.status){
                 dispatch({
                     type: DASHBOARDTWEETS,
-                    payload : responseData.message
+                    payload : responseData
                 });
                 dispatch({
                     type: SETPAGENUM,

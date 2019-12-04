@@ -124,7 +124,7 @@ async function updateProfile(msg, callback) {
             })
         await con.query("START TRANSACTION");
        
-        let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ?', [msg.data.firstName, msg.data.lastName]);
+        let savedUser = await con.query('UPDATE userMysql SET firstname = ?, lastName= ? where username = ?', [msg.data.firstName, msg.data.lastName, msg.data.username]);
         await con.query("COMMIT");
 
         console.log(savedUser)

@@ -238,6 +238,7 @@ let getDashboardTweets = async (message, callback) => {
             console.log(result);
             if (result) {
                 following = result.following;
+                
                 if (following && following.length > 0) {
                     await user.find({ $and: [{ username: { $in: following } }, { active: true }] }, { username }, async (err, result2) => {
                         console.log("user follower result..");
@@ -248,6 +249,7 @@ let getDashboardTweets = async (message, callback) => {
                                 let names = result2[i]["username"];
                                 list.push(names);
                             }
+                            list.push(username);
                             console.log(list)
                             //followingActive.push(person1);
                             /* await tweet.find({ username: { $in: list } }).lean().exec(async (err, result3) => {
@@ -263,7 +265,7 @@ let getDashboardTweets = async (message, callback) => {
                                      callback(null, { status: 401, message: "tweets list cannot be returned!!" });
                                  }
                              });*/
-                            await tweet.find({ username: { $in: list } }).sort({ createdAt: -1 }).skip(offset).limit(pageSize).lean().exec(async (err, result3) => {
+                            await tweet.find({ $or:[{username: { $in: list }}, {'retweets.username':{ $in: list }}]  }).sort({ createdAt: -1 }).skip(offset).limit(pageSize).lean().exec(async (err, result3) => {
                                 if (err) {
                                     console.log("unable to insert into database", err);
                                     callback(err, "Database Error");
@@ -271,7 +273,10 @@ let getDashboardTweets = async (message, callback) => {
                                     console.log("tweets returned!!");
                                     console.log(result3);
                                     result3 = await processTweets(result3);
-                                    callback(null, { status: 200, message: result3 });
+                                    console.log("followers list...222");
+                                    console.log(list);
+                                   // let resultMessage = {following : list, message : result3};
+                                    callback(null, {status: 200, message : result3, following : list});
                                 } else {
                                     callback(null, { status: 401, message: "tweets list cannot be returned!!" });
                                 }
@@ -373,6 +378,7 @@ let retweetWithoutComment = async (message, callback) => {
                     callback(null, { status: 200, message: 'tweet  cannot be retweeted!!' });
                 }
             });
+
         } else {
             callback(null, { status: 200, message: 'tweet  cannot be retweeted!!' });
         }

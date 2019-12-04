@@ -97,13 +97,7 @@ class ReplyModalInner extends Component {
           </div>
         </div>
 
-        <div className="modal-footer">
-          <i id="image" style={{ position: 'absolute', left: '60px' }} className="far fa-image fa-2x"></i>
-          <button className="btn btn-primary btn-circle" type="submit" onClick={(evt) => this.replyClickHandler(evt)} style={{ position: 'absolute', right: '60px', fontWeight: "bold" }}>Reply</button><br /><br /><br />
-        </div>
-
       </div>
-
 
     );
   }

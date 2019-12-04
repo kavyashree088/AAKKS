@@ -73,6 +73,7 @@ class LandingPage extends Component {
                 console.log( response);
                 
                 if (response.data.responseMessage === 'Login Successfully') {
+                    debugger;
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("username", response.data.info.username);
                     localStorage.setItem("firstname", response.data.info.firstname);
