@@ -60,7 +60,7 @@ class LeftNav extends Component {
                         <span><b>Logout</b></span>
                     </a>
                 </li>
-
+                <button data-toggle="modal" data-target="#navTweetModal" className="btn btn-primary nav-btn-circle" type="submit" style={{position:'absolute',  left:'60px',fontWeight:"bold"   }}>Tweet</button><br/><br/><br/>
             </div >
         )
     }

@@ -16,7 +16,7 @@ import ListSpecific from './Components/ListSpecific';
 import ListInfo from './Components/ListInfo';
 import Bookmarks from './Components/BookmarkMain';
 import TweetDisplay from './Components/TweetDisplay';
-
+import Analytics from './Components/Analytics';
 import Follow from './Components/UserProfile/Follow'
 
 
@@ -43,6 +43,7 @@ class App extends Component {
           <Route path="/Bookmarks" component={Bookmarks}></Route>
 
           <Route exact path="/follow" component={Follow}></Route>
+          <Route path="/Analytics" component={Analytics}></Route>
           
 
         </Switch>

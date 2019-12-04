@@ -242,6 +242,7 @@ class List extends Component {
         link: "/profile/" + localStorage.getItem("username"),
         className: "fas fa-user-circle"
       },
+      {label: 'Analytics', link: '/Analytics', className: "fas fa-poll" } ,
       { label: "Deactivate", link: "/deactivate", className: "fa fa-ban" },
       { label: "Delete", link: "/delete", className: "fa fa-trash-o" }
     ];

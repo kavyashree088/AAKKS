@@ -14,7 +14,7 @@ var messageTopics = require('./services/messageTopics.js')
 var profileTopic = require('./services/ProfileTopic.js')
 var SignupSignin = require('./services/LoginSignup')
 var listTopics = require("./services/listTopics");
-
+var analytics=require('./services/analytics');
 // Set up Database connection
 var config = require('./config/settings');
 var mongoose = require('mongoose');
@@ -84,6 +84,13 @@ function handleTopicRequest(topic_name, fname) {
           return;
         })
         break;
+        case 'analytics':
+        analytics.analyticsService(data.data, function(err, res) {
+          console.log("analytics.js")
+          response(data, res, producer);
+          return;
+        });
+        break;
     }
   })
 };
@@ -114,3 +121,4 @@ handleTopicRequest("listTopics", listTopics);
 handleTopicRequest("loginSignuptopic", SignupSignin);
 handleTopicRequest("messageTopics", messageTopics);
 handleTopicRequest("profileTopic", profileTopic);
+handleTopicRequest("analytics", analytics);
