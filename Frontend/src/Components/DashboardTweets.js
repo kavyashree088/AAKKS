@@ -30,10 +30,11 @@ export class DashboardTweets extends Component {
         this.props.getDashboardTweets(dataObj);
     }
     renderPagination() {
+        debugger;
         /* <Pagination.Item  >
                                 next
                         </Pagination.Item>*/
-        if (this.props.dashboardTweets) {
+        if (this.props.dashboardTweets && this.props.dashboardTweets.length > 0) {
             return (
                 <div className='offset-md-11'>
                     <button className="btn btn-primary btn-circle" onClick={() => { this.reqForDashboardTweets() }} > <i class="fas fa-angle-double-right"></i> </button>
