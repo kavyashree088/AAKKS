@@ -4,7 +4,7 @@ import axios from "axios";
 import swal from 'sweetalert';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { likeATweet, unlikeATweet, bookmarkATweet, unbookmarkATweet, setCurrentTweet, retweetWithoutComment, retweetWithComment } from '../JS/Actions/tweetAction.js';
+import { likeATweet, unlikeATweet, bookmarkATweet, unbookmarkATweet, setCurrentTweet, retweetWithoutComment, retweetWithComment, deleteATweet } from '../JS/Actions/tweetAction.js';
 import {
     Card,
     CardImg,
@@ -32,7 +32,8 @@ class TweetComponentInner extends Component {
         username: '',
         likeClass: 'like far fa-heart fa-lg grey',
         bookmarkClass: 'fas fa-bookmark grey',
-        retweetClass: 'fas fa-retweet fa-lg dropdown grey'
+        retweetClass: 'fas fa-retweet fa-lg dropdown grey',
+        reloadFlag:false
     };
     constructor(props) {
         super(props);
@@ -189,6 +190,18 @@ class TweetComponentInner extends Component {
         });
     }
 
+    deleteATweet=(tweetId)=>{
+        let data = { tweetId };
+        axios.defaults.withCredentials = true;
+        let postURL = "http://" + settings.hostname + ":" + settings.port + "/deleteATweet";
+        //TODO :or get followers list from local storage and send it
+        let dataObj = { data, url: postURL };
+        this.props.deleteATweet(dataObj);
+        this.setState({
+            reloadFlag:true
+        });
+    }
+
     render() {
         let { userFullName, username, tweetText, media, replies, likes, isRetweet, actualTweetDetails, profilePic, createdAt } = this.props.tweet;
         //let userFullName = firstName + " " + lastName;
@@ -201,10 +214,20 @@ class TweetComponentInner extends Component {
         let tweetUrl = '/tweet/' + tweetId;
         let profileImg = settings.s3bucket + profilePic;
         let postedDateStr = getMonthAndDate(createdAt);
+
+let deleteShow=null;
+if(localStorage.getItem('username')==username){
+    deleteShow=<i class="far fa-trash-alt" style={{ margin:"10%"}} onClick={(evt) => { evt.stopPropagation(); this.deleteATweet(tweetId) }}></i>
+}
+let ReloadPage=null;
+if(this.state.reloadFlag){
+ReloadPage=window.location.reload();
+}
         // <Link to ={tweetUrl}>
         // <img src = {profileImg} style={{width:'100%'}}/>
         return (
             <div className="tweet-container" onClick={() => { this.tweetClickHandler(tweetUrl) }}>
+                {ReloadPage}
                 <div className="tweet-body">
 
                     <Card >
@@ -245,6 +268,7 @@ class TweetComponentInner extends Component {
                                         <li><a href="#" className="dropdown-item grey" onClick={(evt) => { evt.stopPropagation(); this.props.setCurrentTweet(this.props.tweet); this.props.retweetWithComment(tweetId, username) }} data-toggle="modal" data-target="#tweetModal"><i className="fas fa-retweet"></i>&nbsp; &nbsp;Retweet with a comment</a></li>
                                     </ul>
                                     <a onClick={(evt) => { evt.stopPropagation(); this.bookmarkOrUnbookmarkATweet(bookmarkClass, tweetId) }}><i className={bookmarkClass}></i></a>
+                                     {deleteShow}         
                                 </Col>
                             </Row>
                         </CardBody>
@@ -271,6 +295,7 @@ const mapDispatchToProps = function (dispatch) {
         setCurrentTweet: (currentTweet) => dispatch(setCurrentTweet(currentTweet)),
         retweetWithoutComment: (dataObj) => dispatch(retweetWithoutComment(dataObj)),
         retweetWithComment: (dataObj) => dispatch(retweetWithComment(dataObj)),
+        deleteATweet: (dataObj) => dispatch(deleteATweet(dataObj)),
     }
 }
 
